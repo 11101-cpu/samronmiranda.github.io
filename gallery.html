@@ -1,63 +1,55 @@
 <!doctype html>
-<link rel="stylesheet" href="styles.css">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gallery — Samron Miranda</title>
+<meta name="description" content="Gallery and portfolio of Samron Miranda.">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="cyber">
-<header class="topbar">
-<div class="container topbar-inner">
-<a class="brand" href="index.html">Samron<span class="accent">T.</span></a>
-<nav class="nav" id="mainNav">
-<a href="index.html" class="nav-link">Home</a>
-<a href="about.html" class="nav-link">About</a>
-<a href="gallery.html" class="nav-link active">Gallery</a>
-<a href="contact.html" class="nav-link">Contact</a>
+<body>
+<header class="nav-wrap">
+<nav class="nav container">
+<a class="brand" href="index.html">Samron Miranda</a>
+<button id="menu-toggle-3" class="menu-toggle">☰</button>
+<ul class="nav-links" id="nav-links-3">
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="gallery.html" class="active">Gallery</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
 </nav>
-<button id="navToggle" class="nav-toggle" aria-expanded="false">☰</button>
-</div>
 </header>
 
 
 <main class="container gallery-page">
-<h1 class="glow">Gallery / Portfolio</h1>
-<p>Click any image to view it larger.</p>
+<h1>Gallery / Portfolio</h1>
+<p class="intro">A few snapshots of my work, passions and memorable moments.</p>
 
 
-<div id="galleryGrid" class="gallery-grid">
-<figure class="gallery-item">
-<img src="assets/photo1.jpg" alt="Project 1" data-index="0">
-<figcaption>Project 1 — UI mockup</figcaption>
-</figure>
-<figure class="gallery-item">
-<img src="assets/photo2.jpg" alt="Project 2" data-index="1">
-<figcaption>Project 2 — College assignment</figcaption>
-</figure>
-<figure class="gallery-item">
-<img src="assets/photo3.jpg" alt="Project 3" data-index="2">
-<figcaption>Project 3 — Photography</figcaption>
-</figure>
-<figure class="gallery-item">
-<img src="assets/photo4.jpg" alt="Project 4" data-index="3">
-<figcaption>Project 4 — Mini-game</figcaption>
-</figure>
+<div class="gallery-grid">
+<img class="thumb" src="assets/images/photo1.jpg" alt="photo1" data-full="assets/images/photo1_large.jpg">
+<img class="thumb" src="assets/images/photo2.jpg" alt="photo2" data-full="assets/images/photo2_large.jpg">
+<img class="thumb" src="assets/images/photo3.jpg" alt="photo3" data-full="assets/images/photo3_large.jpg">
+<img class="thumb" src="assets/images/photo4.jpg" alt="photo4" data-full="assets/images/photo4_large.jpg">
 </div>
 
 
+<!-- Modal for larger images -->
 <div id="modal" class="modal" aria-hidden="true">
-<button class="modal-close" id="modalClose">✕</button>
-<button class="modal-nav prev" id="modalPrev">◀</button>
-<img id="modalImg" src="" alt="Expanded view">
-<button class="modal-nav next" id="modalNext">▶</button>
-<p id="modalCaption" class="modal-caption"></p>
+<button id="modal-close" class="modal-close">✕</button>
+<img id="modal-img" src="" alt="expanded">
 </div>
 </main>
 
 
 <footer class="site-footer">
 <div class="container">
-<div>© <span id="year3"></span> Samron Trevor Miranda</div>
+<p>&copy; <span id="year-3"></span> Samron Trevor Miranda</p>
 </div>
 </footer>
 
 
-<script src="script.js"></script>
+<script src="assets/js/script.js"></script>
 </body>
 </html>
