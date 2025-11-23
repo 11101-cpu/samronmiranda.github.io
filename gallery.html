@@ -1,0 +1,63 @@
+<!doctype html>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="cyber">
+<header class="topbar">
+<div class="container topbar-inner">
+<a class="brand" href="index.html">Samron<span class="accent">T.</span></a>
+<nav class="nav" id="mainNav">
+<a href="index.html" class="nav-link">Home</a>
+<a href="about.html" class="nav-link">About</a>
+<a href="gallery.html" class="nav-link active">Gallery</a>
+<a href="contact.html" class="nav-link">Contact</a>
+</nav>
+<button id="navToggle" class="nav-toggle" aria-expanded="false">☰</button>
+</div>
+</header>
+
+
+<main class="container gallery-page">
+<h1 class="glow">Gallery / Portfolio</h1>
+<p>Click any image to view it larger.</p>
+
+
+<div id="galleryGrid" class="gallery-grid">
+<figure class="gallery-item">
+<img src="assets/photo1.jpg" alt="Project 1" data-index="0">
+<figcaption>Project 1 — UI mockup</figcaption>
+</figure>
+<figure class="gallery-item">
+<img src="assets/photo2.jpg" alt="Project 2" data-index="1">
+<figcaption>Project 2 — College assignment</figcaption>
+</figure>
+<figure class="gallery-item">
+<img src="assets/photo3.jpg" alt="Project 3" data-index="2">
+<figcaption>Project 3 — Photography</figcaption>
+</figure>
+<figure class="gallery-item">
+<img src="assets/photo4.jpg" alt="Project 4" data-index="3">
+<figcaption>Project 4 — Mini-game</figcaption>
+</figure>
+</div>
+
+
+<div id="modal" class="modal" aria-hidden="true">
+<button class="modal-close" id="modalClose">✕</button>
+<button class="modal-nav prev" id="modalPrev">◀</button>
+<img id="modalImg" src="" alt="Expanded view">
+<button class="modal-nav next" id="modalNext">▶</button>
+<p id="modalCaption" class="modal-caption"></p>
+</div>
+</main>
+
+
+<footer class="site-footer">
+<div class="container">
+<div>© <span id="year3"></span> Samron Trevor Miranda</div>
+</div>
+</footer>
+
+
+<script src="script.js"></script>
+</body>
+</html>
