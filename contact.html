@@ -1,32 +1,62 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Contact — Samron Trevor Miranda</title>
-<meta name="description" content="Contact form to reach Samron." />
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="cyber">
-<header class="topbar">
-<div class="container topbar-inner">
-<a class="brand" href="index.html">Samron<span class="accent">T.</span></a>
-<nav class="nav" id="mainNav">
-<a href="index.html" class="nav-link">Home</a>
-<a href="about.html" class="nav-link">About</a>
-<a href="gallery.html" class="nav-link">Gallery</a>
-<a href="contact.html" class="nav-link active">Contact</a>
+<body>
+<header class="nav-wrap">
+<nav class="nav container">
+<a class="brand" href="index.html">Samron Miranda</a>
+<button id="menu-toggle-4" class="menu-toggle">☰</button>
+<ul class="nav-links" id="nav-links-4">
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="gallery.html">Gallery</a></li>
+<li><a href="contact.html" class="active">Contact</a></li>
+</ul>
 </nav>
-<button id="navToggle" class="nav-toggle" aria-expanded="false">☰</button>
-</div>
 </header>
 
 
 <main class="container contact-page">
-<h1 class="glow">Contact Me</h1>
-<p>If you'd like to reach me, fill the form below.</p>
+<h1>Contact Me</h1>
+<p>If you'd like to reach me, send a message using the form below or email me at <a href="mailto:samronmiranda@gmail.com">samronmiranda@gmail.com</a>.</p>
 
 
-<form id="contactForm" novalidate>
-<label>Name<input type="text" id="name" required minlength="2" value="Samron Trevor Miranda"
+<form id="contact-form" class="contact-form" novalidate>
+<label for="name">Name</label>
+<input id="name" name="name" type="text" required>
+
+
+<label for="email">Email</label>
+<input id="email" name="email" type="email" required>
+
+
+<label for="message">Message</label>
+<textarea id="message" name="message" rows="6" required></textarea>
+
+
+<button type="submit" class="btn">Send Message</button>
+<p id="form-msg" class="form-msg" aria-live="polite"></p>
+</form>
+
+
+<div class="socials">
+<h3>Connect</h3>
+<p>
+<a href="#" target="_blank" rel="noopener">LinkedIn</a> &middot;
+<a href="#" target="_blank" rel="noopener">GitHub</a> &middot;
+<a href="#" target="_blank" rel="noopener">Instagram</a>
+</p>
+</div>
+</main>
+
+
+<footer class="site-footer">
+<div class="container">
+<p>&copy; <span id="year-4"></span> Samron Trevor Miranda</p>
+</div>
+</footer>
+
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>
