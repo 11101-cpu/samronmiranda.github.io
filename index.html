@@ -1,70 +1,297 @@
 <!doctype html>
-<li><a href="contact.html">Contact</a></li>
-</ul>
-</nav>
-</header>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Samron Trevor Miranda — Portfolio</title>
+  <style>
+    /* Clean blue & white pitch-deck style */
+    :root{
+      --bg:#f8fbff; /* very light blue */
+      --accent:#0b66ff; /* primary blue */
+      --muted:#6b7a90;
+      --card:#ffffff;
+      --glass: rgba(255,255,255,0.65);
+      --shadow: 0 8px 30px rgba(12,33,80,0.08);
+      --rounded: 14px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: radial-gradient(circle at 10% 10%, rgba(11,102,255,0.06), transparent 8%),
+                  linear-gradient(180deg,var(--bg),#eaf4ff 60%);
+      color:#102034;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      letter-spacing:0.1px;
+      padding-bottom:40px;
+    }
 
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:22px 28px;
+      max-width:1200px;margin:0 auto;
+    }
+    .logo{font-weight:700;color:var(--accent);font-size:18px}
+    nav ul{display:flex;gap:18px;align-items:center;list-style:none;padding:0;margin:0}
+    nav a{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:10px}
+    nav a:hover{background:var(--glass);color:var(--accent)}
 
-<main>
-<section class="hero">
-<div class="hero-inner container">
-<h1>Hi, I’m <span class="accent">Samron Trevor Miranda</span></h1>
-<p class="lead">Novice coder • Enthusiastic sportsman • Lover of history, classical literature & technology.</p>
-<div class="cta">
-<a class="btn" href="about.html">Know More</a>
-<a class="btn ghost" href="gallery.html">See My Work</a>
-</div>
-</div>
-</section>
+    .container{max-width:1200px;margin:0 auto;padding:0 28px}
 
+    .hero{
+      margin-top:10px;
+      padding:40px 0 38px;
+      display:grid;grid-template-columns:1fr 420px;gap:30px;align-items:center;
+    }
+    .hero-inner{padding:28px;background:linear-gradient(180deg,rgba(255,255,255,0.8), rgba(255,255,255,0.6));border-radius:18px;box-shadow:var(--shadow)}
+    h1{font-size:40px;margin:6px 0 10px;line-height:1.02}
+    .accent{color:var(--accent);}
+    .lead{color:var(--muted);margin:0 0 16px}
 
-<section class="highlights container">
-<div class="card">
-<h3>Course</h3>
-<p>Computer Engineering — Father Conceicao Rodrigues College of Engineering</p>
-</div>
-<div class="card">
-<h3>Age</h3>
-<p>18</p>
-</div>
-<div class="card">
-<h3>Hobbies</h3>
-<p>Coding, Sports, Reading History & Classical Literature</p>
-</div>
-</section>
+    .cta{display:flex;gap:12px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:12px;background:var(--accent);color:white;text-decoration:none;font-weight:600}
+    .btn.ghost{background:transparent;border:1px solid rgba(11,102,255,0.12);color:var(--accent)}
 
+    /* moving words widget */
+    .moving-words{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+    .word-wrap{position:relative;height:34px;overflow:hidden}
+    .word-wrap .words{position:absolute;top:0;left:0;animation:slideWords 10s linear infinite}
+    .word{display:block;height:34px;padding:0 6px;font-weight:700;color:var(--accent)}
+    @keyframes slideWords{
+      0%{transform:translateY(0)}
+      20%{transform:translateY(-34px)}
+      40%{transform:translateY(-68px)}
+      60%{transform:translateY(-102px)}
+      80%{transform:translateY(-136px)}
+      100%{transform:translateY(0)}
+    }
 
-<section class="projects container">
-<h2>Recent Projects</h2>
-<div class="grid">
-<article class="proj">
-<img src="assets/images/project1.jpg" alt="project 1">
-<h4>Mini Chat App</h4>
-<p>Built with HTML, CSS, JS — a playground for learning sockets.</p>
-</article>
-<article class="proj">
-<img src="assets/images/project2.jpg" alt="project 2">
-<h4>Portfolio</h4>
-<p>A single-page portfolio highlighting coursework and hobbies.</p>
-</article>
-<article class="proj">
-<img src="assets/images/project3.jpg" alt="project 3">
-<h4>Sports Tracker</h4>
-<p>A small JS app to log practice sessions and stats.</p>
-</article>
-</div>
-</section>
-</main>
+    /* highlights */
+    .highlights{display:flex;gap:18px;margin:34px 0}
+    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:var(--shadow);flex:1}
+    .card h3{margin:0 0 6px}
+    .card p{margin:0;color:var(--muted)}
 
+    /* projects */
+    .projects h2{margin-top:10px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:14px}
+    .proj{background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,255,0.9));padding:14px;border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;transition:transform .28s ease,box-shadow .28s}
+    .proj:hover{transform:translateY(-8px);box-shadow:0 18px 50px rgba(12,33,80,0.12)}
+    .proj img{width:100%;height:140px;object-fit:cover;border-radius:10px}
+    .proj h4{margin:0}
+    .proj p{margin:0;color:var(--muted);font-size:14px}
 
-<footer class="site-footer">
-<div class="container">
-<p>Fr. Conceicao Rodrigues College of Engineering &middot; Father Agnel Ashram, Bandstand, Bandra-West, Mumbai-50</p>
-<p>&copy; <span id="year"></span> Samron Trevor Miranda</p>
-</div>
-</footer>
+    /* interactive controls */
+    .projects .controls{display:flex;gap:10px;align-items:center;margin-top:12px}
+    .chip{padding:8px 10px;border-radius:999px;background:rgba(11,102,255,0.06);border:1px solid rgba(11,102,255,0.06);cursor:pointer}
+    .chip.active{background:var(--accent);color:white;border-color:transparent}
 
+    footer.site-footer{margin-top:40px;padding:22px 0;color:var(--muted)}
+    footer p{margin:6px 0}
 
-<script src="assets/js/script.js"></script>
+    /* responsive */
+    @media (max-width:880px){
+      .hero{grid-template-columns:1fr}
+      .hero-inner{order:2}
+    }
+
+    /* subtle floating background shapes */
+    .bg-shape{position:fixed;right:-80px;top:10%;width:420px;height:420px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#5fb0ff);opacity:0.06;filter:blur(36px);pointer-events:none}
+    .bg-shape--2{left:-100px;bottom:-60px;opacity:0.045}
+
+    /* small accessibility helpers */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+</head>
+<body>
+  <div class="bg-shape" aria-hidden></div>
+  <div class="bg-shape bg-shape--2" aria-hidden></div>
+
+  <header>
+    <div class="logo">Samron Miranda</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Hi, I’m <span class="accent">Samron Trevor Miranda</span></h1>
+        <p class="lead">Novice coder • Enthusiastic sportsman • Lover of history, classical literature & technology.</p>
+
+        <div class="moving-words" aria-hidden="true">
+          <div>Passionate about</div>
+          <div class="word-wrap" aria-hidden>
+            <div class="words">
+              <span class="word">Web Apps</span>
+              <span class="word">Data</span>
+              <span class="word">Sports Science</span>
+              <span class="word">History</span>
+              <span class="word">Design</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:10px"></div>
+        <div class="cta">
+          <a class="btn" href="about.html">Know More</a>
+          <a class="btn ghost" href="gallery.html">See My Work</a>
+        </div>
+      </div>
+
+      <aside style="padding:18px;display:flex;flex-direction:column;gap:14px;align-items:flex-end">
+        <div style="background:linear-gradient(180deg,#fff,#f7fbff);padding:18px;border-radius:12px;box-shadow:var(--shadow);min-width:300px">
+          <h3 style="margin:0 0 6px">Quick Info</h3>
+          <p style="margin:0;color:var(--muted)">Computer Engineering — Father Conceicao Rodrigues College of Engineering</p>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <div style="background:var(--accent);color:white;padding:8px 10px;border-radius:10px;font-weight:700">Age<br><small style="font-weight:600">18</small></div>
+            <div style="padding:8px 10px;border-radius:10px;background:rgba(11,102,255,0.06)">Hobbies<br><small style="color:var(--muted)">Coding, Sports, Reading</small></div>
+          </div>
+        </div>
+
+        <div style="text-align:right;color:var(--muted);font-size:13px">Fr. Conceicao Rodrigues College of Engineering<br> Father Agnel Ashram, Bandstand, Bandra-West, Mumbai-50</div>
+      </aside>
+    </section>
+
+    <section class="projects">
+      <h2>Recent Projects</h2>
+
+      <div class="controls">
+        <div class="chip active" data-sort="default">Default</div>
+        <div class="chip" data-sort="alpha-asc">A → Z</div>
+        <div class="chip" data-sort="alpha-desc">Z → A</div>
+        <div class="chip" id="shuffle">Shuffle</div>
+        <div style="margin-left:auto;color:var(--muted);font-size:13px">Drag to reorder (desktop)</div>
+      </div>
+
+      <div class="grid" id="projectsGrid">
+        <article class="proj" draggable="true" data-title="Mini Chat App">
+          <img src="assets/images/project1.jpg" alt="project 1">
+          <h4>Mini Chat App</h4>
+          <p>Built with HTML, CSS, JS — a playground for learning sockets.</p>
+        </article>
+        <article class="proj" draggable="true" data-title="Portfolio">
+          <img src="assets/images/project2.jpg" alt="project 2">
+          <h4>Portfolio</h4>
+          <p>A single-page portfolio highlighting coursework and hobbies.</p>
+        </article>
+        <article class="proj" draggable="true" data-title="Sports Tracker">
+          <img src="assets/images/project3.jpg" alt="project 3">
+          <h4>Sports Tracker</h4>
+          <p>A small JS app to log practice sessions and stats.</p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer container">
+    <p>&copy; <span id="year"></span> Samron Trevor Miranda</p>
+  </footer>
+
+  <script>
+    // populate year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Sorting controls
+    const chips = document.querySelectorAll('.chip');
+    const grid = document.getElementById('projectsGrid');
+    function renderOrder(elements){
+      grid.innerHTML = '';
+      elements.forEach(el=>grid.appendChild(el));
+    }
+    function getItems(){
+      return Array.from(grid.querySelectorAll('.proj'));
+    }
+    chips.forEach(chip=>{
+      chip.addEventListener('click', ()=>{
+        chips.forEach(c=>c.classList.remove('active'));
+        chip.classList.add('active');
+        const mode = chip.dataset.sort;
+        let items = getItems();
+        if(mode === 'alpha-asc'){
+          items.sort((a,b)=> a.dataset.title.localeCompare(b.dataset.title));
+        } else if(mode === 'alpha-desc'){
+          items.sort((a,b)=> b.dataset.title.localeCompare(a.dataset.title));
+        } else if(mode === 'default'){
+          items.sort((a,b)=> a.dataset.title.localeCompare(b.dataset.title));
+        }
+        renderOrder(items);
+      });
+    });
+
+    // Shuffle
+    document.getElementById('shuffle').addEventListener('click', ()=>{
+      const items = getItems();
+      for(let i = items.length -1; i>0; i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [items[i], items[j]] = [items[j], items[i]];
+      }
+      chips.forEach(c=>c.classList.remove('active'));
+      document.querySelector('[data-sort="default"]').classList.add('active');
+      renderOrder(items);
+    });
+
+    // Simple drag & drop reorder (works on desktop)
+    let dragSrc = null;
+    function handleDragStart(e){
+      dragSrc = this;
+      this.style.opacity = '0.5';
+      e.dataTransfer.effectAllowed = 'move';
+    }
+    function handleDragEnd(){
+      this.style.opacity = '1';
+      document.querySelectorAll('.proj').forEach(p=>p.classList.remove('over'));
+    }
+    function handleDragOver(e){
+      e.preventDefault();
+      return false;
+    }
+    function handleDrop(e){
+      e.stopPropagation();
+      if(dragSrc !== this){
+        const children = Array.from(grid.children);
+        const srcIndex = children.indexOf(dragSrc);
+        const tgtIndex = children.indexOf(this);
+        if(srcIndex < tgtIndex){
+          grid.insertBefore(dragSrc, this.nextSibling);
+        } else {
+          grid.insertBefore(dragSrc, this);
+        }
+      }
+      return false;
+    }
+    function addDnDHandlers(item){
+      item.addEventListener('dragstart', handleDragStart);
+      item.addEventListener('dragend', handleDragEnd);
+      item.addEventListener('dragover', handleDragOver);
+      item.addEventListener('drop', handleDrop);
+    }
+    document.querySelectorAll('.proj').forEach(addDnDHandlers);
+
+    // Make moving words interactive: pause on hover, allow custom list
+    const wordWrap = document.querySelector('.word-wrap .words');
+    const words = Array.from(wordWrap.querySelectorAll('.word')).map(w=>w.textContent);
+    // Pause animation on hover
+    document.querySelector('.word-wrap').addEventListener('mouseenter', ()=>{ wordWrap.style.animationPlayState='paused'});
+    document.querySelector('.word-wrap').addEventListener('mouseleave', ()=>{ wordWrap.style.animationPlayState='running'});
+
+    // small enhancement: keyboard accessible sorting
+    chips.forEach(c=>c.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') c.click(); }));
+
+  </script>
 </body>
 </html>
+
+
