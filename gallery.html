@@ -5,51 +5,199 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gallery — Samron Miranda</title>
 <meta name="description" content="Gallery and portfolio of Samron Miranda.">
-<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  :root{--bg:#f6fbff;--accent:#0b66ff;--muted:#6b7a90;--card:#fff;--shadow:0 10px 30px rgba(12,33,80,0.08);--rounded:12px}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:linear-gradient(180deg,var(--bg),#eaf4ff 60%);color:#102034;-webkit-font-smoothing:antialiased;padding-bottom:40px}
+  .container{max-width:1100px;margin:0 auto;padding:20px}
+  header.nav-wrap{padding:18px 0}
+  .nav{display:flex;align-items:center;justify-content:space-between}
+  .brand{font-weight:700;color:var(--accent);text-decoration:none}
+  .menu-toggle{display:none}
+  .nav-links{display:flex;gap:14px;list-style:none;padding:0;margin:0}
+  .nav-links a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px}
+  .nav-links a.active{background:rgba(11,102,255,0.06);color:var(--accent)}
+
+  h1{font-size:32px;margin:8px 0}
+  .intro{color:var(--muted)}
+
+  .controls{display:flex;gap:10px;margin:16px 0;align-items:center}
+  .filter{padding:8px 12px;border-radius:999px;background:rgba(11,102,255,0.04);border:1px solid rgba(11,102,255,0.04);cursor:pointer}
+  .filter.active{background:var(--accent);color:white}
+  .view-count{margin-left:auto;color:var(--muted);font-size:13px}
+
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  .thumb{width:100%;height:160px;object-fit:cover;border-radius:10px;display:block;cursor:pointer;transition:transform .25s ease,box-shadow .25s;box-shadow:var(--shadow)}
+  .thumb:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 20px 50px rgba(12,33,80,0.12)}
+
+  /* modal */
+  .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(6,18,40,0.55);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .18s ease}
+  .modal[aria-hidden="false"]{opacity:1;pointer-events:auto}
+  .modal-inner{background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:12px;max-width:1000px;width:100%;box-shadow:0 30px 80px rgba(2,10,30,0.6);position:relative}
+  #modal-img{width:100%;max-height:75vh;object-fit:contain;border-radius:8px}
+  .modal-close{position:absolute;right:8px;top:8px;border:0;background:transparent;font-size:20px;color:var(--muted);cursor:pointer}
+  .modal-nav{position:absolute;left:8px;top:50%;transform:translateY(-50%);display:flex;gap:8px}
+  .nav-btn{background:rgba(255,255,255,0.92);border-radius:8px;padding:6px 8px;border:0;cursor:pointer}
+
+  .caption{margin-top:8px;color:var(--muted);font-size:14px}
+
+  /* slideshow small thumbnail strip */
+  .thumb-strip{display:flex;gap:8px;margin-top:8px;overflow:auto}
+  .thumb-strip img{height:56px;width:80px;object-fit:cover;border-radius:6px;cursor:pointer;opacity:0.7}
+  .thumb-strip img.active{outline:3px solid var(--accent);opacity:1}
+
+  /* responsive */
+  @media (max-width:740px){.thumb{height:120px}.modal-inner{padding:8px}} 
+</style>
 </head>
 <body>
 <header class="nav-wrap">
-<nav class="nav container">
-<a class="brand" href="index.html">Samron Miranda</a>
-<button id="menu-toggle-3" class="menu-toggle">☰</button>
-<ul class="nav-links" id="nav-links-3">
-<li><a href="index.html">Home</a></li>
-<li><a href="about.html">About</a></li>
-<li><a href="gallery.html" class="active">Gallery</a></li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
-</nav>
+  <nav class="nav container">
+    <a class="brand" href="index.html">Samron Miranda</a>
+    <button id="menu-toggle-3" class="menu-toggle" aria-expanded="false" aria-controls="nav-links-3">☰</button>
+    <ul class="nav-links" id="nav-links-3">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
 </header>
 
-
 <main class="container gallery-page">
-<h1>Gallery / Portfolio</h1>
-<p class="intro">A few snapshots of my work, passions and memorable moments.</p>
+  <h1>Gallery / Portfolio</h1>
+  <p class="intro">A few snapshots of my work, passions and memorable moments.</p>
 
+  <div class="controls">
+    <div class="filter active" data-filter="all">All</div>
+    <div class="filter" data-filter="projects">Projects</div>
+    <div class="filter" data-filter="sports">Sports</div>
+    <div class="filter" data-filter="events">Events</div>
+    <div class="view-count" id="view-count">4 items</div>
+  </div>
 
-<div class="gallery-grid">
-<img class="thumb" src="assets/images/photo1.jpg" alt="photo1" data-full="assets/images/photo1_large.jpg">
-<img class="thumb" src="assets/images/photo2.jpg" alt="photo2" data-full="assets/images/photo2_large.jpg">
-<img class="thumb" src="assets/images/photo3.jpg" alt="photo3" data-full="assets/images/photo3_large.jpg">
-<img class="thumb" src="assets/images/photo4.jpg" alt="photo4" data-full="assets/images/photo4_large.jpg">
-</div>
+  <div class="gallery-grid" id="galleryGrid">
+    <img class="thumb" src="assets/images/photo1.jpg" alt="Mini Chat App screenshot" data-full="assets/images/photo1_large.jpg" data-tag="projects" loading="lazy">
+    <img class="thumb" src="assets/images/photo2.jpg" alt="College sports day" data-full="assets/images/photo2_large.jpg" data-tag="sports" loading="lazy">
+    <img class="thumb" src="assets/images/photo3.jpg" alt="Portfolio screenshot" data-full="assets/images/photo3_large.jpg" data-tag="projects" loading="lazy">
+    <img class="thumb" src="assets/images/photo4.jpg" alt="Team photo" data-full="assets/images/photo4_large.jpg" data-tag="events" loading="lazy">
+  </div>
 
+  <!-- Modal -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-inner" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <button id="modal-close" class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-nav">
+        <button id="prev" class="nav-btn" aria-label="Previous">◀</button>
+        <button id="next" class="nav-btn" aria-label="Next">▶</button>
+      </div>
+      <img id="modal-img" src="" alt="expanded view">
+      <div class="caption" id="modal-caption"></div>
+      <div class="thumb-strip" id="thumbStrip" aria-hidden></div>
+    </div>
+  </div>
 
-<!-- Modal for larger images -->
-<div id="modal" class="modal" aria-hidden="true">
-<button id="modal-close" class="modal-close">✕</button>
-<img id="modal-img" src="" alt="expanded">
-</div>
 </main>
 
-
-<footer class="site-footer">
-<div class="container">
-<p>&copy; <span id="year-3"></span> Samron Trevor Miranda</p>
-</div>
+<footer class="site-footer container">
+  <p>&copy; <span id="year-3"></span> Samron Trevor Miranda</p>
 </footer>
 
+<script>
+  document.getElementById('year-3').textContent = new Date().getFullYear();
+  const filters = document.querySelectorAll('.filter');
+  const grid = document.getElementById('galleryGrid');
+  const items = Array.from(grid.querySelectorAll('.thumb'));
+  const viewCount = document.getElementById('view-count');
 
-<script src="assets/js/script.js"></script>
+  function updateCount(){ viewCount.textContent = items.filter(i => !i.hidden).length + ' items'; }
+  updateCount();
+
+  filters.forEach(f=>f.addEventListener('click', ()=>{
+    filters.forEach(x=>x.classList.remove('active'));
+    f.classList.add('active');
+    const tag = f.dataset.filter;
+    items.forEach(it=>{
+      if(tag === 'all' || it.dataset.tag === tag) it.hidden = false; else it.hidden = true;
+    });
+    updateCount();
+  }));
+
+  // Modal logic with keyboard navigation and thumbnail strip
+  const modal = document.getElementById('modal');
+  const modalImg = document.getElementById('modal-img');
+  const caption = document.getElementById('modal-caption');
+  const thumbStrip = document.getElementById('thumbStrip');
+  let currentIndex = 0;
+  const visibleItems = ()=>Array.from(items).filter(i=>!i.hidden);
+
+  function openAt(index){
+    const visible = visibleItems();
+    if(visible.length === 0) return;
+    currentIndex = index % visible.length;
+    const target = visible[currentIndex];
+    modalImg.src = target.dataset.full || target.src;
+    modalImg.alt = target.alt || '';
+    caption.textContent = target.alt || '';
+    modal.setAttribute('aria-hidden','false');
+    buildThumbStrip();
+    highlightThumb(currentIndex);
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
+
+  items.forEach((it, idx)=>{
+    it.addEventListener('click', ()=>{
+      const visible = visibleItems();
+      const index = visible.indexOf(it);
+      openAt(index);
+    });
+  });
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('next').addEventListener('click', ()=>{ openAt((currentIndex+1) % visibleItems().length); });
+  document.getElementById('prev').addEventListener('click', ()=>{ openAt((currentIndex-1+visibleItems().length) % visibleItems().length); });
+
+  // keyboard
+  window.addEventListener('keydown', (e)=>{
+    if(modal.getAttribute('aria-hidden') === 'false'){
+      if(e.key === 'Escape') closeModal();
+      if(e.key === 'ArrowRight') document.getElementById('next').click();
+      if(e.key === 'ArrowLeft') document.getElementById('prev').click();
+    }
+  });
+
+  // build thumbnail strip and click handling
+  function buildThumbStrip(){
+    thumbStrip.innerHTML = '';
+    const visible = visibleItems();
+    visible.forEach((v, i)=>{
+      const t = document.createElement('img');
+      t.src = v.src; t.alt = v.alt; t.dataset.index = i; if(i === currentIndex) t.classList.add('active');
+      t.addEventListener('click', ()=>{ openAt(i); });
+      thumbStrip.appendChild(t);
+    });
+  }
+
+  function highlightThumb(i){
+    const thumbs = Array.from(thumbStrip.children);
+    thumbs.forEach(t=>t.classList.remove('active'));
+    if(thumbs[i]) thumbs[i].classList.add('active');
+  }
+
+  // simple touch support: swipe left/right inside modal image
+  let startX = 0;
+  modalImg.addEventListener('touchstart', e=> startX = e.changedTouches[0].clientX);
+  modalImg.addEventListener('touchend', e=>{
+    const dx = e.changedTouches[0].clientX - startX;
+    if(Math.abs(dx) > 40){ if(dx < 0) document.getElementById('next').click(); else document.getElementById('prev').click(); }
+  });
+
+  // accessibility: close modal when clicking backdrop
+  modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+
+</script>
 </body>
 </html>
+
