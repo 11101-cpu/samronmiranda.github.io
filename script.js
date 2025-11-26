@@ -1,5 +1,4 @@
 /* Modern Pitch-Deck Style Unified JS (navigation, modals, animations, forms) */
-/* Modern Pitch-Deck Style Unified JS (navigation, modals, animations, forms) */
 
 // ---------- YEAR AUTO-UPDATE ----------
 ['year','year-2','year-3','year-4'].forEach(id => {
@@ -30,7 +29,7 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   if(a.getAttribute('href') === path) a.classList.add('active');
 });
 
-// ---------- GALLERY MODAL (w/ keyboard + swipe) ----------
+// ---------- GALLERY MODAL ----------
 const thumbs = document.querySelectorAll('.thumb');
 const modal = document.getElementById('modal');
 const modalImg = document.getElementById('modal-img');
@@ -58,14 +57,7 @@ thumbs.forEach((t, i) => t.addEventListener('click', () => openModal(i)));
 if(modalClose) modalClose.addEventListener('click', closeModal);
 if(modal) modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
 
-// keyboard navigation
-window.addEventListener('keydown', e => {
-  if(modal.getAttribute('aria-hidden') === 'false'){
-    if(e.key === 'Escape') closeModal();
-  }
-});
-
-// ---------- CONTACT FORM (CLIENT-SIDE ONLY) ----------
+// ---------- CONTACT FORM ----------
 const form = document.getElementById('contact-form');
 if(form){
   form.addEventListener('submit', e => {
@@ -97,7 +89,7 @@ if(form){
   });
 }
 
-// ---------- MOVING WORDS (Pause on hover) ----------
+// ---------- MOVING WORDS ----------
 const rotators = document.querySelectorAll('.word-wrap .words');
 rotators.forEach(r => {
   r.parentElement.addEventListener('mouseenter', () => r.style.animationPlayState = 'paused');
