@@ -6,53 +6,101 @@
 <title>About — Samron Miranda</title>
 <meta name="description" content="About Samron Trevor Miranda — background, interests, goals, achievements.">
 <style>
+  /* ------------------------
+     THEME VARIABLES
+     ------------------------ */
   :root{
-    /* default theme (light) */
-    --bg:#f6fbff; --accent:#0b66ff; --muted:#6b7a90; --card:#fff; --glass: rgba(255,255,255,0.7);
-    --shadow: 0 10px 30px rgba(12,33,80,0.08); --rounded:14px; --text:#102034;
-    --fill-gradient: linear-gradient(90deg,var(--accent),#5fb0ff);
-  }
-  /* neon theme variables (applied when body.neon present) */
-  body.neon{
-    --bg: #0b0711; --accent: #8b5cf6; --muted: #bdb6d9; --card: rgba(0,0,0,0.45);
-    --glass: rgba(255,255,255,0.03); --shadow: 0 10px 40px rgba(139,92,246,0.12); --text: #e6e0ff;
-    --fill-gradient: linear-gradient(90deg,#ff5cf6,#8b5cf6);
+    /* default (white/blue) theme variables */
+    --bg-default: #f6fbff;
+    --card-default: #ffffff;
+    --accent-default: #0b66ff;
+    --accent-2-default: #5fb0ff;
+    --muted-default: #6b7a90;
+    --glass-default: rgba(255,255,255,0.7);
+    --shadow-default: 0 10px 30px rgba(12,33,80,0.08);
+
+    /* neon green theme variables (active by default) */
+    --bg-neon: linear-gradient(180deg, #0aff80 6%, #0af07a 55%); /* bright neon gradient */
+    --card-neon: rgba(0,0,0,0.06);
+    --accent-neon: #00ff7f; /* neon green accent */
+    --accent-2-neon: #1bff9a;
+    --muted-neon: rgba(0,0,0,0.65);
+    --glass-neon: rgba(255,255,255,0.06);
+    --shadow-neon: 0 10px 30px rgba(0,0,0,0.12);
+
+    /* chosen -- these are the currently active variables (switched by body class) */
+    --bg: var(--bg-neon);
+    --card: var(--card-neon);
+    --accent: var(--accent-neon);
+    --accent-2: var(--accent-2-neon);
+    --muted: var(--muted-neon);
+    --glass: var(--glass-neon);
+    --shadow: var(--shadow-neon);
+
+    --rounded:14px;
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   }
 
+  /* If .default-theme is on body, use original white/blue values */
+  body.default-theme{
+    --bg: linear-gradient(180deg,var(--bg-default),#eaf4ff 60%);
+    --card: var(--card-default);
+    --accent: var(--accent-default);
+    --accent-2: var(--accent-2-default);
+    --muted: var(--muted-default);
+    --glass: var(--glass-default);
+    --shadow: var(--shadow-default);
+  }
+
+  /* ------------------------
+     BASE LAYOUT
+     ------------------------ */
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
     margin:0;
-    background:linear-gradient(180deg,var(--bg),#eaf4ff 60%);
-    color:var(--text);
+    background:var(--bg);
+    color:#102034;
     -webkit-font-smoothing:antialiased;
     padding-bottom:40px;
-    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    transition: background .35s ease, color .35s ease;
+    transition: background 400ms ease, color 300ms ease;
   }
 
   .container{max-width:1100px;margin:0 auto;padding:0 20px}
   header.nav-wrap{padding:18px 0}
   .nav{display:flex;align-items:center;justify-content:space-between}
   .brand{font-weight:700;color:var(--accent);text-decoration:none}
-  .menu-toggle{display:none;background:transparent;border:0;font-size:20px;color:var(--muted)}
+  .menu-toggle{display:none;background:transparent;border:0;font-size:20px}
+  .nav-actions{display:flex;gap:10px;align-items:center}
+  .theme-btn{
+    background:transparent;border:1px solid rgba(255,255,255,0.12);
+    padding:8px 12px;border-radius:10px;font-weight:700;
+    cursor:pointer;color:var(--muted);
+    backdrop-filter: blur(4px);
+  }
+  .theme-btn.small{font-size:13px;padding:6px 10px}
+
   .nav-links{display:flex;gap:14px;list-style:none;padding:0;margin:0}
   .nav-links a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px}
   .nav-links a.active{background:var(--glass);color:var(--accent)}
-  .controls{display:flex;gap:10px;align-items:center}
 
   main.about-page{padding:26px 0}
   h1{font-size:32px;margin:8px 0}
-
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:18px}
-  .bio,.goals{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);backdrop-filter: blur(6px)}
+  .bio,.goals{
+    background:var(--card);
+    padding:18px;border-radius:12px;
+    box-shadow:var(--shadow);
+    transition: background 300ms ease, box-shadow 300ms ease;
+    color:var(--muted);
+  }
   .bio p{margin:8px 0;color:var(--muted)}
   .goals h3{margin-top:0}
   .goals ul{margin:8px 0 12px 18px;color:var(--muted)}
 
   /* moving words small banner */
-  .hero-mini{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;background:linear-gradient(90deg,rgba(11,102,255,0.06),rgba(11,102,255,0.02));margin-bottom:14px}
-  body.neon .hero-mini{background: linear-gradient(90deg, rgba(139,92,246,0.08), rgba(139,92,246,0.03));}
+  .hero-mini{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;
+    background:linear-gradient(90deg, rgba(0,0,0,0.04), rgba(0,0,0,0.02));margin-bottom:14px}
   .word-rotator{overflow:hidden;height:22px;position:relative}
   .word-rotator .words{position:absolute;left:0;top:0;animation:rotateWords 9s linear infinite}
   .word{display:block;height:22px;padding:0 6px;font-weight:700;color:var(--accent)}
@@ -61,15 +109,13 @@
   /* skills */
   .skills{display:flex;flex-direction:column;gap:12px}
   .skill{display:flex;flex-direction:column;gap:6px}
-  .skill .bar{height:12px;background:rgba(11,102,255,0.08);border-radius:999px;overflow:hidden}
-  body.neon .skill .bar{background: rgba(139,92,246,0.12);}
-  .skill .fill{height:100%;width:0;transition:width 1.2s ease; background:var(--fill-gradient)}
+  .skill .bar{height:12px;background:rgba(0,0,0,0.06);border-radius:999px;overflow:hidden}
+  .skill .fill{height:100%;width:0;transition:width 1.2s ease; background:linear-gradient(90deg,var(--accent),var(--accent-2))}
   .skill-label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
 
   /* stat counters */
   .stats{display:flex;gap:12px;margin-top:12px}
   .stat{flex:1;background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:10px;box-shadow:var(--shadow);text-align:center}
-  body.neon .stat{background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.35));}
   .stat .num{font-size:20px;font-weight:800;color:var(--accent)}
   .stat .label{color:var(--muted);font-size:13px}
 
@@ -82,85 +128,115 @@
     .menu-toggle{display:block}
   }
 
-  /* small floating shape */
-  .bg-shape{position:fixed;right:-80px;top:12%;width:360px;height:360px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#5fb0ff);opacity:0.05;filter:blur(36px);pointer-events:none}
-  body.neon .bg-shape{opacity:0.12; filter: blur(46px);}
+  /* small floating shape (subtle) */
+  .bg-shape{
+    position:fixed;right:-80px;top:12%;width:360px;height:360px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));opacity:0.06;filter:blur(36px);pointer-events:none;
+    transition: opacity 400ms ease;
+  }
 
-  /* neon glow touches */
-  body.neon .brand, body.neon .nav-links a.active { text-shadow: 0 6px 18px rgba(139,92,246,0.3); }
-  body.neon .fill { box-shadow: 0 6px 18px rgba(139,92,246,0.12); }
+  /* ------------------------
+     THEME-TOGGLE VISUALS (Button accent changes with theme)
+     ------------------------ */
+  .theme-btn.theme-default{
+    color:var(--accent);
+    background:linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
+    border:1px solid rgba(11,102,255,0.12);
+  }
+  .theme-btn.theme-neon{
+    color:#002b11;
+    background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.06);
+  }
 
-  /* toggle button */
-  .theme-toggle{border:0;background:transparent;padding:8px 12px;border-radius:10px;cursor:pointer;color:var(--muted);font-weight:700}
-  .theme-toggle.active{background:var(--glass);color:var(--accent);box-shadow:var(--shadow)}
-
-  /* Loading overlay */
-  .loading-overlay{
+  /* ------------------------
+     LOADING OVERLAY (game-like)
+     ------------------------ */
+  .loader-overlay{
     position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-    background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.9));
-    z-index:9999;flex-direction:column;gap:18px;
+    background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.55));
+    z-index:9999;backdrop-filter: blur(4px);flex-direction:column;gap:18px;
+    color:white;transition:opacity 300ms ease, visibility 300ms;
   }
-  body.neon .loading-overlay{background: linear-gradient(180deg, rgba(3,1,6,0.95), rgba(3,1,6,0.98));}
-  .loader-shell{width:420px;max-width:90%;padding:18px;border-radius:12px;background:var(--card);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;align-items:center}
-  .loader-title{font-weight:800;color:var(--accent)}
-  .loader-bar{width:100%;height:12px;background:rgba(0,0,0,0.06);border-radius:999px;overflow:hidden}
-  .loader-fill{height:100%;width:0;background:var(--fill-gradient);transition:width .25s linear}
-  .loader-percent{font-size:14px;color:var(--muted)}
-
-  /* modal (info prompt) */
-  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;z-index:9998;padding:16px}
-  body.neon .modal-backdrop{background: rgba(0,0,0,0.55);}
-  .modal{width:720px;max-width:100%;background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);overflow:auto;max-height:88vh}
-  .modal h2{margin:0 0 12px}
-  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
-  .form-row input, .form-row textarea, .form-row select{
-    padding:10px;border-radius:8px;border:1px solid rgba(16,32,52,0.06);font-size:14px;background:transparent;color:var(--text)
+  .loader-hidden{opacity:0;visibility:hidden;pointer-events:none}
+  .loader-card{
+    width:360px;max-width:92%;padding:18px;border-radius:14px;background:rgba(0,0,0,0.36);
+    text-align:center;box-shadow:0 18px 40px rgba(0,0,0,0.6);
   }
-  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
-  .btn{padding:8px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
-  .btn-primary{background:var(--accent);color:white}
-  .btn-ghost{background:transparent;border:1px solid var(--glass);color:var(--muted)}
+  .loader-logo{
+    width:86px;height:86px;border-radius:20px;display:inline-flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:26px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#021018;box-shadow:0 8px 30px rgba(0,0,0,0.5);animation:pulse 1.1s ease-in-out infinite;
+  }
+  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
 
-  /* small helper for glow text in neon */
-  .glow{color:var(--accent);font-weight:800}
+  .loader-title{margin-top:10px;font-weight:800}
+  .loader-sub{font-size:13px;opacity:0.85;margin-bottom:12px}
+
+  .progress{
+    height:10px;background:rgba(255,255,255,0.12);border-radius:999px;overflow:hidden;margin:8px 0;
+  }
+  .progress .bar{
+    height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    transition:width 200ms linear;
+  }
+
+  .loader-hud{display:flex;justify-content:space-between;font-size:12px;opacity:0.85;margin-top:6px}
+  .loader-tip{font-size:12px;color:rgba(255,255,255,0.9);margin-top:6px;}
+
+  /* small text link for skipping (visible on desktop) */
+  .loader-skip{margin-top:10px;font-size:13px;opacity:0.9;color:rgba(255,255,255,0.95);cursor:pointer;text-decoration:underline}
+
+  /* reduced motion respect */
+  @media (prefers-reduced-motion: reduce){
+    .word-rotator .words{animation:none}
+    .loader-logo{animation:none}
+  }
 </style>
 </head>
 <body>
-  <div class="bg-shape" aria-hidden></div>
-
-  <!-- Loading overlay (visible on first load) -->
-  <div id="loading-overlay" class="loading-overlay" role="status" aria-live="polite" aria-label="Loading">
-    <div class="loader-shell" role="presentation">
-      <div class="loader-title">Loading Samron Miranda — Preparing the page</div>
-      <div class="loader-bar" aria-hidden>
-        <div id="loader-fill" class="loader-fill" style="width:0%"></div>
-      </div>
-      <div class="loader-percent" id="loader-percent">0%</div>
-      <div style="font-size:12px;color:var(--muted)">Tip: you can customize your profile after loading.</div>
+  <!-- Loading overlay (game-like) -->
+  <div id="loader" class="loader-overlay" role="status" aria-live="polite">
+    <div class="loader-card" aria-hidden="false">
+      <div class="loader-logo" aria-hidden="true">SM</div>
+      <div class="loader-title">Entering — Samron Miranda</div>
+      <div class="loader-sub">Loading profile modules...</div>
+      <div class="progress" aria-hidden="true"><div id="loader-bar" class="bar"></div></div>
+      <div class="loader-hud"><span id="loader-percent">0%</span><span id="loader-stage">Initializing</span></div>
+      <div class="loader-tip">Tip: Hover the rotating words to pause them.</div>
+      <div id="loader-skip" class="loader-skip" tabindex="0">Skip animation</div>
     </div>
   </div>
 
+  <div class="bg-shape" aria-hidden></div>
+
   <header class="nav-wrap">
-    <nav class="nav container" aria-label="Main navigation">
+    <nav class="nav container">
       <a class="brand" href="index.html">Samron Miranda</a>
-      <div class="controls">
+
+      <div class="nav-actions">
+        <!-- Theme toggle button -->
+        <button id="theme-toggle" class="theme-btn theme-neon small" aria-pressed="false" title="Switch theme">
+          Switch to white/blue
+        </button>
+
+        <!-- Mobile menu toggle -->
         <button id="menu-toggle-2" class="menu-toggle" aria-expanded="false" aria-controls="nav-links-2">☰</button>
-        <ul class="nav-links" id="nav-links-2">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html" class="active">About</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <button id="theme-toggle" class="theme-toggle" title="Toggle neon theme">Neon</button>
       </div>
+
+      <ul class="nav-links" id="nav-links-2">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
     </nav>
   </header>
 
-  <main class="container about-page" id="main-content" aria-hidden>
+  <main class="container about-page" id="main-content" aria-hidden="true">
     <h1>About Me</h1>
 
-    <div class="hero-mini" id="hero-mini">
+    <div class="hero-mini">
       <div style="font-weight:700;color:var(--muted);font-size:13px">I’m currently:</div>
       <div class="word-rotator" aria-hidden>
         <div class="words">
@@ -174,56 +250,56 @@
     </div>
 
     <div class="about-grid">
-      <div class="bio" id="bio-card">
-        <p><strong>Name:</strong> <span id="info-name">Samron Trevor Miranda</span></p>
-        <p><strong>Email:</strong> <a id="info-email" href="mailto:samronmiranda@gmail.com">samronmiranda@gmail.com</a></p>
-        <p><strong>Age:</strong> <span id="info-age">18</span></p>
-        <p><strong>Course / Department:</strong> <span id="info-course">Computer Engineering</span></p>
-        <p><strong>College:</strong> <span id="info-college">Father Conceicao Rodrigues College of Engineering</span></p>
-        <p><strong>Hobbies:</strong> <span id="info-hobbies">Novice coding, sports, reading history and classical literature.</span></p>
+      <div class="bio">
+        <p><strong>Name:</strong> Samron Trevor Miranda</p>
+        <p><strong>Email:</strong> <a href="mailto:samronmiranda@gmail.com">samronmiranda@gmail.com</a></p>
+        <p><strong>Age:</strong> 18</p>
+        <p><strong>Course / Department:</strong> Computer Engineering</p>
+        <p><strong>College:</strong> Father Conceicao Rodrigues College of Engineering</p>
+        <p><strong>Hobbies:</strong> Novice coding, sports, reading history and classical literature.</p>
 
         <div class="stats" aria-hidden>
           <div class="stat">
-            <div class="num" data-target="6" id="stat-projects">0</div>
+            <div class="num" data-target="6">0</div>
             <div class="label">Projects</div>
           </div>
           <div class="stat">
-            <div class="num" data-target="12" id="stat-events">0</div>
+            <div class="num" data-target="12">0</div>
             <div class="label">Events / Matches</div>
           </div>
           <div class="stat">
-            <div class="num" data-target="1" id="stat-clubs">0</div>
+            <div class="num" data-target="1">0</div>
             <div class="label">Clubs Joined</div>
           </div>
         </div>
       </div>
 
-      <div class="goals" id="goals-card">
+      <div class="goals">
         <h3>Goals & Achievements</h3>
-        <ul id="info-goals">
+        <ul>
           <li>Learning full-stack development.</li>
           <li>Participated in inter-college sports events.</li>
           <li>Member of college coding club (placeholder).</li>
         </ul>
+
         <h3>Personal Statement</h3>
-        <p id="info-statement">I love exploring how technology and history shape societies. I’m building skills to create practical solutions and enjoy collaborating on projects that combine creativity and engineering.</p>
+        <p>I love exploring how technology and history shape societies. I’m building skills to create practical solutions and enjoy collaborating on projects that combine creativity and engineering.</p>
 
         <h3 style="margin-top:12px">Skills</h3>
         <div class="skills" id="skills">
           <div class="skill">
-            <div class="skill-label"><span>HTML & CSS</span><span class="skill-percent">75%</span></div>
-            <div class="bar"><div class="fill" data-fill="75%" style="width:0%"></div></div>
+            <div class="skill-label"><span>HTML & CSS</span><span>75%</span></div>
+            <div class="bar"><div class="fill" data-fill="75%"></div></div>
           </div>
           <div class="skill">
-            <div class="skill-label"><span>JavaScript</span><span class="skill-percent">60%</span></div>
-            <div class="bar"><div class="fill" data-fill="60%" style="width:0%"></div></div>
+            <div class="skill-label"><span>JavaScript</span><span>60%</span></div>
+            <div class="bar"><div class="fill" data-fill="60%"></div></div>
           </div>
           <div class="skill">
-            <div class="skill-label"><span>Problem Solving</span><span class="skill-percent">80%</span></div>
-            <div class="bar"><div class="fill" data-fill="80%" style="width:0%"></div></div>
+            <div class="skill-label"><span>Problem Solving</span><span>80%</span></div>
+            <div class="bar"><div class="fill" data-fill="80%"></div></div>
           </div>
         </div>
-
       </div>
     </div>
   </main>
@@ -232,380 +308,175 @@
     <p>&copy; <span id="year-2"></span> Samron Trevor Miranda</p>
   </footer>
 
-  <!-- Modal to collect/display information -->
-  <div id="modal-backdrop" class="modal-backdrop" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal" role="document">
-      <h2 id="modal-title">Tell me about yourself</h2>
-      <p style="margin-top:0;color:var(--muted)">Fill this quick form so I can populate the page with your information. You can skip any field or come back later.</p>
-
-      <div class="form-grid">
-        <div>
-          <div class="form-row">
-            <label for="f-name">Name</label>
-            <input id="f-name" placeholder="Your name" />
-          </div>
-          <div class="form-row">
-            <label for="f-email">Email</label>
-            <input id="f-email" placeholder="you@example.com" type="email" />
-          </div>
-          <div class="form-row">
-            <label for="f-age">Age</label>
-            <input id="f-age" type="number" min="0" placeholder="18" />
-          </div>
-          <div class="form-row">
-            <label for="f-course">Course / Department</label>
-            <input id="f-course" placeholder="Computer Engineering" />
-          </div>
-          <div class="form-row">
-            <label for="f-college">College</label>
-            <input id="f-college" placeholder="College name" />
-          </div>
-        </div>
-
-        <div>
-          <div class="form-row">
-            <label for="f-hobbies">Hobbies (comma separated)</label>
-            <input id="f-hobbies" placeholder="coding, sports, reading" />
-          </div>
-          <div class="form-row">
-            <label for="f-goals">Top goals (one per line)</label>
-            <textarea id="f-goals" rows="4" placeholder="Become a full-stack developer&#10;Win inter-college hackathon"></textarea>
-          </div>
-          <div class="form-row">
-            <label for="f-statement">Personal statement</label>
-            <textarea id="f-statement" rows="3" placeholder="A short personal statement..."></textarea>
-          </div>
-          <div class="form-row">
-            <label for="f-projects">Projects (count)</label>
-            <input id="f-projects" type="number" min="0" placeholder="6" />
-          </div>
-          <div class="form-row">
-            <label for="f-events">Events / Matches (count)</label>
-            <input id="f-events" type="number" min="0" placeholder="12" />
-          </div>
-          <div class="form-row">
-            <label for="f-clubs">Clubs Joined (count)</label>
-            <input id="f-clubs" type="number" min="0" placeholder="1" />
-          </div>
-        </div>
-      </div>
-
-      <h3 style="margin-top:12px">Skills (name:percent)</h3>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <input id="skill-1" placeholder="HTML & CSS:75" style="flex:1;min-width:180px" />
-        <input id="skill-2" placeholder="JavaScript:60" style="flex:1;min-width:180px" />
-        <input id="skill-3" placeholder="Problem Solving:80" style="flex:1;min-width:180px" />
-      </div>
-
-      <div class="modal-actions">
-        <button id="modal-skip" class="btn btn-ghost">Skip</button>
-        <button id="modal-submit" class="btn btn-primary">Save & Apply</button>
-      </div>
-    </div>
-  </div>
-
 <script>
-  // Set year
+  // ---------- YEAR AUTO-UPDATE ----------
   document.getElementById('year-2').textContent = new Date().getFullYear();
 
-  // mobile menu toggle
+  // ---------- MOBILE NAV TOGGLES ----------
   const btn = document.getElementById('menu-toggle-2');
   const links = document.getElementById('nav-links-2');
   btn.addEventListener('click', ()=>{
     const expanded = btn.getAttribute('aria-expanded') === 'true';
     btn.setAttribute('aria-expanded', String(!expanded));
-    if(links.style.display === 'flex') links.style.display = 'none'; else links.style.display = 'flex';
-    links.style.flexDirection = 'column';
-    links.style.gap = '10px';
-    links.style.background = 'white';
-    links.style.padding = '10px';
-    links.style.borderRadius = '10px';
-    links.style.boxShadow = 'var(--shadow)';
-  });
-
-  // Theme toggle logic (neon)
-  const themeBtn = document.getElementById('theme-toggle');
-  const body = document.body;
-  function applyTheme(neon){
-    if(neon){
-      body.classList.add('neon');
-      themeBtn.classList.add('active');
-      themeBtn.textContent = 'Default';
-      themeBtn.title = 'Switch to default theme';
-    } else {
-      body.classList.remove('neon');
-      themeBtn.classList.remove('active');
-      themeBtn.textContent = 'Neon';
-      themeBtn.title = 'Switch to neon theme';
+    if(links.style.display === 'flex') links.style.display = 'none';
+    else {
+      links.style.display = 'flex';
+      links.style.flexDirection = 'column';
+      links.style.gap = '10px';
+      links.style.background = 'rgba(255,255,255,0.92)';
+      links.style.padding = '10px';
+      links.style.borderRadius = '10px';
+      links.style.boxShadow = 'var(--shadow)';
     }
-    localStorage.setItem('prefNeon', neon ? '1' : '0');
-  }
-  // initialize theme from localStorage
-  const savedNeon = localStorage.getItem('prefNeon');
-  applyTheme(savedNeon === '1');
-
-  themeBtn.addEventListener('click', ()=> {
-    applyTheme(!body.classList.contains('neon'));
   });
 
-  // Loading overlay animation (game-like progress). When done, show modal to collect info.
-  const overlay = document.getElementById('loading-overlay');
-  const loaderFill = document.getElementById('loader-fill');
-  const loaderPercent = document.getElementById('loader-percent');
-  const mainContent = document.getElementById('main-content');
-  function fakeLoadSequence(){
-    let p = 0;
-    // increment with small random steps to feel organic
-    const id = setInterval(()=>{
-      p += Math.random() * 6 + 4; // 4-10
-      if(p >= 100) p = 100;
-      loaderFill.style.width = p + '%';
-      loaderPercent.textContent = Math.round(p) + '%';
-      if(p >= 100){
-        clearInterval(id);
-        // brief fade out
-        overlay.style.transition = 'opacity .45s ease';
-        overlay.style.opacity = '0';
-        setTimeout(()=> {
-          overlay.style.display = 'none';
-          // reveal main content and then open modal
-          mainContent.removeAttribute('aria-hidden');
-          // small delay then show modal
-          setTimeout(()=> showInfoModalIfNeeded(), 350);
-        }, 450);
+  // ---------- THEME TOGGLE ----------
+  const themeBtn = document.getElementById('theme-toggle');
+  // starting theme is neon (no class). When toggled we add/remove 'default-theme' on <body>
+  function applyThemeButton() {
+    const isDefault = document.body.classList.contains('default-theme');
+    themeBtn.setAttribute('aria-pressed', String(isDefault));
+    themeBtn.classList.toggle('theme-default', isDefault);
+    themeBtn.classList.toggle('theme-neon', !isDefault);
+    themeBtn.textContent = isDefault ? 'Switch to neon green' : 'Switch to white/blue';
+  }
+  themeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('default-theme');
+    applyThemeButton();
+  });
+  // init button visuals
+  applyThemeButton();
+
+  // ---------- animate stat counters when visible ----------
+  const nums = document.querySelectorAll('.num');
+  const obs = new IntersectionObserver((entries, observer)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const el = entry.target;
+        const target = +el.dataset.target;
+        let start = 0;
+        const step = Math.max(1, Math.ceil(target / 60));
+        const timer = setInterval(()=>{
+          start += step;
+          if(start >= target){
+            el.textContent = String(target);
+            clearInterval(timer);
+          } else el.textContent = String(start);
+        }, 16);
+        observer.unobserve(el);
       }
-    }, 90);
+    });
+  }, {threshold:0.6});
+  nums.forEach(n=>obs.observe(n));
+
+  // ---------- animate skill bars when scrolled into view ----------
+  const fills = document.querySelectorAll('.fill');
+  const skillsObs = new IntersectionObserver((entries, observer)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const f = entry.target;
+        f.style.width = f.dataset.fill;
+        observer.unobserve(f);
+      }
+    });
+  }, {threshold:0.25});
+  fills.forEach(f=>skillsObs.observe(f));
+
+  // ---------- pause rotating words on hover ----------
+  const rotator = document.querySelector('.word-rotator .words');
+  const rotWrap = document.querySelector('.word-rotator');
+  if(rotWrap){
+    rotWrap.addEventListener('mouseenter', ()=> rotator.style.animationPlayState='paused');
+    rotWrap.addEventListener('mouseleave', ()=> rotator.style.animationPlayState='running');
   }
 
-  // modal handling
-  const modalBackdrop = document.getElementById('modal-backdrop');
-  const modalSubmit = document.getElementById('modal-submit');
-  const modalSkip = document.getElementById('modal-skip');
+  // ---------- LOADER SIMULATION (game-like) ----------
+  const loader = document.getElementById('loader');
+  const loaderBar = document.getElementById('loader-bar');
+  const loaderPercent = document.getElementById('loader-percent');
+  const loaderStage = document.getElementById('loader-stage');
+  const loaderSkip = document.getElementById('loader-skip');
+  const mainContent = document.getElementById('main-content');
 
-  function showInfoModalIfNeeded(){
-    // If user has previously saved info, populate silently; otherwise show modal.
-    const stored = localStorage.getItem('aboutInfo_v1');
-    if(stored){
-      populateFromStorage();
-      // still let user open modal later by clicking name (we'll add an edit trigger)
+  // a small sequence of stages to feel game-like
+  const stages = [
+    {label: 'Initializing', pct: 8, delay: 220},
+    {label: 'Loading assets', pct: 38, delay: 320},
+    {label: 'Booting UI', pct: 62, delay: 260},
+    {label: 'Applying preferences', pct: 84, delay: 240},
+    {label: 'Finalizing', pct: 100, delay: 220}
+  ];
+
+  // function to run loader sequence, then hide overlay
+  function runLoaderSequence(skipImmediately=false){
+    let i = 0;
+    mainContent.setAttribute('aria-hidden','true');
+    if(skipImmediately){
+      // skip straight to hiding
+      loaderBar.style.width = '100%';
+      loaderPercent.textContent = '100%';
+      hideLoader();
       return;
     }
-    openModal();
-  }
-
-  function openModal(){
-    modalBackdrop.style.display = 'flex';
-    // focus first input
-    setTimeout(()=> document.getElementById('f-name').focus(), 120);
-  }
-  function closeModal(){ modalBackdrop.style.display = 'none'; }
-
-  modalSkip.addEventListener('click', ()=> {
-    closeModal();
-  });
-
-  function readFormData(){
-    const name = document.getElementById('f-name').value.trim();
-    const email = document.getElementById('f-email').value.trim();
-    const age = document.getElementById('f-age').value.trim();
-    const course = document.getElementById('f-course').value.trim();
-    const college = document.getElementById('f-college').value.trim();
-    const hobbies = document.getElementById('f-hobbies').value.trim();
-    const goalsRaw = document.getElementById('f-goals').value.trim();
-    const statement = document.getElementById('f-statement').value.trim();
-    const projects = document.getElementById('f-projects').value.trim();
-    const events = document.getElementById('f-events').value.trim();
-    const clubs = document.getElementById('f-clubs').value.trim();
-    const skill1 = document.getElementById('skill-1').value.trim();
-    const skill2 = document.getElementById('skill-2').value.trim();
-    const skill3 = document.getElementById('skill-3').value.trim();
-
-    const goals = goalsRaw ? goalsRaw.split(/\r?\n/).map(s=>s.trim()).filter(Boolean) : [];
-    const skills = [skill1, skill2, skill3].map(s => {
-      if(!s) return null;
-      const parts = s.split(':').map(x=>x.trim());
-      const name = parts[0] || '';
-      let pct = parseInt(parts[1] || '0', 10);
-      if(isNaN(pct)) pct = 0;
-      pct = Math.max(0, Math.min(100, pct));
-      return {name, pct};
-    }).filter(Boolean);
-    return {name,email,age,course,college,hobbies,goals,statement,projects,events,clubs,skills};
-  }
-
-  modalSubmit.addEventListener('click', ()=>{
-    const data = readFormData();
-    // Save to localStorage
-    localStorage.setItem('aboutInfo_v1', JSON.stringify(data));
-    populateFromData(data);
-    closeModal();
-  });
-
-  function populateFromData(data){
-    if(!data) return;
-    if(data.name) document.getElementById('info-name').textContent = data.name;
-    if(data.email) {
-      const el = document.getElementById('info-email');
-      el.textContent = data.email;
-      el.href = 'mailto:' + data.email;
-    }
-    if(data.age) document.getElementById('info-age').textContent = data.age;
-    if(data.course) document.getElementById('info-course').textContent = data.course;
-    if(data.college) document.getElementById('info-college').textContent = data.college;
-    if(data.hobbies) document.getElementById('info-hobbies').textContent = data.hobbies;
-    if(Array.isArray(data.goals) && data.goals.length){
-      const ul = document.getElementById('info-goals');
-      ul.innerHTML = '';
-      data.goals.forEach(g=>{
-        const li = document.createElement('li'); li.textContent = g; ul.appendChild(li);
-      })
-    }
-    if(data.statement) document.getElementById('info-statement').textContent = data.statement;
-
-    // stats
-    if(data.projects) {
-      const pEl = document.getElementById('stat-projects');
-      pEl.dataset.target = String(Math.max(0, parseInt(data.projects,10)||0));
-      pEl.textContent = '0';
-    }
-    if(data.events) {
-      const eEl = document.getElementById('stat-events');
-      eEl.dataset.target = String(Math.max(0, parseInt(data.events,10)||0));
-      eEl.textContent = '0';
-    }
-    if(data.clubs) {
-      const cEl = document.getElementById('stat-clubs');
-      cEl.dataset-target = String(Math.max(0, parseInt(data.clubs,10)||0));
-      cEl.dataset.target = String(Math.max(0, parseInt(data.clubs,10)||0));
-      cEl.textContent = '0';
-    }
-
-    // skills
-    const fillEls = document.querySelectorAll('.fill');
-    // Default to existing skills if none provided
-    if(Array.isArray(data.skills) && data.skills.length){
-      // map top 3 skills into fills
-      for(let i=0;i<3;i++){
-        const s = data.skills[i];
-        if(!s) continue;
-        const parent = fillEls[i];
-        parent.dataset.fill = s.pct + '%';
-        // update label texts (two spans: .skill-label > span:first and span:last)
-        const label = parent.closest('.skill').querySelector('.skill-label');
-        if(label){
-          label.children[0].textContent = s.name || label.children[0].textContent;
-          label.children[1].textContent = s.pct + '%';
-        }
+    function nextStage(){
+      if(i >= stages.length){
+        hideLoader();
+        return;
       }
-    }
-
-    // trigger animations: stat counters and skill fills
-    startStatCounters();
-    animateSkillBars();
-  }
-
-  function populateFromStorage(){
-    const stored = localStorage.getItem('aboutInfo_v1');
-    if(!stored) return;
-    try{
-      const data = JSON.parse(stored);
-      populateFromData(data);
-    }catch(e){
-      console.warn('Failed to parse stored about info', e);
-    }
-  }
-
-  // animate stat counters when visible (IntersectionObserver)
-  let statObserver;
-  function startStatCounters(){
-    const nums = document.querySelectorAll('.num');
-    if(statObserver) { /* already created? disconnect to reset */ statObserver.disconnect(); }
-    statObserver = new IntersectionObserver((entries, observer)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          const el = entry.target;
-          const target = +el.dataset.target || +el.getAttribute('data-target') || 0;
-          let start = 0;
-          const duration = 900; // ms
-          const stepTime = 16;
-          const steps = Math.max(1, Math.floor(duration / stepTime));
-          const increment = Math.ceil(target / steps);
-          const timer = setInterval(()=>{
-            start += increment;
-            if(start >= target){ el.textContent = String(target); clearInterval(timer); }
-            else el.textContent = String(start);
-          }, stepTime);
-          observer.unobserve(el);
+      const st = stages[i++];
+      loaderStage.textContent = st.label;
+      // animate from current to target
+      let current = parseInt(loaderBar.style.width) || 0;
+      const target = st.pct;
+      const step = Math.max(1, Math.round((target - current) / 10));
+      const ticks = Math.max(6, Math.round(st.delay / 30));
+      let t = 0;
+      const interval = setInterval(()=>{
+        t++;
+        current = Math.min(target, current + step);
+        loaderBar.style.width = current + '%';
+        loaderPercent.textContent = current + '%';
+        if(current >= target || t >= ticks){
+          clearInterval(interval);
+          // small pause before next stage
+          setTimeout(nextStage, 120);
         }
-      });
-    }, {threshold:0.5});
-    document.querySelectorAll('.num').forEach(n=> statObserver.observe(n));
+      }, 30);
+    }
+    nextStage();
   }
 
-  // animate skill bars when scrolled into view
-  function animateSkillBars(){
-    const fills = document.querySelectorAll('.fill');
-    const skillsObs = new IntersectionObserver((entries, observer)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          const f = entry.target;
-          // if dataset.fill present like "75%" then animate to that width
-          const target = f.dataset.fill || '0%';
-          f.style.width = target;
-          observer.unobserve(f);
-        }
-      });
-    }, {threshold:0.25});
-    fills.forEach(f=>skillsObs.observe(f));
+  function hideLoader(){
+    loader.classList.add('loader-hidden');
+    // reveal main content to screen readers after a short delay
+    setTimeout(()=>{
+      mainContent.removeAttribute('aria-hidden');
+      loader.setAttribute('aria-hidden','true');
+    }, 300);
   }
 
-  // Kick off load simulation when DOM ready
+  // skip handler
+  loaderSkip.addEventListener('click', ()=> runLoaderSequence(true));
+  loaderSkip.addEventListener('keypress', (e)=>{ if(e.key === 'Enter' || e.key === ' ') runLoaderSequence(true); });
+
+  // start loader when DOM is ready (simulate a brief startup)
   document.addEventListener('DOMContentLoaded', ()=>{
-    // Start fake loading then show page and modal
-    fakeLoadSequence();
-
-    // Provide a way to open the modal later by clicking the name
-    const nameSpan = document.getElementById('info-name');
-    nameSpan.style.cursor = 'pointer';
-    nameSpan.title = 'Click to edit profile';
-    nameSpan.addEventListener('click', ()=>{
-      // prefill modal fields from storage
-      const stored = localStorage.getItem('aboutInfo_v1');
-      if(stored){
-        try{
-          const d = JSON.parse(stored);
-          // set fields
-          document.getElementById('f-name').value = d.name || '';
-          document.getElementById('f-email').value = d.email || '';
-          document.getElementById('f-age').value = d.age || '';
-          document.getElementById('f-course').value = d.course || '';
-          document.getElementById('f-college').value = d.college || '';
-          document.getElementById('f-hobbies').value = d.hobbies || '';
-          document.getElementById('f-goals').value = (Array.isArray(d.goals) ? d.goals.join('\\n') : '');
-          document.getElementById('f-statement').value = d.statement || '';
-          document.getElementById('f-projects').value = d.projects || '';
-          document.getElementById('f-events').value = d.events || '';
-          document.getElementById('f-clubs').value = d.clubs || '';
-          // skills
-          if(Array.isArray(d.skills)){
-            document.getElementById('skill-1').value = d.skills[0] ? (d.skills[0].name + ':' + d.skills[0].pct) : '';
-            document.getElementById('skill-2').value = d.skills[1] ? (d.skills[1].name + ':' + d.skills[1].pct) : '';
-            document.getElementById('skill-3').value = d.skills[2] ? (d.skills[2].name + ':' + d.skills[2].pct) : '';
-          }
-        }catch(e){}
-      }
-      openModal();
-    });
-
-    // Add keyboard shortcut to toggle theme (T)
-    document.addEventListener('keydown', (e)=>{
-      if(e.key.toLowerCase() === 't'){ applyTheme(!body.classList.contains('neon')); }
-    });
+    // small delay to allow CSS to paint
+    setTimeout(()=> runLoaderSequence(false), 180);
   });
 
-  // ensure if user already saved info, populate immediately without showing modal
-  populateFromStorage();
+  // If user prefers reduced motion, hide loader quickly
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    // skip animation
+    document.addEventListener('DOMContentLoaded', ()=> runLoaderSequence(true));
+  }
+
+  // Accessibility: allow escape key to skip loader
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && loader && !loader.classList.contains('loader-hidden')){
+      runLoaderSequence(true);
+    }
+  });
 </script>
 </body>
 </html>
-
