@@ -7,33 +7,52 @@
 <meta name="description" content="About Samron Trevor Miranda — background, interests, goals, achievements.">
 <style>
   :root{
-    --bg:#f6fbff; --accent:#0b66ff; --muted:#6b7a90; --card:#fff; --glass: rgba(255,255,255,0.7); --shadow: 0 10px 30px rgba(12,33,80,0.08); --rounded:14px;
-    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    /* default theme (light) */
+    --bg:#f6fbff; --accent:#0b66ff; --muted:#6b7a90; --card:#fff; --glass: rgba(255,255,255,0.7);
+    --shadow: 0 10px 30px rgba(12,33,80,0.08); --rounded:14px; --text:#102034;
+    --fill-gradient: linear-gradient(90deg,var(--accent),#5fb0ff);
   }
+  /* neon theme variables (applied when body.neon present) */
+  body.neon{
+    --bg: #0b0711; --accent: #8b5cf6; --muted: #bdb6d9; --card: rgba(0,0,0,0.45);
+    --glass: rgba(255,255,255,0.03); --shadow: 0 10px 40px rgba(139,92,246,0.12); --text: #e6e0ff;
+    --fill-gradient: linear-gradient(90deg,#ff5cf6,#8b5cf6);
+  }
+
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{margin:0;background:linear-gradient(180deg,var(--bg),#eaf4ff 60%);color:#102034;-webkit-font-smoothing:antialiased;padding-bottom:40px}
+  body{
+    margin:0;
+    background:linear-gradient(180deg,var(--bg),#eaf4ff 60%);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    transition: background .35s ease, color .35s ease;
+  }
 
   .container{max-width:1100px;margin:0 auto;padding:0 20px}
   header.nav-wrap{padding:18px 0}
   .nav{display:flex;align-items:center;justify-content:space-between}
   .brand{font-weight:700;color:var(--accent);text-decoration:none}
-  .menu-toggle{display:none;background:transparent;border:0;font-size:20px}
+  .menu-toggle{display:none;background:transparent;border:0;font-size:20px;color:var(--muted)}
   .nav-links{display:flex;gap:14px;list-style:none;padding:0;margin:0}
   .nav-links a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px}
   .nav-links a.active{background:var(--glass);color:var(--accent)}
+  .controls{display:flex;gap:10px;align-items:center}
 
   main.about-page{padding:26px 0}
   h1{font-size:32px;margin:8px 0}
 
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:18px}
-  .bio,.goals{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow)}
+  .bio,.goals{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);backdrop-filter: blur(6px)}
   .bio p{margin:8px 0;color:var(--muted)}
   .goals h3{margin-top:0}
   .goals ul{margin:8px 0 12px 18px;color:var(--muted)}
 
   /* moving words small banner */
   .hero-mini{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;background:linear-gradient(90deg,rgba(11,102,255,0.06),rgba(11,102,255,0.02));margin-bottom:14px}
+  body.neon .hero-mini{background: linear-gradient(90deg, rgba(139,92,246,0.08), rgba(139,92,246,0.03));}
   .word-rotator{overflow:hidden;height:22px;position:relative}
   .word-rotator .words{position:absolute;left:0;top:0;animation:rotateWords 9s linear infinite}
   .word{display:block;height:22px;padding:0 6px;font-weight:700;color:var(--accent)}
@@ -43,12 +62,14 @@
   .skills{display:flex;flex-direction:column;gap:12px}
   .skill{display:flex;flex-direction:column;gap:6px}
   .skill .bar{height:12px;background:rgba(11,102,255,0.08);border-radius:999px;overflow:hidden}
-  .skill .fill{height:100%;width:0;transition:width 1.2s ease; background:linear-gradient(90deg,var(--accent),#5fb0ff)}
+  body.neon .skill .bar{background: rgba(139,92,246,0.12);}
+  .skill .fill{height:100%;width:0;transition:width 1.2s ease; background:var(--fill-gradient)}
   .skill-label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
 
   /* stat counters */
   .stats{display:flex;gap:12px;margin-top:12px}
   .stat{flex:1;background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:10px;box-shadow:var(--shadow);text-align:center}
+  body.neon .stat{background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.35));}
   .stat .num{font-size:20px;font-weight:800;color:var(--accent)}
   .stat .label{color:var(--muted);font-size:13px}
 
@@ -63,31 +84,87 @@
 
   /* small floating shape */
   .bg-shape{position:fixed;right:-80px;top:12%;width:360px;height:360px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#5fb0ff);opacity:0.05;filter:blur(36px);pointer-events:none}
+  body.neon .bg-shape{opacity:0.12; filter: blur(46px);}
+
+  /* neon glow touches */
+  body.neon .brand, body.neon .nav-links a.active { text-shadow: 0 6px 18px rgba(139,92,246,0.3); }
+  body.neon .fill { box-shadow: 0 6px 18px rgba(139,92,246,0.12); }
+
+  /* toggle button */
+  .theme-toggle{border:0;background:transparent;padding:8px 12px;border-radius:10px;cursor:pointer;color:var(--muted);font-weight:700}
+  .theme-toggle.active{background:var(--glass);color:var(--accent);box-shadow:var(--shadow)}
+
+  /* Loading overlay */
+  .loading-overlay{
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.9));
+    z-index:9999;flex-direction:column;gap:18px;
+  }
+  body.neon .loading-overlay{background: linear-gradient(180deg, rgba(3,1,6,0.95), rgba(3,1,6,0.98));}
+  .loader-shell{width:420px;max-width:90%;padding:18px;border-radius:12px;background:var(--card);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;align-items:center}
+  .loader-title{font-weight:800;color:var(--accent)}
+  .loader-bar{width:100%;height:12px;background:rgba(0,0,0,0.06);border-radius:999px;overflow:hidden}
+  .loader-fill{height:100%;width:0;background:var(--fill-gradient);transition:width .25s linear}
+  .loader-percent{font-size:14px;color:var(--muted)}
+
+  /* modal (info prompt) */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;z-index:9998;padding:16px}
+  body.neon .modal-backdrop{background: rgba(0,0,0,0.55);}
+  .modal{width:720px;max-width:100%;background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);overflow:auto;max-height:88vh}
+  .modal h2{margin:0 0 12px}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+  .form-row input, .form-row textarea, .form-row select{
+    padding:10px;border-radius:8px;border:1px solid rgba(16,32,52,0.06);font-size:14px;background:transparent;color:var(--text)
+  }
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
+  .btn{padding:8px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+  .btn-primary{background:var(--accent);color:white}
+  .btn-ghost{background:transparent;border:1px solid var(--glass);color:var(--muted)}
+
+  /* small helper for glow text in neon */
+  .glow{color:var(--accent);font-weight:800}
 </style>
 </head>
 <body>
   <div class="bg-shape" aria-hidden></div>
+
+  <!-- Loading overlay (visible on first load) -->
+  <div id="loading-overlay" class="loading-overlay" role="status" aria-live="polite" aria-label="Loading">
+    <div class="loader-shell" role="presentation">
+      <div class="loader-title">Loading Samron Miranda — Preparing the page</div>
+      <div class="loader-bar" aria-hidden>
+        <div id="loader-fill" class="loader-fill" style="width:0%"></div>
+      </div>
+      <div class="loader-percent" id="loader-percent">0%</div>
+      <div style="font-size:12px;color:var(--muted)">Tip: you can customize your profile after loading.</div>
+    </div>
+  </div>
+
   <header class="nav-wrap">
-    <nav class="nav container">
+    <nav class="nav container" aria-label="Main navigation">
       <a class="brand" href="index.html">Samron Miranda</a>
-      <button id="menu-toggle-2" class="menu-toggle" aria-expanded="false" aria-controls="nav-links-2">☰</button>
-      <ul class="nav-links" id="nav-links-2">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html" class="active">About</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+      <div class="controls">
+        <button id="menu-toggle-2" class="menu-toggle" aria-expanded="false" aria-controls="nav-links-2">☰</button>
+        <ul class="nav-links" id="nav-links-2">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle neon theme">Neon</button>
+      </div>
     </nav>
   </header>
 
-  <main class="container about-page">
+  <main class="container about-page" id="main-content" aria-hidden>
     <h1>About Me</h1>
 
-    <div class="hero-mini">
+    <div class="hero-mini" id="hero-mini">
       <div style="font-weight:700;color:var(--muted);font-size:13px">I’m currently:</div>
       <div class="word-rotator" aria-hidden>
         <div class="words">
-          <span class="word">Learning Full‑Stack</span>
+          <span class="word">Learning Full-Stack</span>
           <span class="word">Building Small Apps</span>
           <span class="word">Practising Sports</span>
           <span class="word">Reading History</span>
@@ -97,53 +174,53 @@
     </div>
 
     <div class="about-grid">
-      <div class="bio">
-        <p><strong>Name:</strong> Samron Trevor Miranda</p>
-        <p><strong>Email:</strong> <a href="mailto:samronmiranda@gmail.com">samronmiranda@gmail.com</a></p>
-        <p><strong>Age:</strong> 18</p>
-        <p><strong>Course / Department:</strong> Computer Engineering</p>
-        <p><strong>College:</strong> Father Conceicao Rodrigues College of Engineering</p>
-        <p><strong>Hobbies:</strong> Novice coding, sports, reading history and classical literature.</p>
+      <div class="bio" id="bio-card">
+        <p><strong>Name:</strong> <span id="info-name">Samron Trevor Miranda</span></p>
+        <p><strong>Email:</strong> <a id="info-email" href="mailto:samronmiranda@gmail.com">samronmiranda@gmail.com</a></p>
+        <p><strong>Age:</strong> <span id="info-age">18</span></p>
+        <p><strong>Course / Department:</strong> <span id="info-course">Computer Engineering</span></p>
+        <p><strong>College:</strong> <span id="info-college">Father Conceicao Rodrigues College of Engineering</span></p>
+        <p><strong>Hobbies:</strong> <span id="info-hobbies">Novice coding, sports, reading history and classical literature.</span></p>
 
         <div class="stats" aria-hidden>
           <div class="stat">
-            <div class="num" data-target="6">0</div>
+            <div class="num" data-target="6" id="stat-projects">0</div>
             <div class="label">Projects</div>
           </div>
           <div class="stat">
-            <div class="num" data-target="12">0</div>
+            <div class="num" data-target="12" id="stat-events">0</div>
             <div class="label">Events / Matches</div>
           </div>
           <div class="stat">
-            <div class="num" data-target="1">0</div>
+            <div class="num" data-target="1" id="stat-clubs">0</div>
             <div class="label">Clubs Joined</div>
           </div>
         </div>
       </div>
 
-      <div class="goals">
+      <div class="goals" id="goals-card">
         <h3>Goals & Achievements</h3>
-        <ul>
+        <ul id="info-goals">
           <li>Learning full-stack development.</li>
           <li>Participated in inter-college sports events.</li>
           <li>Member of college coding club (placeholder).</li>
         </ul>
         <h3>Personal Statement</h3>
-        <p>I love exploring how technology and history shape societies. I’m building skills to create practical solutions and enjoy collaborating on projects that combine creativity and engineering.</p>
+        <p id="info-statement">I love exploring how technology and history shape societies. I’m building skills to create practical solutions and enjoy collaborating on projects that combine creativity and engineering.</p>
 
         <h3 style="margin-top:12px">Skills</h3>
         <div class="skills" id="skills">
           <div class="skill">
-            <div class="skill-label"><span>HTML & CSS</span><span>75%</span></div>
-            <div class="bar"><div class="fill" data-fill="75%"></div></div>
+            <div class="skill-label"><span>HTML & CSS</span><span class="skill-percent">75%</span></div>
+            <div class="bar"><div class="fill" data-fill="75%" style="width:0%"></div></div>
           </div>
           <div class="skill">
-            <div class="skill-label"><span>JavaScript</span><span>60%</span></div>
-            <div class="bar"><div class="fill" data-fill="60%"></div></div>
+            <div class="skill-label"><span>JavaScript</span><span class="skill-percent">60%</span></div>
+            <div class="bar"><div class="fill" data-fill="60%" style="width:0%"></div></div>
           </div>
           <div class="skill">
-            <div class="skill-label"><span>Problem Solving</span><span>80%</span></div>
-            <div class="bar"><div class="fill" data-fill="80%"></div></div>
+            <div class="skill-label"><span>Problem Solving</span><span class="skill-percent">80%</span></div>
+            <div class="bar"><div class="fill" data-fill="80%" style="width:0%"></div></div>
           </div>
         </div>
 
@@ -155,8 +232,80 @@
     <p>&copy; <span id="year-2"></span> Samron Trevor Miranda</p>
   </footer>
 
+  <!-- Modal to collect/display information -->
+  <div id="modal-backdrop" class="modal-backdrop" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal" role="document">
+      <h2 id="modal-title">Tell me about yourself</h2>
+      <p style="margin-top:0;color:var(--muted)">Fill this quick form so I can populate the page with your information. You can skip any field or come back later.</p>
+
+      <div class="form-grid">
+        <div>
+          <div class="form-row">
+            <label for="f-name">Name</label>
+            <input id="f-name" placeholder="Your name" />
+          </div>
+          <div class="form-row">
+            <label for="f-email">Email</label>
+            <input id="f-email" placeholder="you@example.com" type="email" />
+          </div>
+          <div class="form-row">
+            <label for="f-age">Age</label>
+            <input id="f-age" type="number" min="0" placeholder="18" />
+          </div>
+          <div class="form-row">
+            <label for="f-course">Course / Department</label>
+            <input id="f-course" placeholder="Computer Engineering" />
+          </div>
+          <div class="form-row">
+            <label for="f-college">College</label>
+            <input id="f-college" placeholder="College name" />
+          </div>
+        </div>
+
+        <div>
+          <div class="form-row">
+            <label for="f-hobbies">Hobbies (comma separated)</label>
+            <input id="f-hobbies" placeholder="coding, sports, reading" />
+          </div>
+          <div class="form-row">
+            <label for="f-goals">Top goals (one per line)</label>
+            <textarea id="f-goals" rows="4" placeholder="Become a full-stack developer&#10;Win inter-college hackathon"></textarea>
+          </div>
+          <div class="form-row">
+            <label for="f-statement">Personal statement</label>
+            <textarea id="f-statement" rows="3" placeholder="A short personal statement..."></textarea>
+          </div>
+          <div class="form-row">
+            <label for="f-projects">Projects (count)</label>
+            <input id="f-projects" type="number" min="0" placeholder="6" />
+          </div>
+          <div class="form-row">
+            <label for="f-events">Events / Matches (count)</label>
+            <input id="f-events" type="number" min="0" placeholder="12" />
+          </div>
+          <div class="form-row">
+            <label for="f-clubs">Clubs Joined (count)</label>
+            <input id="f-clubs" type="number" min="0" placeholder="1" />
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:12px">Skills (name:percent)</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input id="skill-1" placeholder="HTML & CSS:75" style="flex:1;min-width:180px" />
+        <input id="skill-2" placeholder="JavaScript:60" style="flex:1;min-width:180px" />
+        <input id="skill-3" placeholder="Problem Solving:80" style="flex:1;min-width:180px" />
+      </div>
+
+      <div class="modal-actions">
+        <button id="modal-skip" class="btn btn-ghost">Skip</button>
+        <button id="modal-submit" class="btn btn-primary">Save & Apply</button>
+      </div>
+    </div>
+  </div>
+
 <script>
-  // year
+  // Set year
   document.getElementById('year-2').textContent = new Date().getFullYear();
 
   // mobile menu toggle
@@ -174,44 +323,289 @@
     links.style.boxShadow = 'var(--shadow)';
   });
 
-  // animate stat counters when visible
-  const nums = document.querySelectorAll('.num');
-  const obs = new IntersectionObserver((entries, observer)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const el = entry.target;
-        const target = +el.dataset.target;
-        let start = 0;
-        const step = Math.ceil(target / 60);
-        const timer = setInterval(()=>{
-          start += step;
-          if(start >= target){ el.textContent = String(target); clearInterval(timer); }
-          else el.textContent = String(start);
-        }, 16);
-        observer.unobserve(el);
+  // Theme toggle logic (neon)
+  const themeBtn = document.getElementById('theme-toggle');
+  const body = document.body;
+  function applyTheme(neon){
+    if(neon){
+      body.classList.add('neon');
+      themeBtn.classList.add('active');
+      themeBtn.textContent = 'Default';
+      themeBtn.title = 'Switch to default theme';
+    } else {
+      body.classList.remove('neon');
+      themeBtn.classList.remove('active');
+      themeBtn.textContent = 'Neon';
+      themeBtn.title = 'Switch to neon theme';
+    }
+    localStorage.setItem('prefNeon', neon ? '1' : '0');
+  }
+  // initialize theme from localStorage
+  const savedNeon = localStorage.getItem('prefNeon');
+  applyTheme(savedNeon === '1');
+
+  themeBtn.addEventListener('click', ()=> {
+    applyTheme(!body.classList.contains('neon'));
+  });
+
+  // Loading overlay animation (game-like progress). When done, show modal to collect info.
+  const overlay = document.getElementById('loading-overlay');
+  const loaderFill = document.getElementById('loader-fill');
+  const loaderPercent = document.getElementById('loader-percent');
+  const mainContent = document.getElementById('main-content');
+  function fakeLoadSequence(){
+    let p = 0;
+    // increment with small random steps to feel organic
+    const id = setInterval(()=>{
+      p += Math.random() * 6 + 4; // 4-10
+      if(p >= 100) p = 100;
+      loaderFill.style.width = p + '%';
+      loaderPercent.textContent = Math.round(p) + '%';
+      if(p >= 100){
+        clearInterval(id);
+        // brief fade out
+        overlay.style.transition = 'opacity .45s ease';
+        overlay.style.opacity = '0';
+        setTimeout(()=> {
+          overlay.style.display = 'none';
+          // reveal main content and then open modal
+          mainContent.removeAttribute('aria-hidden');
+          // small delay then show modal
+          setTimeout(()=> showInfoModalIfNeeded(), 350);
+        }, 450);
       }
-    });
-  }, {threshold:0.6});
-  nums.forEach(n=>obs.observe(n));
+    }, 90);
+  }
+
+  // modal handling
+  const modalBackdrop = document.getElementById('modal-backdrop');
+  const modalSubmit = document.getElementById('modal-submit');
+  const modalSkip = document.getElementById('modal-skip');
+
+  function showInfoModalIfNeeded(){
+    // If user has previously saved info, populate silently; otherwise show modal.
+    const stored = localStorage.getItem('aboutInfo_v1');
+    if(stored){
+      populateFromStorage();
+      // still let user open modal later by clicking name (we'll add an edit trigger)
+      return;
+    }
+    openModal();
+  }
+
+  function openModal(){
+    modalBackdrop.style.display = 'flex';
+    // focus first input
+    setTimeout(()=> document.getElementById('f-name').focus(), 120);
+  }
+  function closeModal(){ modalBackdrop.style.display = 'none'; }
+
+  modalSkip.addEventListener('click', ()=> {
+    closeModal();
+  });
+
+  function readFormData(){
+    const name = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const age = document.getElementById('f-age').value.trim();
+    const course = document.getElementById('f-course').value.trim();
+    const college = document.getElementById('f-college').value.trim();
+    const hobbies = document.getElementById('f-hobbies').value.trim();
+    const goalsRaw = document.getElementById('f-goals').value.trim();
+    const statement = document.getElementById('f-statement').value.trim();
+    const projects = document.getElementById('f-projects').value.trim();
+    const events = document.getElementById('f-events').value.trim();
+    const clubs = document.getElementById('f-clubs').value.trim();
+    const skill1 = document.getElementById('skill-1').value.trim();
+    const skill2 = document.getElementById('skill-2').value.trim();
+    const skill3 = document.getElementById('skill-3').value.trim();
+
+    const goals = goalsRaw ? goalsRaw.split(/\r?\n/).map(s=>s.trim()).filter(Boolean) : [];
+    const skills = [skill1, skill2, skill3].map(s => {
+      if(!s) return null;
+      const parts = s.split(':').map(x=>x.trim());
+      const name = parts[0] || '';
+      let pct = parseInt(parts[1] || '0', 10);
+      if(isNaN(pct)) pct = 0;
+      pct = Math.max(0, Math.min(100, pct));
+      return {name, pct};
+    }).filter(Boolean);
+    return {name,email,age,course,college,hobbies,goals,statement,projects,events,clubs,skills};
+  }
+
+  modalSubmit.addEventListener('click', ()=>{
+    const data = readFormData();
+    // Save to localStorage
+    localStorage.setItem('aboutInfo_v1', JSON.stringify(data));
+    populateFromData(data);
+    closeModal();
+  });
+
+  function populateFromData(data){
+    if(!data) return;
+    if(data.name) document.getElementById('info-name').textContent = data.name;
+    if(data.email) {
+      const el = document.getElementById('info-email');
+      el.textContent = data.email;
+      el.href = 'mailto:' + data.email;
+    }
+    if(data.age) document.getElementById('info-age').textContent = data.age;
+    if(data.course) document.getElementById('info-course').textContent = data.course;
+    if(data.college) document.getElementById('info-college').textContent = data.college;
+    if(data.hobbies) document.getElementById('info-hobbies').textContent = data.hobbies;
+    if(Array.isArray(data.goals) && data.goals.length){
+      const ul = document.getElementById('info-goals');
+      ul.innerHTML = '';
+      data.goals.forEach(g=>{
+        const li = document.createElement('li'); li.textContent = g; ul.appendChild(li);
+      })
+    }
+    if(data.statement) document.getElementById('info-statement').textContent = data.statement;
+
+    // stats
+    if(data.projects) {
+      const pEl = document.getElementById('stat-projects');
+      pEl.dataset.target = String(Math.max(0, parseInt(data.projects,10)||0));
+      pEl.textContent = '0';
+    }
+    if(data.events) {
+      const eEl = document.getElementById('stat-events');
+      eEl.dataset.target = String(Math.max(0, parseInt(data.events,10)||0));
+      eEl.textContent = '0';
+    }
+    if(data.clubs) {
+      const cEl = document.getElementById('stat-clubs');
+      cEl.dataset-target = String(Math.max(0, parseInt(data.clubs,10)||0));
+      cEl.dataset.target = String(Math.max(0, parseInt(data.clubs,10)||0));
+      cEl.textContent = '0';
+    }
+
+    // skills
+    const fillEls = document.querySelectorAll('.fill');
+    // Default to existing skills if none provided
+    if(Array.isArray(data.skills) && data.skills.length){
+      // map top 3 skills into fills
+      for(let i=0;i<3;i++){
+        const s = data.skills[i];
+        if(!s) continue;
+        const parent = fillEls[i];
+        parent.dataset.fill = s.pct + '%';
+        // update label texts (two spans: .skill-label > span:first and span:last)
+        const label = parent.closest('.skill').querySelector('.skill-label');
+        if(label){
+          label.children[0].textContent = s.name || label.children[0].textContent;
+          label.children[1].textContent = s.pct + '%';
+        }
+      }
+    }
+
+    // trigger animations: stat counters and skill fills
+    startStatCounters();
+    animateSkillBars();
+  }
+
+  function populateFromStorage(){
+    const stored = localStorage.getItem('aboutInfo_v1');
+    if(!stored) return;
+    try{
+      const data = JSON.parse(stored);
+      populateFromData(data);
+    }catch(e){
+      console.warn('Failed to parse stored about info', e);
+    }
+  }
+
+  // animate stat counters when visible (IntersectionObserver)
+  let statObserver;
+  function startStatCounters(){
+    const nums = document.querySelectorAll('.num');
+    if(statObserver) { /* already created? disconnect to reset */ statObserver.disconnect(); }
+    statObserver = new IntersectionObserver((entries, observer)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const el = entry.target;
+          const target = +el.dataset.target || +el.getAttribute('data-target') || 0;
+          let start = 0;
+          const duration = 900; // ms
+          const stepTime = 16;
+          const steps = Math.max(1, Math.floor(duration / stepTime));
+          const increment = Math.ceil(target / steps);
+          const timer = setInterval(()=>{
+            start += increment;
+            if(start >= target){ el.textContent = String(target); clearInterval(timer); }
+            else el.textContent = String(start);
+          }, stepTime);
+          observer.unobserve(el);
+        }
+      });
+    }, {threshold:0.5});
+    document.querySelectorAll('.num').forEach(n=> statObserver.observe(n));
+  }
 
   // animate skill bars when scrolled into view
-  const fills = document.querySelectorAll('.fill');
-  const skillsObs = new IntersectionObserver((entries, observer)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const f = entry.target;
-        f.style.width = f.dataset.fill;
-        observer.unobserve(f);
+  function animateSkillBars(){
+    const fills = document.querySelectorAll('.fill');
+    const skillsObs = new IntersectionObserver((entries, observer)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const f = entry.target;
+          // if dataset.fill present like "75%" then animate to that width
+          const target = f.dataset.fill || '0%';
+          f.style.width = target;
+          observer.unobserve(f);
+        }
+      });
+    }, {threshold:0.25});
+    fills.forEach(f=>skillsObs.observe(f));
+  }
+
+  // Kick off load simulation when DOM ready
+  document.addEventListener('DOMContentLoaded', ()=>{
+    // Start fake loading then show page and modal
+    fakeLoadSequence();
+
+    // Provide a way to open the modal later by clicking the name
+    const nameSpan = document.getElementById('info-name');
+    nameSpan.style.cursor = 'pointer';
+    nameSpan.title = 'Click to edit profile';
+    nameSpan.addEventListener('click', ()=>{
+      // prefill modal fields from storage
+      const stored = localStorage.getItem('aboutInfo_v1');
+      if(stored){
+        try{
+          const d = JSON.parse(stored);
+          // set fields
+          document.getElementById('f-name').value = d.name || '';
+          document.getElementById('f-email').value = d.email || '';
+          document.getElementById('f-age').value = d.age || '';
+          document.getElementById('f-course').value = d.course || '';
+          document.getElementById('f-college').value = d.college || '';
+          document.getElementById('f-hobbies').value = d.hobbies || '';
+          document.getElementById('f-goals').value = (Array.isArray(d.goals) ? d.goals.join('\\n') : '');
+          document.getElementById('f-statement').value = d.statement || '';
+          document.getElementById('f-projects').value = d.projects || '';
+          document.getElementById('f-events').value = d.events || '';
+          document.getElementById('f-clubs').value = d.clubs || '';
+          // skills
+          if(Array.isArray(d.skills)){
+            document.getElementById('skill-1').value = d.skills[0] ? (d.skills[0].name + ':' + d.skills[0].pct) : '';
+            document.getElementById('skill-2').value = d.skills[1] ? (d.skills[1].name + ':' + d.skills[1].pct) : '';
+            document.getElementById('skill-3').value = d.skills[2] ? (d.skills[2].name + ':' + d.skills[2].pct) : '';
+          }
+        }catch(e){}
       }
+      openModal();
     });
-  }, {threshold:0.25});
-  fills.forEach(f=>skillsObs.observe(f));
 
-  // pause rotating words on hover
-  const rotator = document.querySelector('.word-rotator .words');
-  document.querySelector('.word-rotator').addEventListener('mouseenter', ()=> rotator.style.animationPlayState='paused');
-  document.querySelector('.word-rotator').addEventListener('mouseleave', ()=> rotator.style.animationPlayState='running');
+    // Add keyboard shortcut to toggle theme (T)
+    document.addEventListener('keydown', (e)=>{
+      if(e.key.toLowerCase() === 't'){ applyTheme(!body.classList.contains('neon')); }
+    });
+  });
 
+  // ensure if user already saved info, populate immediately without showing modal
+  populateFromStorage();
 </script>
 </body>
 </html>
+
