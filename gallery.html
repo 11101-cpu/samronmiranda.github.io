@@ -6,17 +6,63 @@
 <title>Gallery — Samron Miranda</title>
 <meta name="description" content="Gallery and portfolio of Samron Miranda.">
 <style>
-  :root{--bg:#f6fbff;--accent:#0b66ff;--muted:#6b7a90;--card:#fff;--shadow:0 10px 30px rgba(12,33,80,0.08);--rounded:12px}
+  :root{
+    --bg:#f6fbff;
+    --accent:#0b66ff;
+    --muted:#6b7a90;
+    --card:#fff;
+    --shadow:0 10px 30px rgba(12,33,80,0.08);
+    --rounded:12px;
+    --text:#102034;
+    --glass: rgba(255,255,255,0.92);
+  }
+
+  /* neon green theme variables (applied when body has .neon) */
+  .neon {
+    --bg: linear-gradient(180deg,#e9fff2,#e0fff0);
+    --accent: #00ff66;
+    --muted: #0e3b26;
+    --card: #04180c;
+    --shadow: 0 20px 60px rgba(0,128,64,0.12);
+    --text: #04180c;
+    --glass: rgba(3,18,12,0.95);
+  }
+
   *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:linear-gradient(180deg,var(--bg),#eaf4ff 60%);color:#102034;-webkit-font-smoothing:antialiased;padding-bottom:40px}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;
+    background:linear-gradient(180deg,var(--bg),#eaf4ff 60%);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+    transition:background .35s ease,color .35s ease;
+  }
+
   .container{max-width:1100px;margin:0 auto;padding:20px}
-  header.nav-wrap{padding:18px 0}
-  .nav{display:flex;align-items:center;justify-content:space-between}
+  header.nav-wrap{padding:14px 0}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
   .brand{font-weight:700;color:var(--accent);text-decoration:none}
   .menu-toggle{display:none}
   .nav-links{display:flex;gap:14px;list-style:none;padding:0;margin:0}
   .nav-links a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px}
   .nav-links a.active{background:rgba(11,102,255,0.06);color:var(--accent)}
+
+  /* theme toggle */
+  .theme-toggle {
+    border: 0;
+    background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    padding:8px 12px;
+    border-radius:999px;
+    cursor:pointer;
+    display:inline-flex;
+    gap:8px;
+    align-items:center;
+    box-shadow:var(--shadow);
+    color:var(--muted);
+    font-weight:600;
+  }
+  .theme-toggle.neon-on { background: linear-gradient(90deg, rgba(0,255,102,0.12), rgba(0,255,102,0.06)); color: #012e18; }
 
   h1{font-size:32px;margin:8px 0}
   .intro{color:var(--muted)}
@@ -33,11 +79,11 @@
   /* modal */
   .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(6,18,40,0.55);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .18s ease}
   .modal[aria-hidden="false"]{opacity:1;pointer-events:auto}
-  .modal-inner{background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:12px;max-width:1000px;width:100%;box-shadow:0 30px 80px rgba(2,10,30,0.6);position:relative}
+  .modal-inner{background:linear-gradient(180deg,var(--card),#fbfdff);padding:12px;border-radius:12px;max-width:1000px;width:100%;box-shadow:0 30px 80px rgba(2,10,30,0.6);position:relative}
   #modal-img{width:100%;max-height:75vh;object-fit:contain;border-radius:8px}
   .modal-close{position:absolute;right:8px;top:8px;border:0;background:transparent;font-size:20px;color:var(--muted);cursor:pointer}
   .modal-nav{position:absolute;left:8px;top:50%;transform:translateY(-50%);display:flex;gap:8px}
-  .nav-btn{background:rgba(255,255,255,0.92);border-radius:8px;padding:6px 8px;border:0;cursor:pointer}
+  .nav-btn{background:var(--glass);border-radius:8px;padding:6px 8px;border:0;cursor:pointer}
 
   .caption{margin-top:8px;color:var(--muted);font-size:14px}
 
@@ -46,14 +92,67 @@
   .thumb-strip img{height:56px;width:80px;object-fit:cover;border-radius:6px;cursor:pointer;opacity:0.7}
   .thumb-strip img.active{outline:3px solid var(--accent);opacity:1}
 
+  /* loader full-screen */
+  .page-loader{
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#041018, #04202a);
+    z-index:9999;color:#b8fff0;flex-direction:column;gap:18px;
+  }
+  .loader-badge{
+    width:96px;height:96px;border-radius:20px;background:linear-gradient(135deg,#001414,#00402e);display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px rgba(0,170,120,0.14);
+    transform-origin:center;
+    animation: pulse 1.6s ease-in-out infinite;
+    border: 1px solid rgba(0,255,150,0.12);
+  }
+  .loader-badge svg{filter:drop-shadow(0 8px 40px rgba(0,255,150,0.12));}
+  .loader-text{font-weight:700;letter-spacing:0.6px;color:rgba(200,255,230,0.9)}
+  .loader-dots{display:flex;gap:6px}
+  .loader-dots span{width:8px;height:8px;border-radius:50%;background:rgba(0,255,150,0.85);opacity:0;transform:translateY(0);animation: dot 1s infinite;}
+  .loader-dots span:nth-child(2){animation-delay:.12s}
+  .loader-dots span:nth-child(3){animation-delay:.24s}
+
+  @keyframes dot { 0%{opacity:0;transform:translateY(0)} 40%{opacity:1;transform:translateY(-8px)} 100%{opacity:0;transform:translateY(0)} }
+  @keyframes pulse { 0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)} }
+
+  /* fade-out animation for loader */
+  .page-loader.hidden{opacity:0;pointer-events:none;transition:opacity .5s ease;transform:translateY(-6px);}
+
   /* responsive */
-  @media (max-width:740px){.thumb{height:120px}.modal-inner{padding:8px}} 
+  @media (max-width:740px){.thumb{height:120px}.modal-inner{padding:8px}.nav{flex-wrap:wrap}}
 </style>
 </head>
 <body>
+<!-- PAGE LOADER -->
+<div id="pageLoader" class="page-loader" role="status" aria-live="polite" aria-label="Loading">
+  <div class="loader-badge" aria-hidden="true">
+    <!-- simple neon icon (camera-like) -->
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3.5" y="6.5" width="17" height="11" rx="2" stroke="url(#g)" stroke-width="1.2"/>
+      <circle cx="12" cy="11.5" r="2.6" stroke="url(#g)" stroke-width="1.2"/>
+      <defs>
+        <linearGradient id="g" x1="0" x2="1">
+          <stop offset="0" stop-color="#6affb3"/>
+          <stop offset="1" stop-color="#00ff66"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+  <div class="loader-text">Samron Miranda</div>
+  <div class="loader-dots" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+</div>
+
 <header class="nav-wrap">
   <nav class="nav container">
     <a class="brand" href="index.html">Samron Miranda</a>
+
+    <!-- theme toggle button -->
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button id="themeToggle" class="theme-toggle" title="Toggle neon green theme" aria-pressed="false" type="button">
+        🌿 Neon
+      </button>
+    </div>
+
     <button id="menu-toggle-3" class="menu-toggle" aria-expanded="false" aria-controls="nav-links-3">☰</button>
     <ul class="nav-links" id="nav-links-3">
       <li><a href="index.html">Home</a></li>
@@ -64,7 +163,7 @@
   </nav>
 </header>
 
-<main class="container gallery-page">
+<main class="container gallery-page" id="pageContent" aria-hidden="true">
   <h1>Gallery / Portfolio</h1>
   <p class="intro">A few snapshots of my work, passions and memorable moments.</p>
 
@@ -104,6 +203,7 @@
 </footer>
 
 <script>
+  // --- basic initializers ---
   document.getElementById('year-3').textContent = new Date().getFullYear();
   const filters = document.querySelectorAll('.filter');
   const grid = document.getElementById('galleryGrid');
@@ -113,7 +213,7 @@
   function updateCount(){ viewCount.textContent = items.filter(i => !i.hidden).length + ' items'; }
   updateCount();
 
-  filters.forEach(f=>f.addEventListener('click', ()=>{
+  filters.forEach(f=>f.addEventListener('click', ()=> {
     filters.forEach(x=>x.classList.remove('active'));
     f.classList.add('active');
     const tag = f.dataset.filter;
@@ -123,7 +223,7 @@
     updateCount();
   }));
 
-  // Modal logic with keyboard navigation and thumbnail strip
+  // --- Modal logic with keyboard navigation and thumbnail strip ---
   const modal = document.getElementById('modal');
   const modalImg = document.getElementById('modal-img');
   const caption = document.getElementById('modal-caption');
@@ -134,7 +234,7 @@
   function openAt(index){
     const visible = visibleItems();
     if(visible.length === 0) return;
-    currentIndex = index % visible.length;
+    currentIndex = ((index % visible.length) + visible.length) % visible.length;
     const target = visible[currentIndex];
     modalImg.src = target.dataset.full || target.src;
     modalImg.alt = target.alt || '';
@@ -148,7 +248,7 @@
   function closeModal(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
 
   items.forEach((it, idx)=>{
-    it.addEventListener('click', ()=>{
+    it.addEventListener('click', ()=> {
       const visible = visibleItems();
       const index = visible.indexOf(it);
       openAt(index);
@@ -159,7 +259,7 @@
   document.getElementById('next').addEventListener('click', ()=>{ openAt((currentIndex+1) % visibleItems().length); });
   document.getElementById('prev').addEventListener('click', ()=>{ openAt((currentIndex-1+visibleItems().length) % visibleItems().length); });
 
-  // keyboard
+  // keyboard navigation
   window.addEventListener('keydown', (e)=>{
     if(modal.getAttribute('aria-hidden') === 'false'){
       if(e.key === 'Escape') closeModal();
@@ -197,7 +297,95 @@
   // accessibility: close modal when clicking backdrop
   modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
 
+  // --- THEME TOGGLE (neon green) ---
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+
+  function applyTheme(isNeon){
+    if(isNeon){
+      body.classList.add('neon');
+      themeToggle.classList.add('neon-on');
+      themeToggle.setAttribute('aria-pressed','true');
+      themeToggle.textContent = '🌿 Neon (On)';
+    } else {
+      body.classList.remove('neon');
+      themeToggle.classList.remove('neon-on');
+      themeToggle.setAttribute('aria-pressed','false');
+      themeToggle.textContent = '🌿 Neon';
+    }
+    localStorage.setItem('samron_neon', isNeon ? '1' : '0');
+  }
+
+  // initialize from storage
+  const stored = localStorage.getItem('samron_neon');
+  applyTheme(stored === '1');
+
+  themeToggle.addEventListener('click', ()=> {
+    const isOn = body.classList.contains('neon');
+    applyTheme(!isOn);
+  });
+
+  // --- PAGE LOADER: show until page fully loaded OR fallback timeout ---
+  const loader = document.getElementById('pageLoader');
+  const pageContent = document.getElementById('pageContent');
+
+  // function to hide loader and reveal content
+  function hideLoader(){
+    if(!loader) return;
+    loader.classList.add('hidden');
+    // wait for fade-out then remove from DOM
+    setTimeout(()=> { loader.remove(); }, 600);
+    pageContent.removeAttribute('aria-hidden');
+  }
+
+  // Wait for load event and also ensure images have loaded (best-effort)
+  let imagesToLoad = Array.from(document.images);
+  // If no images, just hide loader on load
+  let imagesLoaded = 0;
+  if(imagesToLoad.length === 0){
+    window.addEventListener('load', hideLoader);
+  } else {
+    imagesToLoad.forEach(img=>{
+      if(img.complete) imagesLoaded++;
+      else {
+        img.addEventListener('load', ()=>{ imagesLoaded++; if(imagesLoaded === imagesToLoad.length) hideLoader(); });
+        img.addEventListener('error', ()=>{ imagesLoaded++; if(imagesLoaded === imagesToLoad.length) hideLoader(); });
+      }
+    });
+    // If some images were already complete:
+    if(imagesLoaded === imagesToLoad.length) {
+      // wait for full load event to give a smoother UX
+      window.addEventListener('load', hideLoader);
+    } else {
+      // fallback: if load event didn't fire for any reason, hide after 2200ms
+      window.addEventListener('load', hideLoader);
+      setTimeout(()=> { // ensure loader won't block forever
+        if(document.body.contains(loader)) hideLoader();
+      }, 2200);
+    }
+  }
+
+  // ensure keyboard & focusable content isn't accessible while loader shows
+  // (we already hid main content with aria-hidden; this keeps screen readers consistent)
+  document.addEventListener('readystatechange', ()=> {
+    if(document.readyState === 'complete' && document.body.contains(loader)){
+      // ensure loader will be hidden if something odd happens
+      hideLoader();
+    }
+  });
+
+  // small enhancement: allow user to press Escape to dismiss loader after 800ms (non-obtrusive)
+  setTimeout(()=> {
+    window.addEventListener('keydown', function escHide(e){
+      if(e.key === 'Escape' && document.body.contains(loader)) hideLoader();
+      window.removeEventListener('keydown', escHide);
+    });
+  }, 800);
+
+  // --- ensure filters count updates if images hidden/visible change externally ---
+  const observer = new MutationObserver(updateCount);
+  observer.observe(grid, { attributes: true, childList: false, subtree: true, attributeFilter: ['hidden'] });
+
 </script>
 </body>
 </html>
-
