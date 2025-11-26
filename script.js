@@ -2,7 +2,7 @@
 /* Modern Pitch-Deck Style Unified JS (loader, nav, modal, animations, forms) */
 
 /* GAME-STYLE LOADER SCRIPT (index only if #game-loader exists)
-   Minimum visible duration enforced: 3500ms */
+   Minimum visible duration enforced: 3500ms */z
 (function(){
   const MIN_DURATION = 3500; // ms
   const startTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
