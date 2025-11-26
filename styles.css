@@ -1,6 +1,24 @@
-/* Blue & White — Modern Pitch Deck CSS (responsive + subtle motion)
-/* Blue & White — Modern Pitch Deck CSS (responsive + subtle motion) */
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Blue & White — Neon Toggle + Game Loader Demo</title>
+<style>
+/* === Neon-green variant as default === */
 :root{
+  --bg:#39ff14; /* neon green background */
+  --accent:#072033; /* darker accent for contrast */
+  --accent-2:#0b6622; /* secondary darker green */
+  --muted:#072033cc;
+  --card: rgba(255,255,255,0.06);
+  --glass: rgba(255,255,255,0.06);
+  --shadow: 0 10px 30px rgba(2,8,6,0.25);
+  --rounded:12px;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+/* Original blue & white theme (applies when data-theme="original") */
+:root[data-theme="original"]{
   --bg:#f6fbff; /* very light blue */
   --accent:#0b66ff; /* primary blue */
   --accent-2:#5fb0ff; /* secondary blue */
@@ -9,32 +27,31 @@
   --glass: rgba(255,255,255,0.7);
   --shadow: 0 10px 30px rgba(12,33,80,0.06);
   --rounded:12px;
-  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;color:#102034;background:linear-gradient(180deg,var(--bg),#eaf4ff 60%);-webkit-font-smoothing:antialiased}
+html,body{height:100%;margin:0;color:var(--accent);background:linear-gradient(180deg,var(--bg),color-mix(in srgb, var(--bg) 60%, white));-webkit-font-smoothing:antialiased}
 .container{max-width:1100px;margin:0 auto;padding:1.25rem}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
 .brand{font-weight:700;color:var(--accent);text-decoration:none;font-size:1.1rem}
-.menu-toggle{display:none;background:none;border:1px solid rgba(11,102,255,0.06);padding:0.4rem 0.6rem;color:var(--muted);border-radius:8px}
+.menu-toggle{display:none;background:none;border:1px solid rgba(0,0,0,0.04);padding:0.4rem 0.6rem;color:var(--muted);border-radius:8px}
 .nav-links{list-style:none;display:flex;gap:1rem;margin:0;padding:0}
 .nav-links a{color:var(--muted);text-decoration:none;padding:0.45rem 0.75rem;border-radius:8px}
 .nav-links a.active, .nav-links a:hover{color:white;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 
-.hero{padding:4.5rem 0;background:radial-gradient(circle at 10% 10%, rgba(11,102,255,0.06), transparent 8%)}
-.hero-inner{padding:2rem;background:linear-gradient(180deg,rgba(255,255,255,0.9), rgba(255,255,255,0.8));border-radius:14px;box-shadow:var(--shadow)}
-.hero h1{font-size:2.2rem;color:#072033;margin:0}
+.hero{padding:4.5rem 0;background:radial-gradient(circle at 10% 10%, rgba(0,0,0,0.06), transparent 8%)}
+.hero-inner{padding:2rem;background:linear-gradient(180deg,rgba(255,255,255,0.06), rgba(255,255,255,0.02));border-radius:14px;box-shadow:var(--shadow)}
+.hero h1{font-size:2.2rem;color:var(--accent);margin:0}
 .lead{margin-top:0.5rem;color:var(--muted)}
 .motto{margin-top:0.75rem;color:var(--accent);font-weight:700}
-.btn{display:inline-block;padding:0.6rem 1rem;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;text-decoration:none;border-radius:10px;margin-right:0.6rem;font-weight:700}
+.btn{display:inline-block;padding:0.6rem 1rem;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;text-decoration:none;border-radius:10px;margin-right:0.6rem;font-weight:700;border:0}
 .btn.ghost{background:transparent;border:1px solid rgba(11,102,255,0.08);color:var(--accent)}
 
 .highlights{display:flex;gap:1rem;margin-top:2rem}
 .card{background:var(--card);padding:1rem;border-radius:10px;flex:1;box-shadow:var(--shadow)}
 .projects{margin-top:2rem}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
-.proj{background:linear-gradient(180deg,#fff,#f7fbff);padding:0.8rem;border-radius:10px;transition:transform .25s ease,box-shadow .25s}
-.proj:hover{transform:translateY(-8px);box-shadow:0 18px 50px rgba(12,33,80,0.08)}
+.proj{background:linear-gradient(180deg,transparent,rgba(255,255,255,0.02));padding:0.8rem;border-radius:10px;transition:transform .25s ease,box-shadow .25s}
+.proj:hover{transform:translateY(-8px);box-shadow:0 18px 50px rgba(0,0,0,0.08)}
 .proj img{width:100%;height:140px;object-fit:cover;border-radius:8px}
 
 .site-footer{padding:1.25rem 0;text-align:center;color:var(--muted);margin-top:2rem}
@@ -47,7 +64,7 @@ html,body{height:100%;margin:0;color:#102034;background:linear-gradient(180deg,v
 .modal .modal-close{position:absolute;top:2rem;right:2rem;background:none;border:0;color:var(--muted);font-size:1.4rem}
 
 .contact-form{max-width:650px}
-.contact-form input,.contact-form textarea{width:100%;padding:0.8rem;margin-bottom:0.8rem;border-radius:10px;border:1px solid rgba(2,10,30,0.04);background:var(--glass);color:#072033}
+.contact-form input,.contact-form textarea{width:100%;padding:0.8rem;margin-bottom:0.8rem;border-radius:10px;border:1px solid rgba(2,10,30,0.04);background:var(--glass);color:var(--accent)}
 .form-msg{margin-top:0.6rem;color:var(--muted)}
 
 /* Moving words / rotator (small, reusable) */
@@ -60,17 +77,17 @@ html,body{height:100%;margin:0;color:#102034;background:linear-gradient(180deg,v
 /* Skill bars and counters */
 .skills{display:flex;flex-direction:column;gap:12px}
 .skill{display:flex;flex-direction:column;gap:6px}
-.skill .bar{height:12px;background:rgba(11,102,255,0.06);border-radius:999px;overflow:hidden}
+.skill .bar{height:12px;background:rgba(0,0,0,0.08);border-radius:999px;overflow:hidden}
 .skill .fill{height:100%;width:0;transition:width 1.2s ease; background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 
 .stats{display:flex;gap:12px;margin-top:12px}
-.stat{flex:1;background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:10px;box-shadow:var(--shadow);text-align:center}
+.stat{flex:1;background:linear-gradient(180deg,transparent,rgba(255,255,255,0.02));padding:12px;border-radius:10px;box-shadow:var(--shadow);text-align:center}
 .stat .num{font-size:20px;font-weight:800;color:var(--accent)}
 .stat .label{color:var(--muted);font-size:13px}
 
 /* subtle floating shapes for visual polish */
-.bg-shape{position:fixed;right:-80px;top:10%;width:420px;height:420px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));opacity:0.06;filter:blur(36px);pointer-events:none}
-.bg-shape--2{left:-100px;bottom:-60px;opacity:0.045}
+.bg-shape{position:fixed;right:-80px;top:10%;width:420px;height:420px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));opacity:0.08;filter:blur(36px);pointer-events:none}
+.bg-shape--2{left:-100px;bottom:-60px;opacity:0.05}
 
 /* responsive tweaks */
 @media(max-width:880px){
@@ -86,3 +103,154 @@ html,body{height:100%;margin:0;color:#102034;background:linear-gradient(180deg,v
 .center{text-align:center}
 .p-1{padding:1rem}
 .shadow-soft{box-shadow:var(--shadow)}
+
+/* === Game-like loading overlay === */
+.loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4));z-index:9999;backdrop-filter: blur(4px);}
+.loader-card{width:min(760px,92%);padding:1.4rem;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));box-shadow:0 20px 60px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.03);display:flex;gap:1rem;align-items:center}
+.loader-left{flex:1}
+.loader-title{font-weight:800;font-size:1.2rem;color:var(--accent);margin-bottom:0.35rem}
+.loader-sub{color:var(--muted);font-size:0.9rem;margin-bottom:0.8rem}
+.progress-bar{height:16px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;position:relative}
+.progress-fill{height:100%;width:0;transform:translateX(-0%);transition:width 900ms cubic-bezier(.2,.9,.2,1);background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 6px 22px rgba(0,0,0,0.35)}
+.progress-stripes{position:absolute;inset:0;background-image:linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.05) 75%, transparent 75%, transparent);background-size:40px 40px;animation:moveStripes 1s linear infinite}
+@keyframes moveStripes{from{background-position:0 0}to{background-position:40px 0}}
+.loader-right{width:120px;text-align:right}
+.loader-percent{font-weight:900;font-size:1.6rem;color:var(--accent)}
+
+/* small fade-out animation for loader */
+.fade-out{animation:fadeOut 400ms ease forwards}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+
+</style>
+</head>
+<body>
+  <!-- Loading overlay (visible on initial load) -->
+  <div id="loader" class="loader-overlay" role="status" aria-live="polite">
+    <div class="loader-card">
+      <div class="loader-left">
+        <div class="loader-title">Entering — Loading assets</div>
+        <div class="loader-sub">Preparing environment... enjoy the brief cinematic</div>
+        <div class="progress-bar" aria-hidden="true">
+          <div id="progressFill" class="progress-fill"></div>
+          <div class="progress-stripes"></div>
+        </div>
+      </div>
+      <div class="loader-right">
+        <div id="percent" class="loader-percent">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-shape"></div>
+  <div class="bg-shape--2"></div>
+
+  <header class="container nav">
+    <a class="brand" href="#">Samron Miranda</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Work</a></li>
+      </ul>
+    </nav>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="themeToggle" class="btn" aria-pressed="false">Switch to Blue & White</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Blue & White — Deck (Neon preview)</h1>
+        <p class="lead">This demo starts with a neon-green visual. Use the button to switch back to the original blue & white deck.</p>
+        <div class="motto">Clean • Modern • Playful</div>
+      </div>
+    </section>
+
+    <section class="projects container">
+      <div class="grid">
+        <div class="proj card"><h3>Project A</h3><p class="lead">Short description</p></div>
+        <div class="proj card"><h3>Project B</h3><p class="lead">Short description</p></div>
+        <div class="proj card"><h3>Project C</h3><p class="lead">Short description</p></div>
+      </div>
+    </section>
+
+    <footer class="site-footer">Made with ❤️ — neon demo</footer>
+  </main>
+
+<script>
+// Game-like loader: animate progress and then fade
+(function(){
+  const loader = document.getElementById('loader');
+  const fill = document.getElementById('progressFill');
+  const pct = document.getElementById('percent');
+
+  // simulate staged loading with easing timings
+  let current = 0;
+  const ease = t => 1 - Math.pow(1 - t, 2);
+  const duration = 1400; // total ms for loader animation
+  const start = performance.now();
+
+  function step(now){
+    const t = Math.min((now - start) / duration, 1);
+    const eased = ease(t);
+    current = Math.floor(eased * 100);
+    fill.style.width = current + '%';
+    pct.textContent = current + '%';
+    if(t < 1){
+      requestAnimationFrame(step);
+    } else {
+      // small delay for cinematic effect
+      setTimeout(()=>{
+        loader.classList.add('fade-out');
+        // remove from DOM after animation
+        setTimeout(()=>loader.remove(), 500);
+        // trigger any "onLoaded" behaviors (e.g. animate skill bars)
+        document.dispatchEvent(new Event('app:loaded'));
+      }, 220);
+    }
+  }
+  requestAnimationFrame(step);
+})();
+
+// Theme toggle: set data-theme on documentElement
+(function(){
+  const btn = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  const ORIGINAL = 'original';
+
+  // initialize from saved preference
+  const saved = localStorage.getItem('deck-theme');
+  if(saved === ORIGINAL){
+    root.setAttribute('data-theme', ORIGINAL);
+    btn.textContent = 'Switch to Neon Green';
+    btn.setAttribute('aria-pressed','true');
+  }
+
+  btn.addEventListener('click', ()=>{
+    const isOriginal = root.getAttribute('data-theme') === ORIGINAL;
+    if(isOriginal){
+      root.removeAttribute('data-theme');
+      btn.textContent = 'Switch to Blue & White';
+      btn.setAttribute('aria-pressed','false');
+      localStorage.removeItem('deck-theme');
+    } else {
+      root.setAttribute('data-theme', ORIGINAL);
+      btn.textContent = 'Switch to Neon Green';
+      btn.setAttribute('aria-pressed','true');
+      localStorage.setItem('deck-theme', ORIGINAL);
+    }
+  });
+})();
+
+// Example: animate skill fills after loader
+document.addEventListener('app:loaded', ()=>{
+  document.querySelectorAll('.skill .fill').forEach((el, i)=>{
+    // progressive widths for demo
+    const target = (70 + (i*8)) % 100;
+    setTimeout(()=> el.style.width = target + '%', 120 * i);
+  });
+});
+</script>
+</body>
+</html>
