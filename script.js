@@ -1,10 +1,118 @@
-/* Modern Pitch-Deck Style Unified JS (navigation, modals, animations, forms) */
+/* Modern Pitch-Deck Style Unified JS (navigation, modals, animations, forms)
+   Updated: neon-green default theme + theme-toggle button + game-style loader
+*/
 
 // ---------- YEAR AUTO-UPDATE ----------
 ['year','year-2','year-3','year-4'].forEach(id => {
   const el = document.getElementById(id);
   if(el) el.textContent = new Date().getFullYear();
 });
+
+// ---------- THEME (neon default, toggle to original) ----------
+const THEME_KEY = 'site-theme'; // 'neon' or 'default'
+const body = document.body;
+
+// apply theme class
+function applyTheme(theme) {
+  if (theme === 'default') {
+    body.classList.remove('neon-theme');
+    body.classList.add('default-theme');
+    const btn = document.getElementById('theme-toggle');
+    if(btn) { btn.textContent = 'Switch to Neon Green'; btn.setAttribute('aria-pressed','false'); }
+  } else {
+    body.classList.remove('default-theme');
+    body.classList.add('neon-theme');
+    const btn = document.getElementById('theme-toggle');
+    if(btn) { btn.textContent = 'Switch to White & Blue'; btn.setAttribute('aria-pressed','true'); }
+  }
+  try { localStorage.setItem(THEME_KEY, theme); } catch(e){}
+}
+
+// initialize theme: neon by default unless user previously chose default
+(function initTheme(){
+  let preferred = null;
+  try { preferred = localStorage.getItem(THEME_KEY); } catch(e){}
+  if(preferred === 'default') applyTheme('default'); else applyTheme('neon');
+})();
+
+// create toggle button behavior (will work even if you add the button in HTML)
+function setupThemeToggle() {
+  let btn = document.getElementById('theme-toggle');
+  if(!btn){
+    // if there's no button in HTML, try to inject one into header (non-destructive)
+    const header = document.querySelector('header') || document.querySelector('.site-header') || document.body;
+    btn = document.createElement('button');
+    btn.id = 'theme-toggle';
+    btn.className = 'theme-toggle';
+    header.prepend(btn);
+  }
+  btn.addEventListener('click', () => {
+    const current = body.classList.contains('neon-theme') ? 'neon' : 'default';
+    const next = current === 'neon' ? 'default' : 'neon';
+    applyTheme(next);
+  });
+}
+setupThemeToggle();
+
+// ---------- GAME-STYLE LOADER (creates overlay if none exists) ----------
+// Loader shows on page entry and hides after window 'load' or max timeout.
+// It simulates a game loading progress bar + percent.
+(function setupLoader(){
+  // if loader already exists, keep it
+  if(document.getElementById('game-loader')) return;
+
+  const loader = document.createElement('div');
+  loader.id = 'game-loader';
+  loader.setAttribute('aria-hidden','false');
+  loader.innerHTML = `
+    <div class="loader-wrap" role="status" aria-label="Loading">
+      <div class="loader-logo" aria-hidden="true"></div>
+      <div class="loader-bar">
+        <div class="loader-progress" style="width:0%"></div>
+      </div>
+      <div class="loader-text"><span class="loader-percent">0</span>%</div>
+    </div>
+  `;
+  document.documentElement.appendChild(loader);
+
+  const progressEl = loader.querySelector('.loader-progress');
+  const percentEl = loader.querySelector('.loader-percent');
+
+  let percent = 0;
+  // nice easing tick using requestAnimationFrame
+  let start = null;
+  const duration = 1200; // nominal duration for the simulated progress (ms)
+  const maxWait = 2500;  // maximum time loader will remain (ms) in case load event is slow
+
+  function tick(timestamp){
+    if(!start) start = timestamp;
+    const elapsed = timestamp - start;
+    // ease-out progress curve
+    const t = Math.min(elapsed / duration, 1);
+    percent = Math.round( Math.pow(t, 0.7) * 90 ) + 5; // 5%..95% by timeline
+    progressEl.style.width = percent + '%';
+    percentEl.textContent = percent;
+    if(elapsed < duration) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  // hide function
+  function hideLoader() {
+    if(loader.getAttribute('data-hidden') === 'true') return;
+    loader.setAttribute('data-hidden','true');
+    loader.setAttribute('aria-hidden','true');
+    progressEl.style.width = '100%';
+    percentEl.textContent = '100';
+    loader.classList.add('loaded'); // CSS handles fade
+    setTimeout(() => { loader.remove(); }, 600);
+  }
+
+  // hide after window load or after maxWait
+  let hidden = false;
+  window.addEventListener('load', () => { if(!hidden){ hidden = true; hideLoader(); } }, {passive:true});
+  // fallback: ensure loader doesn't hang forever
+  setTimeout(() => { if(!hidden){ hidden = true; hideLoader(); } }, maxWait);
+})();
 
 // ---------- MOBILE NAV TOGGLES ----------
 const toggles = document.querySelectorAll('.menu-toggle');
@@ -41,16 +149,20 @@ function openModal(idx) {
   if(imgs.length === 0) return;
   currentIndex = idx % imgs.length;
   const src = imgs[currentIndex].dataset.full || imgs[currentIndex].src;
-  modalImg.src = src;
-  modal.style.display = 'flex';
-  modal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
+  if(modalImg) modalImg.src = src;
+  if(modal){
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
 }
 
 function closeModal() {
-  modal.style.display = 'none';
-  modal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+  if(modal){
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
 }
 
 thumbs.forEach((t, i) => t.addEventListener('click', () => openModal(i)));
@@ -70,20 +182,20 @@ if(form){
     const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 
     if(!name || !email || !message){
-      msgEl.textContent = 'Please fill all fields.';
-      msgEl.style.color = 'crimson';
+      if(msgEl){ msgEl.textContent = 'Please fill all fields.'; msgEl.style.color = 'crimson'; }
       return;
     }
     if(!validEmail(email)){
-      msgEl.textContent = 'Please enter a valid email.';
-      msgEl.style.color = 'crimson';
+      if(msgEl){ msgEl.textContent = 'Please enter a valid email.'; msgEl.style.color = 'crimson'; }
       return;
     }
 
-    msgEl.style.color = 'var(--accent)';
-    msgEl.textContent = 'Sending (demo)...';
+    if(msgEl){
+      msgEl.style.color = 'var(--accent)';
+      msgEl.textContent = 'Sending (demo)...';
+    }
     setTimeout(() => {
-      msgEl.textContent = 'Your message was sent (simulation). Connect this form to Formspree/Netlify for real submissions.';
+      if(msgEl) msgEl.textContent = 'Your message was sent (simulation). Connect this form to Formspree/Netlify for real submissions.';
       form.reset();
     }, 1000);
   });
@@ -131,3 +243,4 @@ const counterObs = new IntersectionObserver((entries, obs) => {
   });
 }, { threshold: 0.6 });
 counters.forEach(n => counterObs.observe(n));
+
