@@ -1,80 +1,5 @@
 /* Modern Pitch-Deck Style Unified JS (navigation, modals, animations, forms) */
-(function(){
-  const MIN_DURATION = 3500; // milliseconds
-  const startTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
-
-  const loader = document.getElementById('game-loader');
-  if(!loader) return;
-
-  const bar = document.getElementById('loader-bar');
-  const pct = document.getElementById('loader-pct');
-
-  let progress = 0;
-  let fakeSpeed = 0.25 + Math.random()*0.6;
-  let ticking = true;
-
-  function setProgress(n){
-    progress = Math.max(0, Math.min(100, Math.round(n)));
-    if(bar) bar.style.width = progress + '%';
-    if(pct) pct.textContent = progress + '%';
-  }
-
-  let target = 0;
-  const tick = () => {
-    if(!ticking) return;
-    const diff = target - progress;
-    if(Math.abs(diff) > 0.3){
-      setProgress(progress + diff * 0.12 + fakeSpeed*0.18);
-    } else {
-      setProgress(progress + fakeSpeed*0.08);
-    }
-    requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-
-  const simInterval = setInterval(()=> {
-    target = Math.min(95, target + (0.6 + Math.random() * 1.0));
-  }, 300);
-
-  function finishLoaderNow(delay=0){
-    clearInterval(simInterval);
-    target = 100;
-    // ensure minimum duration
-    const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
-    const elapsed = now - startTime;
-    const remaining = Math.max(0, MIN_DURATION - elapsed);
-    const wait = Math.max(0, remaining) + delay;
-    setTimeout(()=>{
-      setProgress(100);
-      loader.classList.add('hidden');
-      setTimeout(()=> { try{ loader.remove(); } catch(e){} }, 600);
-      ticking = false;
-    }, wait);
-  }
-
-  window.addEventListener('load', ()=> {
-    finishLoaderNow(250); // small extra pause after reaching 100%
-  });
-
-  // Allow Esc to skip immediately (keeps it user-friendly on dev machines)
-  window.addEventListener('keydown', (e)=>{
-    if(e.key === 'Escape'){
-      clearInterval(simInterval);
-      // skip minimum and hide immediately
-      setProgress(100);
-      loader.classList.add('hidden');
-      setTimeout(()=> { try{ loader.remove(); } catch(e){} }, 200);
-      ticking = false;
-    }
-  });
-
-  // programmatic finish for other async work
-  window.finishLoader = function(){
-    clearInterval(simInterval);
-    finishLoaderNow(50);
-  };
-
-})();;
+/* Modern Pitch-Deck Style Unified JS (navigation, modals, animations, forms) */
 
 // ---------- YEAR AUTO-UPDATE ----------
 ['year','year-2','year-3','year-4'].forEach(id => {
@@ -135,7 +60,7 @@ if(modal) modal.addEventListener('click', e => { if(e.target === modal) closeMod
 
 // keyboard navigation
 window.addEventListener('keydown', e => {
-  if(modal && modal.getAttribute('aria-hidden') === 'false'){
+  if(modal.getAttribute('aria-hidden') === 'false'){
     if(e.key === 'Escape') closeModal();
   }
 });
@@ -175,7 +100,6 @@ if(form){
 // ---------- MOVING WORDS (Pause on hover) ----------
 const rotators = document.querySelectorAll('.word-wrap .words');
 rotators.forEach(r => {
-  if(!r.parentElement) return;
   r.parentElement.addEventListener('mouseenter', () => r.style.animationPlayState = 'paused');
   r.parentElement.addEventListener('mouseleave', () => r.style.animationPlayState = 'running');
 });
