@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Blue & White — Neon Toggle + Game Loader Demo</title>
+<title>Blue & White — Neon Toggle + Game Loader Demo (Integrated)</title>
 <style>
-/* === Neon-green variant as default === */
+/* ---------- COMBINED STYLES: ORIGINAL + USER-SUPPLIED ---------- */
 :root{
-  --bg:#39ff14; /* neon green background */
-  --accent:#072033; /* darker accent for contrast */
-  --accent-2:#0b6622; /* secondary darker green */
+  --bg:#39ff14; /* fallback neon */
+  --accent:#072033;
+  --accent-2:#0b6622;
   --muted:#072033cc;
   --card: rgba(255,255,255,0.06);
   --glass: rgba(255,255,255,0.06);
@@ -17,19 +17,69 @@
   --rounded:12px;
   font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
-/* Original blue & white theme (applies when data-theme="original") */
+/* keep compatibility with the previous data-theme flag (original) */
 :root[data-theme="original"]{
-  --bg:#f6fbff; /* very light blue */
-  --accent:#0b66ff; /* primary blue */
-  --accent-2:#5fb0ff; /* secondary blue */
+  --bg:#f6fbff;
+  --accent:#0b66ff;
+  --accent-2:#5fb0ff;
   --muted:#6b7a90;
   --card:#ffffff;
   --glass: rgba(255,255,255,0.7);
   --shadow: 0 10px 30px rgba(12,33,80,0.06);
   --rounded:12px;
 }
+
+/* ---------- THEME: NEON & DEFAULT (user CSS) ---------- */
+/* default (original white/blue deck) */
+body.default-theme {
+  --bg: #f6fbff;
+  --card: #ffffff;
+  --accent: #0b66ff;
+  --accent-2: #5fb0ff;
+  --muted: #6b7a90;
+  color: #0b1330;
+  background: var(--bg);
+}
+
+/* neon theme (default on page load) */
+body.neon-theme {
+  --bg: linear-gradient(180deg, #001f10 0%, #002914 40%), #00ff66;
+  --card: rgba(255,255,255,0.04);
+  --accent: #00ff66;
+  --accent-2: #66ff99;
+  --muted: rgba(255,255,255,0.85);
+  color: #07130b;
+  background: radial-gradient(circle at 10% 10%, rgba(0,255,102,0.12), transparent 15%),
+              radial-gradient(circle at 90% 90%, rgba(102,255,153,0.06), transparent 20%),
+              linear-gradient(180deg, #001f10 0%, #003318 100%);
+}
+
+body.neon-theme .card, body.neon-theme .site-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--muted);
+}
+
+/* theme toggle button */
+.theme-toggle, #themeToggle, #theme-toggle {
+  cursor: pointer;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.06);
+  color: white;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+body.default-theme .theme-toggle {
+  background: var(--card);
+  color: var(--accent);
+  border: 1px solid rgba(11,102,255,0.08);
+}
+
+/* ---------- ORIGINAL UI STYLES (kept + adapted) ---------- */
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;color:var(--accent);background:linear-gradient(180deg,var(--bg),color-mix(in srgb, var(--bg) 60%, white));-webkit-font-smoothing:antialiased}
+html,body{height:100%;margin:0;color:var(--accent);background:var(--bg);-webkit-font-smoothing:antialiased}
 .container{max-width:1100px;margin:0 auto;padding:1.25rem}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
 .brand{font-weight:700;color:var(--accent);text-decoration:none;font-size:1.1rem}
@@ -67,7 +117,7 @@ html,body{height:100%;margin:0;color:var(--accent);background:linear-gradient(18
 .contact-form input,.contact-form textarea{width:100%;padding:0.8rem;margin-bottom:0.8rem;border-radius:10px;border:1px solid rgba(2,10,30,0.04);background:var(--glass);color:var(--accent)}
 .form-msg{margin-top:0.6rem;color:var(--muted)}
 
-/* Moving words / rotator (small, reusable) */
+/* Moving words / rotator */
 .moving-words{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .word-wrap{position:relative;height:34px;overflow:hidden}
 .word-wrap .words{position:absolute;top:0;left:0;animation:slideWords 10s linear infinite}
@@ -104,7 +154,62 @@ html,body{height:100%;margin:0;color:var(--accent);background:linear-gradient(18
 .p-1{padding:1rem}
 .shadow-soft{box-shadow:var(--shadow)}
 
-/* === Game-like loading overlay === */
+/* ---------- GAME-STYLE LOADER (user CSS integrated) ---------- */
+#game-loader {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 99999;
+  background: linear-gradient(180deg, rgba(2,6,10,0.9), rgba(2,6,10,0.85));
+  transition: opacity 0.5s ease, visibility 0.5s;
+}
+#game-loader.loaded { opacity: 0; visibility: hidden; pointer-events: none; }
+#game-loader .loader-wrap {
+  width: min(720px, 92%);
+  max-width: 720px;
+  text-align: center;
+  padding: 28px;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+#game-loader .loader-logo {
+  width: 120px;
+  height: 40px;
+  margin: 0 auto 14px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  box-shadow: 0 6px 30px rgba(0,0,0,0.6), 0 0 18px rgba(0,255,102,0.08) inset;
+}
+#game-loader .loader-bar {
+  width: 100%;
+  height: 12px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+#game-loader .loader-progress {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0,255,102,0.9), rgba(102,255,153,0.9));
+  box-shadow: 0 6px 20px rgba(0,255,102,0.08), 0 0 18px rgba(0,255,102,0.06);
+  transition: width 240ms linear;
+}
+#game-loader .loader-text {
+  font-weight: 700;
+  margin-top: 6px;
+  color: #e6ffe8;
+  letter-spacing: 0.6px;
+}
+body.default-theme #game-loader {
+  background: linear-gradient(180deg, rgba(246,251,255,0.9), rgba(246,251,255,0.95));
+}
+body.default-theme #game-loader .loader-progress {
+  background: linear-gradient(90deg, #0b66ff, #5fb0ff);
+}
+
+/* also keep the original loader styles (id: loader) so older markup still works */
 .loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4));z-index:9999;backdrop-filter: blur(4px);}
 .loader-card{width:min(760px,92%);padding:1.4rem;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));box-shadow:0 20px 60px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.03);display:flex;gap:1rem;align-items:center}
 .loader-left{flex:1}
@@ -114,30 +219,20 @@ html,body{height:100%;margin:0;color:var(--accent);background:linear-gradient(18
 .progress-fill{height:100%;width:0;transform:translateX(-0%);transition:width 900ms cubic-bezier(.2,.9,.2,1);background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 6px 22px rgba(0,0,0,0.35)}
 .progress-stripes{position:absolute;inset:0;background-image:linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.05) 75%, transparent 75%, transparent);background-size:40px 40px;animation:moveStripes 1s linear infinite}
 @keyframes moveStripes{from{background-position:0 0}to{background-position:40px 0}}
-.loader-right{width:120px;text-align:right}
-.loader-percent{font-weight:900;font-size:1.6rem;color:var(--accent)}
-
-/* small fade-out animation for loader */
 .fade-out{animation:fadeOut 400ms ease forwards}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
 </style>
 </head>
-<body>
-  <!-- Loading overlay (visible on initial load) -->
-  <div id="loader" class="loader-overlay" role="status" aria-live="polite">
-    <div class="loader-card">
-      <div class="loader-left">
-        <div class="loader-title">Entering — Loading assets</div>
-        <div class="loader-sub">Preparing environment... enjoy the brief cinematic</div>
-        <div class="progress-bar" aria-hidden="true">
-          <div id="progressFill" class="progress-fill"></div>
-          <div class="progress-stripes"></div>
-        </div>
-      </div>
-      <div class="loader-right">
-        <div id="percent" class="loader-percent">0%</div>
-      </div>
+<body class="neon-theme">
+
+  <!-- Game-style loader (integrated) -->
+  <div id="game-loader" role="status" aria-live="polite">
+    <div class="loader-wrap">
+      <div class="loader-logo" aria-hidden="true"></div>
+      <div class="loader-title">Entering — Loading assets</div>
+      <div class="loader-bar" aria-hidden="true"><div id="gameProgress" class="loader-progress"></div></div>
+      <div id="gamePercent" class="loader-text">0%</div>
     </div>
   </div>
 
@@ -154,7 +249,7 @@ html,body{height:100%;margin:0;color:var(--accent);background:linear-gradient(18
       </ul>
     </nav>
     <div style="display:flex;gap:8px;align-items:center">
-      <button id="themeToggle" class="btn" aria-pressed="false">Switch to Blue & White</button>
+      <button id="themeToggle" class="theme-toggle" aria-pressed="false">Switch to Blue & White</button>
     </div>
   </header>
 
@@ -179,33 +274,28 @@ html,body{height:100%;margin:0;color:var(--accent);background:linear-gradient(18
   </main>
 
 <script>
-// Game-like loader: animate progress and then fade
+/* ---------- LOADER + THEME TOGGLE SCRIPT (integrated) ---------- */
 (function(){
-  const loader = document.getElementById('loader');
-  const fill = document.getElementById('progressFill');
-  const pct = document.getElementById('percent');
+  const loader = document.getElementById('game-loader');
+  const progress = document.getElementById('gameProgress');
+  const percent = document.getElementById('gamePercent');
 
-  // simulate staged loading with easing timings
-  let current = 0;
-  const ease = t => 1 - Math.pow(1 - t, 2);
-  const duration = 1400; // total ms for loader animation
-  const start = performance.now();
+  // simulate staged loading
+  let start = performance.now();
+  const duration = 1400; // total ms
+  function ease(t){ return 1 - Math.pow(1 - t, 2); }
 
   function step(now){
     const t = Math.min((now - start) / duration, 1);
     const eased = ease(t);
-    current = Math.floor(eased * 100);
-    fill.style.width = current + '%';
-    pct.textContent = current + '%';
-    if(t < 1){
-      requestAnimationFrame(step);
-    } else {
-      // small delay for cinematic effect
+    const cur = Math.floor(eased * 100);
+    progress.style.width = cur + '%';
+    percent.textContent = cur + '%';
+    if(t < 1){ requestAnimationFrame(step); }
+    else {
       setTimeout(()=>{
-        loader.classList.add('fade-out');
-        // remove from DOM after animation
-        setTimeout(()=>loader.remove(), 500);
-        // trigger any "onLoaded" behaviors (e.g. animate skill bars)
+        loader.classList.add('loaded');
+        // dispatch event for other UI animations
         document.dispatchEvent(new Event('app:loaded'));
       }, 220);
     }
@@ -213,32 +303,41 @@ html,body{height:100%;margin:0;color:var(--accent);background:linear-gradient(18
   requestAnimationFrame(step);
 })();
 
-// Theme toggle: set data-theme on documentElement
+// Theme toggle: toggles body.neon-theme <-> body.default-theme and persists
 (function(){
   const btn = document.getElementById('themeToggle');
-  const root = document.documentElement;
-  const ORIGINAL = 'original';
+  const body = document.body;
+  const KEY = 'deck-theme-v2';
 
-  // initialize from saved preference
-  const saved = localStorage.getItem('deck-theme');
-  if(saved === ORIGINAL){
-    root.setAttribute('data-theme', ORIGINAL);
+  // initialize
+  const saved = localStorage.getItem(KEY);
+  if(saved === 'default'){
+    body.classList.remove('neon-theme');
+    body.classList.add('default-theme');
     btn.textContent = 'Switch to Neon Green';
     btn.setAttribute('aria-pressed','true');
+  } else {
+    // default neon
+    body.classList.remove('default-theme');
+    body.classList.add('neon-theme');
+    btn.textContent = 'Switch to Blue & White';
+    btn.setAttribute('aria-pressed','false');
   }
 
   btn.addEventListener('click', ()=>{
-    const isOriginal = root.getAttribute('data-theme') === ORIGINAL;
-    if(isOriginal){
-      root.removeAttribute('data-theme');
+    const isDefault = body.classList.contains('default-theme');
+    if(isDefault){
+      body.classList.remove('default-theme');
+      body.classList.add('neon-theme');
       btn.textContent = 'Switch to Blue & White';
       btn.setAttribute('aria-pressed','false');
-      localStorage.removeItem('deck-theme');
+      localStorage.removeItem(KEY);
     } else {
-      root.setAttribute('data-theme', ORIGINAL);
+      body.classList.remove('neon-theme');
+      body.classList.add('default-theme');
       btn.textContent = 'Switch to Neon Green';
       btn.setAttribute('aria-pressed','true');
-      localStorage.setItem('deck-theme', ORIGINAL);
+      localStorage.setItem(KEY,'default');
     }
   });
 })();
@@ -246,7 +345,6 @@ html,body{height:100%;margin:0;color:var(--accent);background:linear-gradient(18
 // Example: animate skill fills after loader
 document.addEventListener('app:loaded', ()=>{
   document.querySelectorAll('.skill .fill').forEach((el, i)=>{
-    // progressive widths for demo
     const target = (70 + (i*8)) % 100;
     setTimeout(()=> el.style.width = target + '%', 120 * i);
   });
