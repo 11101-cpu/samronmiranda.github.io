@@ -6,9 +6,15 @@
 <title>Contact — Samron Miranda</title>
 <meta name="description" content="Contact Samron Trevor Miranda — get in touch.">
 <style>
-  :root{--bg:#f6fbff;--accent:#0b66ff;--muted:#6b7a90;--card:#fff;--glass:rgba(255,255,255,0.7);--shadow:0 12px 40px rgba(6,18,40,0.08);--rounded:12px}
+  :root{
+    --bg:#f6fbff;--accent:#0b66ff;--muted:#6b7a90;--card:#fff;--glass:rgba(255,255,255,0.7);--shadow:0 12px 40px rgba(6,18,40,0.08);--rounded:12px
+  }
+  /* Theme tokens for easy switching */
+  .theme-default{ --bg: #f6fbff; --accent: #0b66ff; --muted: #6b7a90; --card: #fff; --glass: rgba(255,255,255,0.7); --shape-opacity:0.05 }
+  .theme-neon{ --bg: #00ff6a; --accent: #00303f; --muted: rgba(2,10,30,0.6); --card: rgba(255,255,255,0.04); --glass: rgba(255,255,255,0.06); --shape-opacity:0.12 }
+
   *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:linear-gradient(180deg,var(--bg),#eaf4ff 60%);color:#102034;-webkit-font-smoothing:antialiased;padding-bottom:60px}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:linear-gradient(180deg,var(--bg), rgba(255,255,255,0.06) 70%);color:#102034;-webkit-font-smoothing:antialiased;padding-bottom:60px;transition:background .35s ease,color .35s ease}
   .container{max-width:900px;margin:0 auto;padding:20px}
   header.nav-wrap{padding:18px 0}
   .nav{display:flex;align-items:center;justify-content:space-between}
@@ -21,11 +27,14 @@
   h1{font-size:32px;margin:6px 0}
   p.intro{color:var(--muted)}
 
-  .contact-form{background:linear-gradient(180deg,#fff,#fbfdff);padding:18px;border-radius:12px;box-shadow:var(--shadow);margin-top:12px}
+  .contact-form{background:linear-gradient(180deg,var(--card),rgba(255,255,255,0.02));padding:18px;border-radius:12px;box-shadow:var(--shadow);margin-top:12px;border:1px solid rgba(2,10,30,0.03)}
   .contact-form label{display:block;margin-top:12px;font-weight:600}
-  .contact-form input,.contact-form textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(2,10,30,0.06);margin-top:6px;font-size:15px}
+  .contact-form input,.contact-form textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(2,10,30,0.06);margin-top:6px;font-size:15px;background:transparent;color:inherit}
   .contact-form textarea{resize:vertical}
+
   .btn{display:inline-block;padding:10px 14px;border-radius:12px;background:var(--accent);color:white;text-decoration:none;border:0;font-weight:700;margin-top:12px;cursor:pointer}
+  /* theme toggle */
+  .theme-toggle{display:inline-flex;align-items:center;gap:8px;padding:8px;border-radius:999px;border:1px solid rgba(2,10,30,0.06);background:transparent;color:var(--muted);cursor:pointer;font-weight:700}
 
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .form-msg{margin-top:10px;color:var(--muted)}
@@ -34,31 +43,59 @@
   .socials a{color:var(--accent);text-decoration:none;font-weight:600}
 
   /* floating shape */
-  .bg-shape{position:fixed;right:-100px;top:10%;width:380px;height:380px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#5fb0ff);opacity:0.05;filter:blur(36px);pointer-events:none}
+  .bg-shape{position:fixed;right:-100px;top:10%;width:380px;height:380px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#5fb0ff);opacity:var(--shape-opacity);filter:blur(36px);pointer-events:none;transition:opacity .35s ease}
 
   /* tiny animations */
   .btn.sending{transform:translateY(1px) scale(0.98);opacity:0.9}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
+  /* loading overlay (game-style) */
+  .loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6));z-index:9999;flex-direction:column;color:white}
+  .loader-box{width:380px;max-width:80%;padding:26px;border-radius:14px;background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);text-align:center}
+  .loader-title{font-weight:800;letter-spacing:2px;margin-bottom:12px}
+  .loader-anim{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
+  .loader-anim span{width:12px;height:12px;border-radius:3px;background:white;opacity:.15;transform:translateY(0);animation:loaderJump 1s infinite ease-in-out}
+  .loader-anim span:nth-child(2){animation-delay:.12s}
+  .loader-anim span:nth-child(3){animation-delay:.24s}
+  .loader-anim span:nth-child(4){animation-delay:.36s}
+
+  @keyframes loaderJump{0%,80%,100%{transform:translateY(0);opacity:.15}40%{transform:translateY(-18px);opacity:1}}
+  .loader-percent{font-size:14px;font-weight:700}
+  .loader-hidden{opacity:0;pointer-events:none;transition:opacity .45s ease}
+
   /* responsive */
-  @media (max-width:720px){.form-row{grid-template-columns:1fr}}
+  @media (max-width:720px){.form-row{grid-template-columns:1fr}.nav{gap:10px}}
 </style>
 </head>
-<body>
+<body class="theme-neon">
+  <!-- Game-style loading overlay -->
+  <div id="loader" class="loader-overlay" role="status" aria-live="polite">
+    <div class="loader-box">
+      <div class="loader-title">LOADING</div>
+      <div class="loader-anim" aria-hidden>
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="loader-percent" id="loaderPercent">0%</div>
+    </div>
+  </div>
+
   <div class="bg-shape" aria-hidden></div>
   <header class="nav-wrap">
     <nav class="nav container">
       <a class="brand" href="index.html">Samron Miranda</a>
-      <ul class="nav-links" id="nav-links-4">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="contact.html" class="active">Contact</a></li>
-      </ul>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button id="themeToggle" class="theme-toggle" aria-pressed="true" title="Switch theme">Switch to White/Blue</button>
+        <ul class="nav-links" id="nav-links-4" style="margin:0;padding:0">
+          <li style="display:inline-block"><a href="index.html">Home</a></li>
+          <li style="display:inline-block"><a href="about.html">About</a></li>
+          <li style="display:inline-block"><a href="gallery.html">Gallery</a></li>
+          <li style="display:inline-block"><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+      </div>
     </nav>
   </header>
 
-  <main class="container contact-page">
+  <main class="container contact-page" id="mainContent" tabindex="-1">
     <h1>Contact Me</h1>
     <p class="intro">If you'd like to reach me, send a message using the form below or email me at <a id="mail-link" href="mailto:samronmiranda@gmail.com">samronmiranda@gmail.com</a>. Click the email to copy it.</p>
 
@@ -96,6 +133,7 @@
   </footer>
 
 <script>
+  // set year
   document.getElementById('year-4').textContent = new Date().getFullYear();
 
   // copy email on click with feedback
@@ -148,8 +186,55 @@
 
   // Accessibility: press Enter on any input to submit
   form.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); form.requestSubmit(); } });
+
+  // Theme toggle: switch between neon (current) and original white/blue deck
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+  let isDefault = false; // currently neon
+  function updateToggleLabel(){
+    themeToggle.textContent = isDefault ? 'Switch to Neon Green' : 'Switch to White/Blue';
+    themeToggle.setAttribute('aria-pressed', String(isDefault));
+  }
+  themeToggle.addEventListener('click', ()=>{
+    isDefault = !isDefault;
+    if(isDefault){ body.classList.remove('theme-neon'); body.classList.add('theme-default'); }
+    else{ body.classList.remove('theme-default'); body.classList.add('theme-neon'); }
+    updateToggleLabel();
+  });
+  updateToggleLabel();
+
+  // Game-style loading: animate percent then fade out
+  const loader = document.getElementById('loader');
+  const percentEl = document.getElementById('loaderPercent');
+
+  // emulate a game loading sequence with small random increments
+  let percent = 0;
+  function advance(){
+    const slow = Math.random() * 6 + 6; // small increments
+    percent = Math.min(100, Math.round(percent + slow));
+    percentEl.textContent = percent + '%';
+    if(percent < 100){ setTimeout(advance, Math.random() * 220 + 80); }
+    else finishLoading();
+  }
+  function finishLoading(){
+    loader.classList.add('loader-hidden');
+    setTimeout(()=> loader.style.display = 'none', 500);
+    // focus main content for accessibility
+    const main = document.getElementById('mainContent');
+    main.focus();
+  }
+
+  // Start loading when DOM is ready; if the page is already loaded, start quickly.
+  document.addEventListener('readystatechange', ()=>{
+    if(document.readyState === 'interactive'){
+      // small delay to let animation show
+      setTimeout(advance, 200);
+    }
+  });
+
+  // Fallback in case load takes too long
+  setTimeout(()=>{ if(percent < 100) { percent = 100; percentEl.textContent = '100%'; finishLoading(); } }, 3000);
 </script>
 </body>
 </html>
-
 
