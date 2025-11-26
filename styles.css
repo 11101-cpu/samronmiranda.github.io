@@ -1,4 +1,4 @@
-/* Blue & White — Modern Pitch Deck CSS (responsive + subtle motion) */
+/* Blue & White — Modern Pitch Deck CSS (responsive + subtle motion) *
 :root{
   --bg:#f6fbff; /* very light blue */
   --accent:#0b66ff; /* primary blue */
@@ -85,5 +85,3 @@ html,body{height:100%;margin:0;color:#102034;background:linear-gradient(180deg,v
 .center{text-align:center}
 .p-1{padding:1rem}
 .shadow-soft{box-shadow:var(--shadow)}
-
-
