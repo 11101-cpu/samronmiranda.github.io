@@ -1,46 +1,47 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gallery — Samron Miranda</title>
 <meta name="description" content="Gallery and portfolio of Samron Miranda.">
 <style>
+  /* ---------- Theme variables ---------- */
   :root{
-    --bg:#f6fbff;
+    --bg: linear-gradient(180deg,#f6fbff,#eaf4ff 60%);
     --accent:#0b66ff;
     --muted:#6b7a90;
     --card:#fff;
     --shadow:0 10px 30px rgba(12,33,80,0.08);
-    --rounded:12px;
     --text:#102034;
     --glass: rgba(255,255,255,0.92);
+    --rounded:12px;
   }
 
-  /* neon green theme variables (applied when body has .neon) */
-  .neon {
-    --bg: linear-gradient(180deg,#e9fff2,#e0fff0);
+  /* neon-green theme (applied when body.neon) */
+  body.neon {
+    --bg: linear-gradient(180deg,#e8fff0,#e6fff6 60%);
     --accent: #00ff66;
-    --muted: #0e3b26;
-    --card: #04180c;
-    --shadow: 0 20px 60px rgba(0,128,64,0.12);
-    --text: #04180c;
-    --glass: rgba(3,18,12,0.95);
+    --muted: #07321d;
+    --card: #041a10;
+    --shadow: 0 20px 60px rgba(0,140,70,0.12);
+    --text: #042016;
+    --glass: rgba(0,0,0,0.08);
   }
 
+  /* ---------- Base layout ---------- */
   *{box-sizing:border-box}
   body{
     margin:0;
     font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;
-    background:linear-gradient(180deg,var(--bg),#eaf4ff 60%);
+    background:var(--bg);
     color:var(--text);
     -webkit-font-smoothing:antialiased;
     padding-bottom:40px;
     transition:background .35s ease,color .35s ease;
   }
-
   .container{max-width:1100px;margin:0 auto;padding:20px}
-  header.nav-wrap{padding:14px 0}
+  header.nav-wrap{padding:18px 0}
   .nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
   .brand{font-weight:700;color:var(--accent);text-decoration:none}
   .menu-toggle{display:none}
@@ -48,21 +49,13 @@
   .nav-links a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px}
   .nav-links a.active{background:rgba(11,102,255,0.06);color:var(--accent)}
 
-  /* theme toggle */
-  .theme-toggle {
-    border: 0;
-    background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-    padding:8px 12px;
-    border-radius:999px;
-    cursor:pointer;
-    display:inline-flex;
-    gap:8px;
-    align-items:center;
-    box-shadow:var(--shadow);
-    color:var(--muted);
-    font-weight:600;
+  /* theme buttons */
+  .theme-controls{display:flex;gap:8px;align-items:center}
+  .theme-btn {
+    border:0;padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:700;
+    background:var(--glass);box-shadow:var(--shadow);color:var(--muted);
   }
-  .theme-toggle.neon-on { background: linear-gradient(90deg, rgba(0,255,102,0.12), rgba(0,255,102,0.06)); color: #012e18; }
+  .theme-btn[aria-pressed="true"]{outline:2px solid var(--accent)}
 
   h1{font-size:32px;margin:8px 0}
   .intro{color:var(--muted)}
@@ -77,7 +70,7 @@
   .thumb:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 20px 50px rgba(12,33,80,0.12)}
 
   /* modal */
-  .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(6,18,40,0.55);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .18s ease}
+  .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(6,18,40,0.55);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .18s ease;z-index:40}
   .modal[aria-hidden="false"]{opacity:1;pointer-events:auto}
   .modal-inner{background:linear-gradient(180deg,var(--card),#fbfdff);padding:12px;border-radius:12px;max-width:1000px;width:100%;box-shadow:0 30px 80px rgba(2,10,30,0.6);position:relative}
   #modal-img{width:100%;max-height:75vh;object-fit:contain;border-radius:8px}
@@ -86,125 +79,169 @@
   .nav-btn{background:var(--glass);border-radius:8px;padding:6px 8px;border:0;cursor:pointer}
 
   .caption{margin-top:8px;color:var(--muted);font-size:14px}
-
-  /* slideshow small thumbnail strip */
   .thumb-strip{display:flex;gap:8px;margin-top:8px;overflow:auto}
   .thumb-strip img{height:56px;width:80px;object-fit:cover;border-radius:6px;cursor:pointer;opacity:0.7}
   .thumb-strip img.active{outline:3px solid var(--accent);opacity:1}
 
-  /* loader full-screen */
+  /* ---------- Game-like loader ---------- */
   .page-loader{
-    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#041018, #04202a);
-    z-index:9999;color:#b8fff0;flex-direction:column;gap:18px;
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;
+    background:linear-gradient(180deg,#001316,#022826);color:#b8ffd9;z-index:9999;padding:28px;
   }
+
+  .loader-inner{display:flex;flex-direction:column;gap:12px;align-items:center}
   .loader-badge{
-    width:96px;height:96px;border-radius:20px;background:linear-gradient(135deg,#001414,#00402e);display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px rgba(0,170,120,0.14);
-    transform-origin:center;
-    animation: pulse 1.6s ease-in-out infinite;
-    border: 1px solid rgba(0,255,150,0.12);
+    width:110px;height:110px;border-radius:22px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#002a12,#00522a);box-shadow:0 30px 90px rgba(0,200,110,0.12);
+    transform-origin:center;animation: badgePulse 1600ms ease-in-out infinite;
+    border:1px solid rgba(0,255,130,0.08);
   }
-  .loader-badge svg{filter:drop-shadow(0 8px 40px rgba(0,255,150,0.12));}
-  .loader-text{font-weight:700;letter-spacing:0.6px;color:rgba(200,255,230,0.9)}
-  .loader-dots{display:flex;gap:6px}
-  .loader-dots span{width:8px;height:8px;border-radius:50%;background:rgba(0,255,150,0.85);opacity:0;transform:translateY(0);animation: dot 1s infinite;}
-  .loader-dots span:nth-child(2){animation-delay:.12s}
-  .loader-dots span:nth-child(3){animation-delay:.24s}
+  .loader-badge svg{filter:drop-shadow(0 20px 40px rgba(0,255,120,0.12));}
 
-  @keyframes dot { 0%{opacity:0;transform:translateY(0)} 40%{opacity:1;transform:translateY(-8px)} 100%{opacity:0;transform:translateY(0)} }
-  @keyframes pulse { 0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)} }
+  .loader-title{font-weight:800;letter-spacing:0.6px}
+  .loader-sub{font-size:13px;color:rgba(255,255,255,0.75)}
 
-  /* fade-out animation for loader */
-  .page-loader.hidden{opacity:0;pointer-events:none;transition:opacity .5s ease;transform:translateY(-6px);}
+  /* progress bar */
+  .progress-wrap{width:320px;max-width:90%;height:12px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;box-shadow:inset 0 -6px 18px rgba(0,0,0,0.12)}
+  .progress-bar{height:100%;width:0%;background:linear-gradient(90deg,#00ff66,#00b36a);transition:width .2s linear}
+
+  /* animated dots like "loading..." */
+  .dots{display:flex;gap:8px;margin-top:8px}
+  .dots span{width:10px;height:10px;border-radius:50%;background:#00ff66;opacity:0;transform:translateY(0);animation: dot 1s infinite}
+  .dots span:nth-child(2){animation-delay:.12s}
+  .dots span:nth-child(3){animation-delay:.24s}
+
+  @keyframes dot {
+    0%{opacity:0;transform:translateY(0)}
+    40%{opacity:1;transform:translateY(-8px)}
+    100%{opacity:0;transform:translateY(0)}
+  }
+  @keyframes badgePulse {0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+
+  .page-loader.hidden{opacity:0;pointer-events:none;transition:opacity .4s ease;transform:translateY(-6px);}
 
   /* responsive */
   @media (max-width:740px){.thumb{height:120px}.modal-inner{padding:8px}.nav{flex-wrap:wrap}}
 </style>
 </head>
-<body>
-<!-- PAGE LOADER -->
-<div id="pageLoader" class="page-loader" role="status" aria-live="polite" aria-label="Loading">
-  <div class="loader-badge" aria-hidden="true">
-    <!-- simple neon icon (camera-like) -->
-    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="3.5" y="6.5" width="17" height="11" rx="2" stroke="url(#g)" stroke-width="1.2"/>
-      <circle cx="12" cy="11.5" r="2.6" stroke="url(#g)" stroke-width="1.2"/>
-      <defs>
-        <linearGradient id="g" x1="0" x2="1">
-          <stop offset="0" stop-color="#6affb3"/>
-          <stop offset="1" stop-color="#00ff66"/>
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
-  <div class="loader-text">Samron Miranda</div>
-  <div class="loader-dots" aria-hidden="true">
-    <span></span><span></span><span></span>
-  </div>
-</div>
-
-<header class="nav-wrap">
-  <nav class="nav container">
-    <a class="brand" href="index.html">Samron Miranda</a>
-
-    <!-- theme toggle button -->
-    <div style="display:flex;gap:8px;align-items:center;">
-      <button id="themeToggle" class="theme-toggle" title="Toggle neon green theme" aria-pressed="false" type="button">
-        🌿 Neon
-      </button>
-    </div>
-
-    <button id="menu-toggle-3" class="menu-toggle" aria-expanded="false" aria-controls="nav-links-3">☰</button>
-    <ul class="nav-links" id="nav-links-3">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="gallery.html" class="active">Gallery</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
-</header>
-
-<main class="container gallery-page" id="pageContent" aria-hidden="true">
-  <h1>Gallery / Portfolio</h1>
-  <p class="intro">A few snapshots of my work, passions and memorable moments.</p>
-
-  <div class="controls">
-    <div class="filter active" data-filter="all">All</div>
-    <div class="filter" data-filter="projects">Projects</div>
-    <div class="filter" data-filter="sports">Sports</div>
-    <div class="filter" data-filter="events">Events</div>
-    <div class="view-count" id="view-count">4 items</div>
-  </div>
-
-  <div class="gallery-grid" id="galleryGrid">
-    <img class="thumb" src="assets/images/photo1.jpg" alt="Mini Chat App screenshot" data-full="assets/images/photo1_large.jpg" data-tag="projects" loading="lazy">
-    <img class="thumb" src="assets/images/photo2.jpg" alt="College sports day" data-full="assets/images/photo2_large.jpg" data-tag="sports" loading="lazy">
-    <img class="thumb" src="assets/images/photo3.jpg" alt="Portfolio screenshot" data-full="assets/images/photo3_large.jpg" data-tag="projects" loading="lazy">
-    <img class="thumb" src="assets/images/photo4.jpg" alt="Team photo" data-full="assets/images/photo4_large.jpg" data-tag="events" loading="lazy">
-  </div>
-
-  <!-- Modal -->
-  <div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-inner" role="dialog" aria-modal="true" aria-label="Image viewer">
-      <button id="modal-close" class="modal-close" aria-label="Close">✕</button>
-      <div class="modal-nav">
-        <button id="prev" class="nav-btn" aria-label="Previous">◀</button>
-        <button id="next" class="nav-btn" aria-label="Next">▶</button>
+<body class="neon">
+  <!-- GAME-LIKE LOADER (shows on entry) -->
+  <div id="pageLoader" class="page-loader" role="status" aria-live="polite" aria-label="Loading">
+    <div class="loader-inner" role="presentation">
+      <div class="loader-badge" aria-hidden="true">
+        <!-- icon: camera / portfolio -->
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3.5" y="6.5" width="17" height="11" rx="2" stroke="url(#g)" stroke-width="1.2"/>
+          <circle cx="12" cy="11.5" r="2.6" stroke="url(#g)" stroke-width="1.2"/>
+          <defs>
+            <linearGradient id="g" x1="0" x2="1">
+              <stop offset="0" stop-color="#6affb3" />
+              <stop offset="1" stop-color="#00ff66" />
+            </linearGradient>
+          </defs>
+        </svg>
       </div>
-      <img id="modal-img" src="" alt="expanded view">
-      <div class="caption" id="modal-caption"></div>
-      <div class="thumb-strip" id="thumbStrip" aria-hidden></div>
+
+      <div class="loader-title">SAMRON MIRANDA</div>
+      <div class="loader-sub">loading gallery...</div>
+
+      <div class="progress-wrap" aria-hidden="true" title="Loading progress">
+        <div id="progressBar" class="progress-bar" style="width:0%"></div>
+      </div>
+
+      <div class="dots" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </div>
 
-</main>
+  <!-- HEADER -->
+  <header class="nav-wrap">
+    <nav class="nav container" aria-label="Main">
+      <a class="brand" href="index.html">Samron Miranda</a>
 
-<footer class="site-footer container">
-  <p>&copy; <span id="year-3"></span> Samron Trevor Miranda</p>
-</footer>
+      <!-- theme controls: 1) neon (default) 2) original blue/white -->
+      <div class="theme-controls" role="region" aria-label="Theme controls">
+        <button id="neonBtn" class="theme-btn" aria-pressed="true" title="Neon green theme">Neon</button>
+        <button id="origBtn" class="theme-btn" aria-pressed="false" title="Original white & blue deck">Original</button>
+      </div>
+
+      <button id="menu-toggle-3" class="menu-toggle" aria-expanded="false" aria-controls="nav-links-3">☰</button>
+      <ul class="nav-links" id="nav-links-3">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container gallery-page" id="pageContent" aria-hidden="true">
+    <h1>Gallery / Portfolio</h1>
+    <p class="intro">A few snapshots of my work, passions and memorable moments.</p>
+
+    <div class="controls">
+      <div class="filter active" data-filter="all">All</div>
+      <div class="filter" data-filter="projects">Projects</div>
+      <div class="filter" data-filter="sports">Sports</div>
+      <div class="filter" data-filter="events">Events</div>
+      <div class="view-count" id="view-count">4 items</div>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+      <img class="thumb" src="assets/images/photo1.jpg" alt="Mini Chat App screenshot" data-full="assets/images/photo1_large.jpg" data-tag="projects" loading="lazy">
+      <img class="thumb" src="assets/images/photo2.jpg" alt="College sports day" data-full="assets/images/photo2_large.jpg" data-tag="sports" loading="lazy">
+      <img class="thumb" src="assets/images/photo3.jpg" alt="Portfolio screenshot" data-full="assets/images/photo3_large.jpg" data-tag="projects" loading="lazy">
+      <img class="thumb" src="assets/images/photo4.jpg" alt="Team photo" data-full="assets/images/photo4_large.jpg" data-tag="events" loading="lazy">
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal" aria-hidden="true">
+      <div class="modal-inner" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <button id="modal-close" class="modal-close" aria-label="Close">✕</button>
+        <div class="modal-nav">
+          <button id="prev" class="nav-btn" aria-label="Previous">◀</button>
+          <button id="next" class="nav-btn" aria-label="Next">▶</button>
+        </div>
+        <img id="modal-img" src="" alt="expanded view">
+        <div class="caption" id="modal-caption"></div>
+        <div class="thumb-strip" id="thumbStrip" aria-hidden></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer container">
+    <p>&copy; <span id="year-3"></span> Samron Trevor Miranda</p>
+  </footer>
 
 <script>
-  // --- basic initializers ---
+  // ---------- Utilities & initial state ----------
   document.getElementById('year-3').textContent = new Date().getFullYear();
+  const neonBtn = document.getElementById('neonBtn');
+  const origBtn  = document.getElementById('origBtn');
+  const body = document.body;
+
+  // apply theme from localStorage (default to neon)
+  const stored = localStorage.getItem('samron_theme') || 'neon';
+  function setTheme(name){
+    if(name === 'neon'){
+      body.classList.add('neon');
+      neonBtn.setAttribute('aria-pressed','true');
+      origBtn.setAttribute('aria-pressed','false');
+    } else {
+      body.classList.remove('neon');
+      neonBtn.setAttribute('aria-pressed','false');
+      origBtn.setAttribute('aria-pressed','true');
+    }
+    localStorage.setItem('samron_theme', name);
+  }
+  setTheme(stored);
+
+  neonBtn.addEventListener('click', ()=> setTheme('neon'));
+  origBtn.addEventListener('click', ()=> setTheme('original'));
+
+  // ---------- Gallery filters & count ----------
   const filters = document.querySelectorAll('.filter');
   const grid = document.getElementById('galleryGrid');
   const items = Array.from(grid.querySelectorAll('.thumb'));
@@ -213,17 +250,15 @@
   function updateCount(){ viewCount.textContent = items.filter(i => !i.hidden).length + ' items'; }
   updateCount();
 
-  filters.forEach(f=>f.addEventListener('click', ()=> {
+  filters.forEach(f=>f.addEventListener('click', ()=>{
     filters.forEach(x=>x.classList.remove('active'));
     f.classList.add('active');
     const tag = f.dataset.filter;
-    items.forEach(it=>{
-      if(tag === 'all' || it.dataset.tag === tag) it.hidden = false; else it.hidden = true;
-    });
+    items.forEach(it => { it.hidden = !(tag === 'all' || it.dataset.tag === tag); });
     updateCount();
   }));
 
-  // --- Modal logic with keyboard navigation and thumbnail strip ---
+  // ---------- Modal viewer ----------
   const modal = document.getElementById('modal');
   const modalImg = document.getElementById('modal-img');
   const caption = document.getElementById('modal-caption');
@@ -247,19 +282,16 @@
 
   function closeModal(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
 
-  items.forEach((it, idx)=>{
-    it.addEventListener('click', ()=> {
-      const visible = visibleItems();
-      const index = visible.indexOf(it);
-      openAt(index);
-    });
-  });
+  items.forEach((it)=> it.addEventListener('click', ()=>{
+    const visible = visibleItems();
+    const index = visible.indexOf(it);
+    openAt(index);
+  }));
 
   document.getElementById('modal-close').addEventListener('click', closeModal);
   document.getElementById('next').addEventListener('click', ()=>{ openAt((currentIndex+1) % visibleItems().length); });
   document.getElementById('prev').addEventListener('click', ()=>{ openAt((currentIndex-1+visibleItems().length) % visibleItems().length); });
 
-  // keyboard navigation
   window.addEventListener('keydown', (e)=>{
     if(modal.getAttribute('aria-hidden') === 'false'){
       if(e.key === 'Escape') closeModal();
@@ -268,14 +300,14 @@
     }
   });
 
-  // build thumbnail strip and click handling
   function buildThumbStrip(){
     thumbStrip.innerHTML = '';
     const visible = visibleItems();
-    visible.forEach((v, i)=>{
+    visible.forEach((v,i)=>{
       const t = document.createElement('img');
-      t.src = v.src; t.alt = v.alt; t.dataset.index = i; if(i === currentIndex) t.classList.add('active');
-      t.addEventListener('click', ()=>{ openAt(i); });
+      t.src = v.src; t.alt = v.alt; t.dataset.index = i;
+      if(i === currentIndex) t.classList.add('active');
+      t.addEventListener('click', ()=> openAt(i));
       thumbStrip.appendChild(t);
     });
   }
@@ -286,7 +318,7 @@
     if(thumbs[i]) thumbs[i].classList.add('active');
   }
 
-  // simple touch support: swipe left/right inside modal image
+  // swipe support
   let startX = 0;
   modalImg.addEventListener('touchstart', e=> startX = e.changedTouches[0].clientX);
   modalImg.addEventListener('touchend', e=>{
@@ -294,98 +326,96 @@
     if(Math.abs(dx) > 40){ if(dx < 0) document.getElementById('next').click(); else document.getElementById('prev').click(); }
   });
 
-  // accessibility: close modal when clicking backdrop
   modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
 
-  // --- THEME TOGGLE (neon green) ---
-  const themeToggle = document.getElementById('themeToggle');
-  const body = document.body;
-
-  function applyTheme(isNeon){
-    if(isNeon){
-      body.classList.add('neon');
-      themeToggle.classList.add('neon-on');
-      themeToggle.setAttribute('aria-pressed','true');
-      themeToggle.textContent = '🌿 Neon (On)';
-    } else {
-      body.classList.remove('neon');
-      themeToggle.classList.remove('neon-on');
-      themeToggle.setAttribute('aria-pressed','false');
-      themeToggle.textContent = '🌿 Neon';
-    }
-    localStorage.setItem('samron_neon', isNeon ? '1' : '0');
-  }
-
-  // initialize from storage
-  const stored = localStorage.getItem('samron_neon');
-  applyTheme(stored === '1');
-
-  themeToggle.addEventListener('click', ()=> {
-    const isOn = body.classList.contains('neon');
-    applyTheme(!isOn);
-  });
-
-  // --- PAGE LOADER: show until page fully loaded OR fallback timeout ---
+  // ---------- Loader logic (game-like UX) ----------
   const loader = document.getElementById('pageLoader');
+  const progressBar = document.getElementById('progressBar');
   const pageContent = document.getElementById('pageContent');
 
-  // function to hide loader and reveal content
-  function hideLoader(){
-    if(!loader) return;
-    loader.classList.add('hidden');
-    // wait for fade-out then remove from DOM
-    setTimeout(()=> { loader.remove(); }, 600);
-    pageContent.removeAttribute('aria-hidden');
+  // show loader by default; hide page content for accessibility
+  pageContent.setAttribute('aria-hidden','true');
+
+  // simulate progressive loading to look "game-like"
+  // We'll advance progress as images load, and also with a small simulated ramp to look smooth.
+  const imgs = Array.from(document.images);
+  let total = imgs.length || 1;
+  let loaded = 0;
+
+  function setProgress(p){
+    progressBar.style.width = Math.min(100, Math.max(0, p)) + '%';
   }
 
-  // Wait for load event and also ensure images have loaded (best-effort)
-  let imagesToLoad = Array.from(document.images);
-  // If no images, just hide loader on load
-  let imagesLoaded = 0;
-  if(imagesToLoad.length === 0){
-    window.addEventListener('load', hideLoader);
-  } else {
-    imagesToLoad.forEach(img=>{
-      if(img.complete) imagesLoaded++;
+  // when each image loads or errors, increment
+  if(imgs.length > 0){
+    imgs.forEach(img => {
+      if(img.complete) { loaded++; setProgress((loaded/total)*90); }
       else {
-        img.addEventListener('load', ()=>{ imagesLoaded++; if(imagesLoaded === imagesToLoad.length) hideLoader(); });
-        img.addEventListener('error', ()=>{ imagesLoaded++; if(imagesLoaded === imagesToLoad.length) hideLoader(); });
+        img.addEventListener('load', ()=> { loaded++; setProgress((loaded/total)*90); });
+        img.addEventListener('error', ()=> { loaded++; setProgress((loaded/total)*90); });
       }
     });
-    // If some images were already complete:
-    if(imagesLoaded === imagesToLoad.length) {
-      // wait for full load event to give a smoother UX
-      window.addEventListener('load', hideLoader);
-    } else {
-      // fallback: if load event didn't fire for any reason, hide after 2200ms
-      window.addEventListener('load', hideLoader);
-      setTimeout(()=> { // ensure loader won't block forever
-        if(document.body.contains(loader)) hideLoader();
-      }, 2200);
-    }
+  } else {
+    // no images -> mark loaded
+    loaded = total;
+    setProgress(90);
   }
 
-  // ensure keyboard & focusable content isn't accessible while loader shows
-  // (we already hid main content with aria-hidden; this keeps screen readers consistent)
-  document.addEventListener('readystatechange', ()=> {
-    if(document.readyState === 'complete' && document.body.contains(loader)){
-      // ensure loader will be hidden if something odd happens
-      hideLoader();
-    }
+  // smooth animated fill to 100% and then hide
+  function finishLoader(){
+    // fill to 100% visually
+    let current = parseFloat(progressBar.style.width) || 0;
+    const step = ()=> {
+      current += Math.max(1, (100-current) * 0.18);
+      setProgress(current);
+      if(current < 99.5) requestAnimationFrame(step);
+      else {
+        setProgress(100);
+        // fade out and reveal
+        loader.classList.add('hidden');
+        setTimeout(()=> {
+          if(loader && loader.parentNode) loader.remove();
+          pageContent.removeAttribute('aria-hidden');
+        }, 500);
+        document.body.style.overflow = '';
+      }
+    };
+    requestAnimationFrame(step);
+  }
+
+  // Wait for window load, then finish loader.
+  // But also provide a safety fallback so loader never hangs.
+  window.addEventListener('load', ()=> {
+    // slight delay to feel game-like
+    setTimeout(finishLoader, 300);
   });
 
-  // small enhancement: allow user to press Escape to dismiss loader after 800ms (non-obtrusive)
+  // fallback: if load doesn't fire for some reason, finish after 2.2s
+  setTimeout(()=> {
+    if(document.body.contains(loader)) finishLoader();
+  }, 2200);
+
+  // allow user to dismiss loader early with Escape after 800ms
   setTimeout(()=> {
     window.addEventListener('keydown', function escHide(e){
-      if(e.key === 'Escape' && document.body.contains(loader)) hideLoader();
+      if(e.key === 'Escape' && document.body.contains(loader)) finishLoader();
       window.removeEventListener('keydown', escHide);
     });
   }, 800);
 
-  // --- ensure filters count updates if images hidden/visible change externally ---
+  // ensure page content not focusable while loader shows
+  document.addEventListener('readystatechange', ()=> {
+    if(document.readyState === 'complete' && document.body.contains(loader)) {
+      // if anything odd, finish
+      finishLoader();
+    }
+  });
+
+  // ---------- Keep filters count accurate if items change ----------
   const observer = new MutationObserver(updateCount);
   observer.observe(grid, { attributes: true, childList: false, subtree: true, attributeFilter: ['hidden'] });
 
 </script>
 </body>
 </html>
+
