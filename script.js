@@ -1,5 +1,5 @@
 /* Modern Pitch-Deck Style Unified JS (navigation, modals, animations, forms)
-   Updated: neon-green default theme + theme-toggle button + game-style loader
+   Updated: neon-green default theme + bottom-right theme-toggle + game-style loader
 */
 
 // ---------- YEAR AUTO-UPDATE ----------
@@ -18,12 +18,20 @@ function applyTheme(theme) {
     body.classList.remove('neon-theme');
     body.classList.add('default-theme');
     const btn = document.getElementById('theme-toggle');
-    if(btn) { btn.textContent = 'Switch to Neon Green'; btn.setAttribute('aria-pressed','false'); }
+    if(btn) {
+      btn.textContent = 'White & Blue';
+      btn.setAttribute('aria-pressed','false');
+      btn.classList.remove('btn-neon'); btn.classList.add('btn-default');
+    }
   } else {
     body.classList.remove('default-theme');
     body.classList.add('neon-theme');
     const btn = document.getElementById('theme-toggle');
-    if(btn) { btn.textContent = 'Switch to White & Blue'; btn.setAttribute('aria-pressed','true'); }
+    if(btn) {
+      btn.textContent = 'Neon Green';
+      btn.setAttribute('aria-pressed','true');
+      btn.classList.remove('btn-default'); btn.classList.add('btn-neon');
+    }
   }
   try { localStorage.setItem(THEME_KEY, theme); } catch(e){}
 }
@@ -35,17 +43,33 @@ function applyTheme(theme) {
   if(preferred === 'default') applyTheme('default'); else applyTheme('neon');
 })();
 
-// create toggle button behavior (will work even if you add the button in HTML)
+// create toggle button behavior (button fixed bottom-right)
 function setupThemeToggle() {
   let btn = document.getElementById('theme-toggle');
   if(!btn){
-    // if there's no button in HTML, try to inject one into header (non-destructive)
-    const header = document.querySelector('header') || document.querySelector('.site-header') || document.body;
+    // inject one into body if missing
     btn = document.createElement('button');
     btn.id = 'theme-toggle';
     btn.className = 'theme-toggle';
-    header.prepend(btn);
+    btn.setAttribute('aria-label','Toggle theme');
+    document.body.appendChild(btn);
   }
+
+  // ensure it's fixed at bottom-right (styles also in CSS)
+  btn.setAttribute('type','button');
+  btn.style.zIndex = 999999;
+
+  // initialize classes to match current theme
+  if(body.classList.contains('neon-theme')){
+    btn.classList.add('btn-neon');
+    btn.textContent = 'Neon Green';
+    btn.setAttribute('aria-pressed','true');
+  } else {
+    btn.classList.add('btn-default');
+    btn.textContent = 'White & Blue';
+    btn.setAttribute('aria-pressed','false');
+  }
+
   btn.addEventListener('click', () => {
     const current = body.classList.contains('neon-theme') ? 'neon' : 'default';
     const next = current === 'neon' ? 'default' : 'neon';
@@ -55,10 +79,7 @@ function setupThemeToggle() {
 setupThemeToggle();
 
 // ---------- GAME-STYLE LOADER (creates overlay if none exists) ----------
-// Loader shows on page entry and hides after window 'load' or max timeout.
-// It simulates a game loading progress bar + percent.
 (function setupLoader(){
-  // if loader already exists, keep it
   if(document.getElementById('game-loader')) return;
 
   const loader = document.createElement('div');
@@ -79,38 +100,33 @@ setupThemeToggle();
   const percentEl = loader.querySelector('.loader-percent');
 
   let percent = 0;
-  // nice easing tick using requestAnimationFrame
   let start = null;
-  const duration = 1200; // nominal duration for the simulated progress (ms)
-  const maxWait = 2500;  // maximum time loader will remain (ms) in case load event is slow
+  const duration = 1200;
+  const maxWait = 2500;
 
   function tick(timestamp){
     if(!start) start = timestamp;
     const elapsed = timestamp - start;
-    // ease-out progress curve
     const t = Math.min(elapsed / duration, 1);
-    percent = Math.round( Math.pow(t, 0.7) * 90 ) + 5; // 5%..95% by timeline
+    percent = Math.round( Math.pow(t, 0.7) * 90 ) + 5;
     progressEl.style.width = percent + '%';
     percentEl.textContent = percent;
     if(elapsed < duration) requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 
-  // hide function
   function hideLoader() {
     if(loader.getAttribute('data-hidden') === 'true') return;
     loader.setAttribute('data-hidden','true');
     loader.setAttribute('aria-hidden','true');
     progressEl.style.width = '100%';
     percentEl.textContent = '100';
-    loader.classList.add('loaded'); // CSS handles fade
+    loader.classList.add('loaded');
     setTimeout(() => { loader.remove(); }, 600);
   }
 
-  // hide after window load or after maxWait
   let hidden = false;
   window.addEventListener('load', () => { if(!hidden){ hidden = true; hideLoader(); } }, {passive:true});
-  // fallback: ensure loader doesn't hang forever
   setTimeout(() => { if(!hidden){ hidden = true; hideLoader(); } }, maxWait);
 })();
 
