@@ -10,25 +10,30 @@
      THEME VARIABLES
      ------------------------- */
   :root{
+    /* core colors */
+    --blue-primary: #0b66ff;           /* main blue for lettering & accents */
+    --blue-2: #5fb0ff;
+    --ink: var(--blue-primary);
+
     /* white/blue default (fallback values) */
     --bg-default: linear-gradient(180deg,#f6fbff,#eaf4ff 60%);
     --card-default: #ffffff;
-    --accent-default:#0b66ff;
-    --accent2-default:#5fb0ff;
-    --muted-default:#6b7a90;
-    --glass-default: rgba(255,255,255,0.7);
-    --shadow-default: 0 10px 30px rgba(12,33,80,0.08);
+    --accent-default: var(--blue-primary);
+    --accent2-default: var(--blue-2);
+    --muted-default:#3b506b;
+    --glass-default: rgba(255,255,255,0.8);
+    --shadow-default: 0 10px 30px rgba(12,33,80,0.06);
 
-    /* neon theme (start here) */
-    --bg-neon: linear-gradient(180deg,#05ff7a 0%, #00d36a 55%);
-    --card-neon: rgba(0,0,0,0.06);
-    --accent-neon: #00ff7f;
-    --accent2-neon: #1bff9a;
-    --muted-neon: rgba(2,18,12,0.8);
+    /* neon theme (secondary theme) - more subdued for professionalism */
+    --bg-neon: linear-gradient(180deg,#061022 0%, #081936 60%);
+    --card-neon: rgba(255,255,255,0.03);
+    --accent-neon: #7fb3ff;
+    --accent2-neon: #5fc9ff;
+    --muted-neon: #9fbfe8;
     --glass-neon: rgba(255,255,255,0.04);
-    --shadow-neon: 0 12px 34px rgba(0,0,0,0.14);
+    --shadow-neon: 0 12px 34px rgba(6,18,32,0.45);
 
-    /* active tokens (will be switched by .theme-default on <body>) */
+    /* active tokens (switched by .theme-default on <body>) */
     --bg: var(--bg-neon);
     --card: var(--card-neon);
     --accent: var(--accent-neon);
@@ -37,14 +42,15 @@
     --glass: var(--glass-neon);
     --shadow: var(--shadow-neon);
 
-    --radius:14px;
+    --radius:12px;
     --fw-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     font-family: var(--fw-sans);
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
+    box-sizing: border-box;
   }
 
-  /* body.default-theme applies white/blue */
+  /* body.default-theme applies white/blue professional look */
   body.default-theme{
     --bg: var(--bg-default);
     --card: var(--card-default);
@@ -56,31 +62,30 @@
   }
 
   /* -------------------------
-     LAYOUT
+     BASE LAYOUT & TYPOGRAPHY
      ------------------------- */
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0;background:var(--bg);color:#081426;padding-bottom:48px;transition:background .32s ease;
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);          /* all lettering blue */
+    padding-bottom:72px;
+    transition: background .32s ease, color .25s ease;
+    font-size:16px;
+    line-height:1.45;
   }
-  .container{max-width:1100px;margin:0 auto;padding:20px}
-  header{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
-  .brand{font-weight:800;color:var(--accent);text-decoration:none}
-  nav .links{display:flex;gap:12px;align-items:center}
-  a.nav-link{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px}
-  a.nav-link.active{background:var(--glass);color:var(--accent)}
+  .container{max-width:1100px;margin:0 auto;padding:28px 20px;}
+  header{display:flex;align-items:center;justify-content:space-between;padding:6px 0 22px}
+  .brand{font-weight:800;color:var(--ink);text-decoration:none;font-size:18px;letter-spacing:0.2px}
+  nav .links{display:flex;gap:14px;align-items:center}
+  a.nav-link{color:var(--ink);text-decoration:none;padding:8px 10px;border-radius:10px;opacity:0.86}
+  a.nav-link.active{background:var(--glass);color:var(--ink);opacity:1}
 
-  /* theme toggle */
-  .controls{display:flex;gap:10px;align-items:center}
-  .btn{
-    display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:0;background:rgba(255,255,255,0.06);
-    cursor:pointer;font-weight:700;color:var(--muted);backdrop-filter: blur(6px);
-  }
-  .btn:focus{outline:2px solid rgba(0,0,0,0.12);outline-offset:2px}
-
-  main{padding:18px 0}
-  h1{font-size:30px;margin:6px 0}
-  .hero{display:flex;gap:18px;align-items:center;margin-bottom:14px}
+  /* controls removed from header (toggle moved bottom-right) */
+  main{padding:6px 0 26px}
+  h1{font-size:28px;margin:6px 0;color:var(--ink)}
+  .hero{display:flex;gap:18px;align-items:center;margin-bottom:12px}
   .hero .label{font-weight:700;color:var(--muted);font-size:13px}
   .word-rotator{overflow:hidden;height:22px;position:relative}
   .word-rotator .words{position:absolute;left:0;top:0;animation:rot 10s linear infinite}
@@ -88,91 +93,112 @@
   @keyframes rot{0%{transform:translateY(0)}20%{transform:translateY(-22px)}40%{transform:translateY(-44px)}60%{transform:translateY(-66px)}80%{transform:translateY(-88px)}100%{transform:translateY(0)}}
 
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:var(--shadow);color:var(--muted)}
-  .card p{margin:8px 0}
+  .card{
+    background:var(--card);
+    padding:18px;border-radius:12px;
+    box-shadow:var(--shadow);color:var(--muted);
+    border: 1px solid rgba(11,102,255,0.04);
+  }
+  .card h2{margin:0 0 8px;color:var(--ink);font-size:16px}
+  .card p{margin:8px 0;color:var(--ink);opacity:0.92}
 
-  .skills .bar{height:12px;background:rgba(0,0,0,0.06);border-radius:999px;overflow:hidden}
+  .skills .bar{height:12px;background:rgba(11,102,255,0.06);border-radius:999px;overflow:hidden}
   .skills .fill{height:100%;width:0;transition:width 1.1s ease;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 
-  .stats{display:flex;gap:10px;margin-top:12px}
-  .stat{flex:1;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);text-align:center;box-shadow:var(--shadow)}
-  .stat .num{font-weight:800;color:var(--accent);font-size:18px}
+  .stats{display:flex;gap:12px;margin-top:14px}
+  .stat{
+    flex:1;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);
+    text-align:center;box-shadow:var(--shadow);color:var(--ink)
+  }
+  .stat .num{font-weight:900;color:var(--accent);font-size:18px}
 
-  footer{margin-top:26px;color:var(--muted)}
+  footer{margin-top:26px;color:var(--muted);opacity:0.86;font-size:14px}
 
   /* responsive */
-  @media (max-width:880px){ .grid{grid-template-columns:1fr} .links{display:none} }
+  @media (max-width:880px){
+    .grid{grid-template-columns:1fr}
+    header{padding-bottom:12px}
+  }
 
-  /* subtle neon background motif */
-  .orb{position:fixed;left:-120px;bottom:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(0,255,140,0.16), rgba(0,0,0,0));filter:blur(36px);pointer-events:none;opacity:.9}
+  /* subtle background orb */
+  .orb{position:fixed;left:-120px;bottom:-80px;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(11,102,255,0.06), rgba(0,0,0,0));
+    filter:blur(36px);pointer-events:none;opacity:.7}
+
   /* -------------------------
-     LOADER: scanline + pulse + file list
+     LOADER: professional scanline + progress
      ------------------------- */
   #loader{
     position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;
-    background:linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.6));backdrop-filter: blur(6px);
+    background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.46));
+    backdrop-filter: blur(6px);
   }
+  body.default-theme #loader{ background: linear-gradient(180deg,#ffffffd6,#ffffffc0); }
   #loader.hidden{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s,visibility .28s}
   .stage{
-    width:420px;max-width:94%;padding:18px;border-radius:14px;background:rgba(0,0,0,0.42);
-    color:white;text-align:left;box-shadow:0 18px 50px rgba(0,0,0,0.6);position:relative;overflow:hidden;
+    width:420px;max-width:92%;padding:18px;border-radius:12px;background:var(--card);
+    color:var(--ink);text-align:left;box-shadow:0 18px 38px rgba(16,32,52,0.06);position:relative;overflow:hidden;
+    border: 1px solid rgba(11,102,255,0.06);
   }
-  /* scanline overlay */
-  .scan{
-    position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.18;background:
-      linear-gradient(180deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%);
-    background-size:100% 6px;animation:scan 2.1s linear infinite;
-  }
-  @keyframes scan{0%{transform:translateY(-30%)}100%{transform:translateY(130%)}}
+  .loader-top{display:flex;align-items:center;gap:14px;margin-bottom:8px}
   .pulse{
-    width:72px;height:72px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
-    display:flex;align-items:center;justify-content:center;font-weight:900;color:#002;box-shadow:0 8px 30px rgba(0,0,0,0.5);
-    margin-bottom:12px;animation:pulse 1.2s ease-in-out infinite;
+    width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;font-weight:900;color:white;box-shadow:0 8px 30px rgba(0,0,0,0.08);
+    margin-bottom:2px;
   }
-  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
-  .files{font-family:monospace;font-size:13px;line-height:1.4;max-height:120px;overflow:hidden;margin-top:8px}
-  .files .row{opacity:0.9}
+  .files{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;font-size:13px;line-height:1.4;max-height:110px;overflow:hidden;margin-top:8px;color:var(--muted)}
+  .files .row{opacity:0.92;margin-bottom:6px}
   .progress-arc{
     width:86px;height:86px;border-radius:50%;display:grid;place-items:center;margin-left:auto;margin-right:0;
-    position:absolute;right:18px;top:18px;background:conic-gradient(var(--accent) 0% , rgba(255,255,255,0.06) 0% );box-shadow:inset 0 -6px 20px rgba(0,0,0,0.15);
+    position:absolute;right:18px;top:18px;background:conic-gradient(var(--accent) 0% , rgba(11,102,255,0.06) 0% );
+    box-shadow: inset 0 -6px 18px rgba(0,0,0,0.04); color:white;
   }
-  .progress-arc .pct{font-weight:900}
+  .progress-arc .pct{font-weight:900;color:var(--ink);background:rgba(255,255,255,0.9);padding:6px 8px;border-radius:8px;color:var(--accent)}
   .loader-actions{display:flex;gap:8px;margin-top:12px;align-items:center}
-  .skip{background:transparent;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:8px;color:white;cursor:pointer}
-  .skip:focus{outline:2px solid rgba(255,255,255,0.12);outline-offset:2px}
+  .skip{
+    background:transparent;border:1px solid rgba(11,102,255,0.08);padding:8px 10px;border-radius:8px;color:var(--ink);cursor:pointer
+  }
 
-  /* accessible small screens fix */
-  @media (max-width:420px){ .progress-arc{position:static;margin:12px 0 0 0;display:flex;justify-content:center} .stage{padding:14px} }
+  /* -------------------------
+     BOTTOM-RIGHT THEME BUTTON
+     ------------------------- */
+  #themeToggleFixed{
+    position:fixed;right:18px;bottom:18px;z-index:10010;
+    width:56px;height:56px;border-radius:14px;border:0;cursor:pointer;
+    display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 10px 30px rgba(11,102,255,0.12);color:white;font-weight:800;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  #themeToggleFixed:active{transform:translateY(2px)}
+  #themeToggleFixed[aria-pressed="true"]{ box-shadow:0 12px 46px rgba(11,102,255,0.22); }
 
-  /* reduced motion */
-  @media (prefers-reduced-motion: reduce){ .scan,.pulse {animation:none} .word-rotator .words{animation:none} }
+  /* accessible reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .word-rotator .words{animation:none}
+  }
 </style>
 </head>
 <body>
   <!-- LOADER -->
   <div id="loader" role="status" aria-live="polite" aria-label="Loading interface">
     <div class="stage" role="dialog" aria-modal="true" aria-label="Loading">
-      <div style="display:flex;align-items:center;gap:14px">
+      <div class="loader-top">
         <div class="pulse" aria-hidden="true">SM</div>
         <div>
-          <div style="font-weight:900">Welcome — Samron Miranda</div>
-          <div style="font-size:13px;opacity:0.95">Preparing your profile…</div>
+          <div style="font-weight:800;color:var(--ink);font-size:15px">Welcome — Samron Miranda</div>
+          <div style="font-size:13px;color:var(--muted)">Preparing your profile…</div>
         </div>
 
         <div class="progress-arc" id="arc" aria-hidden="true"><div class="pct" id="arcPct">0%</div></div>
       </div>
 
-      <div class="files" id="fileList" aria-hidden="true" style="margin-top:12px">
-        <!-- file rows will be injected -->
-      </div>
+      <div class="files" id="fileList" aria-hidden="true" style="margin-top:6px"></div>
 
       <div class="loader-actions">
-        <button class="skip" id="skipBtn">Skip</button>
+        <button class="skip" id="skipBtn" aria-label="Skip loading">Skip</button>
         <div style="flex:1"></div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.85)" id="loaderStatus">Initializing</div>
+        <div style="font-size:13px;color:var(--muted)" id="loaderStatus">Initializing</div>
       </div>
-
-      <div class="scan" aria-hidden="true"></div>
     </div>
   </div>
 
@@ -183,21 +209,12 @@
     <header>
       <a class="brand" href="index.html">Samron Miranda</a>
 
-      <div class="controls">
-        <nav class="links" aria-label="Primary">
-          <a class="nav-link" href="index.html">Home</a>
-          <a class="nav-link active" href="about.html">About</a>
-          <a class="nav-link" href="gallery.html">Gallery</a>
-          <a class="nav-link" href="contact.html">Contact</a>
-        </nav>
-
-        <button id="themeBtn" class="btn" aria-pressed="false" title="Toggle theme">
-          <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="4"></circle></svg>
-          <span id="themeLabel">White / Blue</span>
-        </button>
-
-        <button id="menuToggle" class="btn" aria-expanded="false" aria-controls="mobileNav">☰</button>
-      </div>
+      <nav class="links" aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link active" href="about.html">About</a>
+        <a class="nav-link" href="gallery.html">Gallery</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
     </header>
   </div>
 
@@ -220,9 +237,9 @@
 
     <div class="grid">
       <section class="card" aria-labelledby="bioHeading">
-        <h2 id="bioHeading" style="margin-top:0">Profile</h2>
+        <h2 id="bioHeading">Profile</h2>
         <p><strong>Name:</strong> Samron Trevor Miranda</p>
-        <p><strong>Email:</strong> <a href="mailto:samronmiranda@gmail.com">samronmiranda@gmail.com</a></p>
+        <p><strong>Email:</strong> <a href="mailto:samronmiranda@gmail.com" style="color:var(--ink);text-decoration:none">samronmiranda@gmail.com</a></p>
         <p><strong>Age:</strong> 18</p>
         <p><strong>Course:</strong> Computer Engineering — Father Conceicao Rodrigues College</p>
 
@@ -234,15 +251,15 @@
       </section>
 
       <section class="card" aria-labelledby="goalsHeading">
-        <h2 id="goalsHeading" style="margin-top:0">Goals & Skills</h2>
+        <h2 id="goalsHeading">Goals & Skills</h2>
         <ul style="color:var(--muted)">
           <li>Learning full-stack dev</li>
           <li>Inter-college sports participation</li>
           <li>Coding club member (placeholder)</li>
         </ul>
 
-        <h3 style="margin-top:12px">Skills</h3>
-        <div class="skills">
+        <h3 style="margin-top:12px;color:var(--ink)">Skills</h3>
+        <div class="skills" aria-hidden="true">
           <div style="margin-bottom:10px">
             <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>HTML & CSS</span><span>75%</span></div>
             <div class="bar"><div class="fill" data-fill="75%"></div></div>
@@ -259,50 +276,55 @@
       </section>
     </div>
 
-    <footer style="margin-top:18px;color:var(--muted)">&copy; <span id="yr"></span> Samron Trevor Miranda</footer>
+    <footer style="margin-top:18px">&copy; <span id="yr"></span> Samron Trevor Miranda</footer>
   </main>
+
+  <!-- BOTTOM-RIGHT THEME BUTTON -->
+  <button id="themeToggleFixed" aria-pressed="false" aria-label="Toggle background theme">
+    <!-- simple icon -->
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4M12 7a5 5 0 100 10 5 5 0 000-10z" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
 <script>
   // ---------- year
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  // ---------- theme toggle with persistence
-  const themeBtn = document.getElementById('themeBtn');
-  const themeLabel = document.getElementById('themeLabel');
-  const themeIcon = document.getElementById('themeIcon');
+  // ---------- theme toggle with persistence (bottom-right)
+  const themeToggle = document.getElementById('themeToggleFixed');
+  const body = document.body;
 
-  function applyTheme(name){
-    if(name === 'default'){
-      document.body.classList.add('default-theme');
-      themeBtn.setAttribute('aria-pressed','true');
-      themeLabel.textContent = 'Neon';
-      // simple icon change (sun/moon style)
-      themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>';
-    }else{
-      document.body.classList.remove('default-theme');
-      themeBtn.setAttribute('aria-pressed','false');
-      themeLabel.textContent = 'White / Blue';
-      themeIcon.innerHTML = '<circle cx="12" cy="12" r="4"></circle>';
+  function applyTheme(mode){
+    if(mode === 'default'){
+      body.classList.add('default-theme');
+      themeToggle.setAttribute('aria-pressed','true');
+      // slightly different visual for default
+      themeToggle.style.background = 'linear-gradient(135deg,var(--accent),var(--accent-2))';
+    } else {
+      body.classList.remove('default-theme');
+      themeToggle.setAttribute('aria-pressed','false');
+      themeToggle.style.background = 'linear-gradient(135deg,var(--accent),var(--accent-2))';
     }
+    localStorage.setItem('sm_theme', mode);
   }
 
-  // read last theme
-  const stored = localStorage.getItem('sm_theme') || 'neon';
-  applyTheme(stored === 'default' ? 'default' : 'neon');
+  // read last theme (default or neon)
+  const savedTheme = localStorage.getItem('sm_theme') || 'neon';
+  applyTheme(savedTheme === 'default' ? 'default' : 'neon');
 
-  themeBtn.addEventListener('click', ()=>{
-    const isDefault = document.body.classList.contains('default-theme');
+  themeToggle.addEventListener('click', ()=>{
+    const isDefault = body.classList.contains('default-theme');
     const next = isDefault ? 'neon' : 'default';
-    applyTheme(next === 'default' ? 'default' : 'neon');
-    localStorage.setItem('sm_theme', next);
+    applyTheme(next);
   });
 
-  // ---------- mobile menu toggle (simple)
-  const menuToggle = document.getElementById('menuToggle');
-  menuToggle.addEventListener('click', ()=>{
-    const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    menuToggle.setAttribute('aria-expanded', String(!expanded));
-    alert('Mobile menu toggled — implement your mobile nav here if needed.');
+  // keyboard: toggle with 'T'
+  document.addEventListener('keydown', (e)=>{
+    if(e.key.toLowerCase() === 't'){
+      const isDefault = body.classList.contains('default-theme');
+      applyTheme(isDefault ? 'neon' : 'default');
+    }
   });
 
   // ---------- skill bars & stat counters when visible ----------
@@ -328,7 +350,7 @@
   fills.forEach(f=>io.observe(f));
   nums.forEach(n=>io.observe(n));
 
-  // ---------- word rotator pause on hover ----------
+  // rotator pause on hover
   const rot = document.querySelector('.word-rotator .words');
   const rotWrap = document.querySelector('.word-rotator');
   if(rotWrap){
@@ -336,7 +358,7 @@
     rotWrap.addEventListener('mouseleave', ()=> rot.style.animationPlayState='running');
   }
 
-  // ---------- LOADER logic (scanline + incremental file list) ----------
+  // ---------- LOADER logic ----------
   const loader = document.getElementById('loader');
   const fileList = document.getElementById('fileList');
   const arc = document.getElementById('arc');
@@ -345,13 +367,11 @@
   const skipBtn = document.getElementById('skipBtn');
   const main = document.getElementById('main');
 
-  // fake files to display
   const files = [
     'profile.json', 'avatar.png', 'skills.bin', 'projects.db',
     'styles.css', 'script.js', 'local-data.cache', 'analytics.log'
   ];
 
-  // progressive loader sequence
   function runLoader(){
     main.setAttribute('aria-hidden','true');
     fileList.innerHTML = '';
@@ -359,19 +379,16 @@
     let fileIndex = 0;
 
     const interval = setInterval(()=>{
-      // advance percentage by small random amount
       pct = Math.min(100, pct + Math.ceil(Math.random()*8));
-      arc.style.background = `conic-gradient(var(--accent) ${pct}%, rgba(255,255,255,0.06) ${pct}% )`;
+      arc.style.background = `conic-gradient(var(--accent) ${pct}%, rgba(11,102,255,0.06) ${pct}% )`;
       arcPct.textContent = pct + '%';
-      // sometimes push a file row
-      if(Math.random() > 0.45 && fileIndex < files.length){
+      if(Math.random() > 0.4 && fileIndex < files.length){
         const row = document.createElement('div');
         row.className = 'row';
         const t = new Date().toLocaleTimeString();
         row.textContent = `[${t}] Loaded: ${files[fileIndex++]}`;
         fileList.prepend(row);
       }
-      // update stage text
       if(pct < 20) loaderStatus.textContent = 'Initializing';
       else if(pct < 50) loaderStatus.textContent = 'Loading modules';
       else if(pct < 80) loaderStatus.textContent = 'Decrypting assets';
@@ -382,31 +399,25 @@
         clearInterval(interval);
         setTimeout(hideLoader, 420);
       }
-    }, 240);
+    }, 210);
   }
 
   function hideLoader(){
     loader.classList.add('hidden');
     main.removeAttribute('aria-hidden');
     // ensure fills and counters animate even if offscreen initially
-    fills.forEach(f=>{ if(f.style.width === '' || f.style.width === '0px') f.style.width = f.getAttribute('data-fill'); });
-    nums.forEach(n=>{ if(n.textContent === '0'){ n.textContent = n.dataset.target; } });
+    fills.forEach(f=>{ if(!f.style.width || f.style.width === '0px') f.style.width = f.getAttribute('data-fill'); });
+    nums.forEach(n=>{ if(n.textContent === '0') n.textContent = n.dataset.target; });
   }
 
-  // skip & keyboard
   skipBtn.addEventListener('click', ()=> { hideLoader(); localStorage.setItem('sm_loader_skipped','1'); });
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') { hideLoader(); localStorage.setItem('sm_loader_skipped','1'); } });
 
-  // start loader on DOM ready, optionally skip if previously skipped or prefers-reduced-motion
   document.addEventListener('DOMContentLoaded', ()=>{
     const skipBefore = localStorage.getItem('sm_loader_skipped') === '1';
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(skipBefore || reduce){ hideLoader(); } else { runLoader(); }
   });
-
-  // accessibility: allow skip via Enter on focused button
-  skipBtn.addEventListener('keyup', (e)=>{ if(e.key === 'Enter') hideLoader(); });
-
 </script>
 </body>
 </html>
