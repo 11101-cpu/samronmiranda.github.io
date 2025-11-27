@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Blue & White — Neon Toggle + Game Loader Demo (Integrated)</title>
 <style>
-/* ---------- COMBINED STYLES: ORIGINAL + USER-SUPPLIED ---------- */
+/* ---------- COMBINED STYLES: PROFESSIONAL TWEAKS + THEMES ---------- */
+
+/* Base variables (these get overridden by body classes) */
 :root{
   --bg:#39ff14; /* fallback neon */
   --accent:#072033;
@@ -15,9 +17,14 @@
   --glass: rgba(255,255,255,0.06);
   --shadow: 0 10px 30px rgba(2,8,6,0.25);
   --rounded:12px;
-  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --text:#072033; /* default text color (blue) */
+  --ui-radius:12px;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
-/* keep compatibility with the previous data-theme flag (original) */
+
+/* compatibility with earlier data-theme flag (kept) */
 :root[data-theme="original"]{
   --bg:#f6fbff;
   --accent:#0b66ff;
@@ -30,6 +37,7 @@
 }
 
 /* ---------- THEME: NEON & DEFAULT (user CSS) ---------- */
+
 /* default (original white/blue deck) */
 body.default-theme {
   --bg: #f6fbff;
@@ -37,7 +45,7 @@ body.default-theme {
   --accent: #0b66ff;
   --accent-2: #5fb0ff;
   --muted: #6b7a90;
-  color: #0b1330;
+  --text: #0b1330; /* blue-ish text */
   background: var(--bg);
 }
 
@@ -48,65 +56,73 @@ body.neon-theme {
   --accent: #00ff66;
   --accent-2: #66ff99;
   --muted: rgba(255,255,255,0.85);
-  color: #07130b;
-  background: radial-gradient(circle at 10% 10%, rgba(0,255,102,0.12), transparent 15%),
-              radial-gradient(circle at 90% 90%, rgba(102,255,153,0.06), transparent 20%),
+  --text: #083b8c; /* force blue lettering even on neon */
+  background: radial-gradient(circle at 10% 10%, rgba(0,255,102,0.08), transparent 15%),
+              radial-gradient(circle at 90% 90%, rgba(102,255,153,0.04), transparent 20%),
               linear-gradient(180deg, #001f10 0%, #003318 100%);
 }
 
+/* ensure cards readable in neon */
 body.neon-theme .card, body.neon-theme .site-card {
   background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.06);
   color: var(--muted);
 }
 
-/* theme toggle button */
-.theme-toggle, #themeToggle, #theme-toggle {
-  cursor: pointer;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-weight: 600;
-  background: rgba(255,255,255,0.06);
-  color: white;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-}
-body.default-theme .theme-toggle {
-  background: var(--card);
-  color: var(--accent);
-  border: 1px solid rgba(11,102,255,0.08);
-}
-
-/* ---------- ORIGINAL UI STYLES (kept + adapted) ---------- */
+/* ---------- PROFESSIONAL UI ADJUSTMENTS ---------- */
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;color:var(--accent);background:var(--bg);-webkit-font-smoothing:antialiased}
+html,body{height:100%;margin:0;color:var(--text);background:var(--bg)}
 .container{max-width:1100px;margin:0 auto;padding:1.25rem}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
-.brand{font-weight:700;color:var(--accent);text-decoration:none;font-size:1.1rem}
+.brand{font-weight:700;color:var(--accent);text-decoration:none;font-size:1.05rem;letter-spacing:0.2px}
 .menu-toggle{display:none;background:none;border:1px solid rgba(0,0,0,0.04);padding:0.4rem 0.6rem;color:var(--muted);border-radius:8px}
 .nav-links{list-style:none;display:flex;gap:1rem;margin:0;padding:0}
-.nav-links a{color:var(--muted);text-decoration:none;padding:0.45rem 0.75rem;border-radius:8px}
+.nav-links a{color:var(--text);text-decoration:none;padding:0.45rem 0.75rem;border-radius:8px;font-weight:600;font-size:0.95rem}
 .nav-links a.active, .nav-links a:hover{color:white;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 
-.hero{padding:4.5rem 0;background:radial-gradient(circle at 10% 10%, rgba(0,0,0,0.06), transparent 8%)}
-.hero-inner{padding:2rem;background:linear-gradient(180deg,rgba(255,255,255,0.06), rgba(255,255,255,0.02));border-radius:14px;box-shadow:var(--shadow)}
-.hero h1{font-size:2.2rem;color:var(--accent);margin:0}
-.lead{margin-top:0.5rem;color:var(--muted)}
+/* refined hero */
+.hero{padding:4.5rem 0;background:transparent}
+.hero-inner{
+  padding:2rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border-radius:calc(var(--ui-radius) + 4px);
+  box-shadow: 0 8px 30px rgba(2,8,24,0.16);
+  border:1px solid rgba(255,255,255,0.03);
+}
+.hero h1{
+  font-size:2rem;
+  color:var(--text);
+  margin:0 0 6px 0;
+  line-height:1.05;
+  letter-spacing:-0.4px;
+}
+.lead{margin-top:0.5rem;color:var(--text);opacity:0.9;font-size:1rem}
 .motto{margin-top:0.75rem;color:var(--accent);font-weight:700}
-.btn{display:inline-block;padding:0.6rem 1rem;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;text-decoration:none;border-radius:10px;margin-right:0.6rem;font-weight:700;border:0}
+
+/* buttons - slightly more restrained */
+.btn{
+  display:inline-block;padding:0.55rem 0.95rem;border-radius:10px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:white;text-decoration:none;font-weight:700;border:0;font-size:0.95rem;
+  box-shadow:0 8px 22px rgba(2,8,24,0.12);
+}
 .btn.ghost{background:transparent;border:1px solid rgba(11,102,255,0.08);color:var(--accent)}
 
+/* cards & grid */
 .highlights{display:flex;gap:1rem;margin-top:2rem}
-.card{background:var(--card);padding:1rem;border-radius:10px;flex:1;box-shadow:var(--shadow)}
+.card{background:var(--card);padding:1.05rem;border-radius:10px;flex:1;box-shadow:0 6px 18px rgba(2,8,24,0.06);border:1px solid rgba(0,0,0,0.03)}
 .projects{margin-top:2rem}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
-.proj{background:linear-gradient(180deg,transparent,rgba(255,255,255,0.02));padding:0.8rem;border-radius:10px;transition:transform .25s ease,box-shadow .25s}
-.proj:hover{transform:translateY(-8px);box-shadow:0 18px 50px rgba(0,0,0,0.08)}
-.proj img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+.proj{background:linear-gradient(180deg,transparent,rgba(255,255,255,0.02));padding:0.9rem;border-radius:10px;transition:transform .25s ease,box-shadow .25s}
+.proj:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,8,24,0.08)}
+.proj h3{margin:0 0 6px 0;color:var(--text)}
+.proj p{margin:0;color:var(--text);opacity:0.85}
 
-.site-footer{padding:1.25rem 0;text-align:center;color:var(--muted);margin-top:2rem}
+/* footer */
+.site-footer{padding:1.25rem 0;text-align:center;color:var(--muted);margin-top:2rem;font-size:0.95rem}
+
+/* smaller components */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1rem}
-
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.8rem}
 .thumb{width:100%;height:160px;object-fit:cover;border-radius:8px;cursor:pointer;display:block}
 .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(6,18,40,0.55);backdrop-filter:blur(4px)}
@@ -114,7 +130,7 @@ html,body{height:100%;margin:0;color:var(--accent);background:var(--bg);-webkit-
 .modal .modal-close{position:absolute;top:2rem;right:2rem;background:none;border:0;color:var(--muted);font-size:1.4rem}
 
 .contact-form{max-width:650px}
-.contact-form input,.contact-form textarea{width:100%;padding:0.8rem;margin-bottom:0.8rem;border-radius:10px;border:1px solid rgba(2,10,30,0.04);background:var(--glass);color:var(--accent)}
+.contact-form input,.contact-form textarea{width:100%;padding:0.8rem;margin-bottom:0.8rem;border-radius:10px;border:1px solid rgba(2,10,30,0.04);background:var(--glass);color:var(--text)}
 .form-msg{margin-top:0.6rem;color:var(--muted)}
 
 /* Moving words / rotator */
@@ -127,7 +143,7 @@ html,body{height:100%;margin:0;color:var(--accent);background:var(--bg);-webkit-
 /* Skill bars and counters */
 .skills{display:flex;flex-direction:column;gap:12px}
 .skill{display:flex;flex-direction:column;gap:6px}
-.skill .bar{height:12px;background:rgba(0,0,0,0.08);border-radius:999px;overflow:hidden}
+.skill .bar{height:12px;background:rgba(0,0,0,0.06);border-radius:999px;overflow:hidden}
 .skill .fill{height:100%;width:0;transition:width 1.2s ease; background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 
 .stats{display:flex;gap:12px;margin-top:12px}
@@ -136,14 +152,15 @@ html,body{height:100%;margin:0;color:var(--accent);background:var(--bg);-webkit-
 .stat .label{color:var(--muted);font-size:13px}
 
 /* subtle floating shapes for visual polish */
-.bg-shape{position:fixed;right:-80px;top:10%;width:420px;height:420px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));opacity:0.08;filter:blur(36px);pointer-events:none}
-.bg-shape--2{left:-100px;bottom:-60px;opacity:0.05}
+.bg-shape{position:fixed;right:-80px;top:10%;width:420px;height:420px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));opacity:0.06;filter:blur(36px);pointer-events:none}
+.bg-shape--2{left:-100px;bottom:-60px;opacity:0.04}
 
 /* responsive tweaks */
 @media(max-width:880px){
   .about-grid{grid-template-columns:1fr}
   .nav-links{display:none}
   .menu-toggle{display:inline-block}
+  .hero h1{font-size:1.6rem}
 }
 
 /* Accessibility helpers */
@@ -172,6 +189,7 @@ html,body{height:100%;margin:0;color:var(--accent);background:var(--bg);-webkit-
   padding: 28px;
   border-radius: 12px;
   backdrop-filter: blur(6px);
+  border:1px solid rgba(255,255,255,0.03);
 }
 #game-loader .loader-logo {
   width: 120px;
@@ -203,14 +221,14 @@ html,body{height:100%;margin:0;color:var(--accent);background:var(--bg);-webkit-
   letter-spacing: 0.6px;
 }
 body.default-theme #game-loader {
-  background: linear-gradient(180deg, rgba(246,251,255,0.9), rgba(246,251,255,0.95));
+  background: linear-gradient(180deg, rgba(246,251,255,0.95), rgba(246,251,255,0.98));
 }
 body.default-theme #game-loader .loader-progress {
   background: linear-gradient(90deg, #0b66ff, #5fb0ff);
 }
 
 /* also keep the original loader styles (id: loader) so older markup still works */
-.loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4));z-index:9999;backdrop-filter: blur(4px);}
+.loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4));z-index:9999;backdrop-filter: blur(4px)}
 .loader-card{width:min(760px,92%);padding:1.4rem;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));box-shadow:0 20px 60px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.03);display:flex;gap:1rem;align-items:center}
 .loader-left{flex:1}
 .loader-title{font-weight:800;font-size:1.2rem;color:var(--accent);margin-bottom:0.35rem}
@@ -222,6 +240,34 @@ body.default-theme #game-loader .loader-progress {
 .fade-out{animation:fadeOut 400ms ease forwards}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
+/* ---------- THEME TOGGLE BUTTON FIXED (BOTTOM-RIGHT) ---------- */
+.theme-toggle {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 12000;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight:700;
+  font-size:0.95rem;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  backdrop-filter: blur(6px);
+}
+
+/* subtle hover / focus */
+.theme-toggle:hover{ transform: translateY(-3px); box-shadow: 0 18px 40px rgba(2,8,24,0.12) }
+
+/* ensure it looks appropriate in each theme */
+body.neon-theme .theme-toggle{ background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); color: var(--text); border: 1px solid rgba(255,255,255,0.06) }
+body.default-theme .theme-toggle{ background: var(--card); color: var(--accent); border: 1px solid rgba(11,102,255,0.08) }
+
+/* small responsive tweak so it doesn't obstruct content on tiny screens */
+@media(max-width:420px){
+  .theme-toggle{ right:12px; bottom:12px; padding:9px 10px; font-size:0.88rem }
+}
 </style>
 </head>
 <body class="neon-theme">
@@ -236,42 +282,45 @@ body.default-theme #game-loader .loader-progress {
     </div>
   </div>
 
-  <div class="bg-shape"></div>
-  <div class="bg-shape--2"></div>
+  <div class="bg-shape" aria-hidden="true"></div>
+  <div class="bg-shape--2" aria-hidden="true"></div>
 
-  <header class="container nav">
+  <header class="container nav" role="banner">
     <a class="brand" href="#">Samron Miranda</a>
-    <nav>
+    <nav aria-label="Main navigation">
       <ul class="nav-links">
         <li><a href="#" class="active">Home</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Work</a></li>
       </ul>
     </nav>
-    <div style="display:flex;gap:8px;align-items:center">
-      <button id="themeToggle" class="theme-toggle" aria-pressed="false">Switch to Blue & White</button>
-    </div>
   </header>
 
-  <main class="container">
-    <section class="hero">
+  <main class="container" role="main">
+    <section class="hero" aria-labelledby="hero-heading">
       <div class="hero-inner">
-        <h1>Blue & White — Deck (Neon preview)</h1>
-        <p class="lead">This demo starts with a neon-green visual. Use the button to switch back to the original blue & white deck.</p>
+        <h1 id="hero-heading">Blue & White — Deck (Neon preview)</h1>
+        <p class="lead">This demo starts with a neon-green visual. Use the button at the bottom-right to switch to the original blue & white deck.</p>
         <div class="motto">Clean • Modern • Playful</div>
       </div>
     </section>
 
-    <section class="projects container">
-      <div class="grid">
-        <div class="proj card"><h3>Project A</h3><p class="lead">Short description</p></div>
-        <div class="proj card"><h3>Project B</h3><p class="lead">Short description</p></div>
-        <div class="proj card"><h3>Project C</h3><p class="lead">Short description</p></div>
+    <section class="projects container" aria-labelledby="projects-heading">
+      <h2 id="projects-heading" class="sr-only">Projects</h2>
+      <div class="grid" role="list">
+        <article class="proj card" role="listitem"><h3>Project A</h3><p class="lead">Short description</p></article>
+        <article class="proj card" role="listitem"><h3>Project B</h3><p class="lead">Short description</p></article>
+        <article class="proj card" role="listitem"><h3>Project C</h3><p class="lead">Short description</p></article>
       </div>
     </section>
 
-    <footer class="site-footer">Made with ❤️ — neon demo</footer>
+    <footer class="site-footer" role="contentinfo">Made with ❤️ — neon demo</footer>
   </main>
+
+  <!-- Theme toggle button: fixed bottom-right as requested -->
+  <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle theme">
+    Switch to Blue & White
+  </button>
 
 <script>
 /* ---------- LOADER + THEME TOGGLE SCRIPT (integrated) ---------- */
@@ -352,3 +401,4 @@ document.addEventListener('app:loaded', ()=>{
 </script>
 </body>
 </html>
+
