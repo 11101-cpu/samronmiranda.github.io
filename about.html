@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>About — Samron Miranda (Alt)</title>
-<meta name="description" content="About Samron Trevor Miranda — alternative neon + loader + theme toggle" />
+<title>About — Samron Miranda (Neon)</title>
+<meta name="description" content="About Samron Trevor Miranda — neon default + loader + bottom-right toggle" />
 <style>
   /* -------------------------
      THEME VARIABLES
@@ -15,7 +15,7 @@
     --blue-2: #5fb0ff;
     --ink: var(--blue-primary);
 
-    /* white/blue default (fallback values) */
+    /* white/blue default (professional) */
     --bg-default: linear-gradient(180deg,#f6fbff,#eaf4ff 60%);
     --card-default: #ffffff;
     --accent-default: var(--blue-primary);
@@ -24,14 +24,16 @@
     --glass-default: rgba(255,255,255,0.8);
     --shadow-default: 0 10px 30px rgba(12,33,80,0.06);
 
-    /* neon theme (secondary theme) - more subdued for professionalism */
-    --bg-neon: linear-gradient(180deg,#061022 0%, #081936 60%);
-    --card-neon: rgba(255,255,255,0.03);
-    --accent-neon: #7fb3ff;
-    --accent2-neon: #5fc9ff;
-    --muted-neon: #9fbfe8;
-    --glass-neon: rgba(255,255,255,0.04);
-    --shadow-neon: 0 12px 34px rgba(6,18,32,0.45);
+    /* NEON theme (vivid) - default now */
+    --bg-neon: radial-gradient(1200px 600px at 10% 10%, rgba(140,43,255,0.12), transparent 10%),
+               radial-gradient(900px 500px at 85% 80%, rgba(13,255,240,0.10), transparent 12%),
+               linear-gradient(180deg,#08021a 0%, #0b1630 55%, #071021 100%);
+    --card-neon: rgba(255,255,255,0.02);
+    --accent-neon: #8b5cf6;
+    --accent2-neon: #00f0ff;
+    --muted-neon: #aabbe6;
+    --glass-neon: rgba(255,255,255,0.03);
+    --shadow-neon: 0 14px 50px rgba(11,22,64,0.55);
 
     /* active tokens (switched by .theme-default on <body>) */
     --bg: var(--bg-neon);
@@ -50,7 +52,7 @@
     box-sizing: border-box;
   }
 
-  /* body.default-theme applies white/blue professional look */
+  /* body.default-theme applies white/blue professional look (toggle) */
   body.default-theme{
     --bg: var(--bg-default);
     --card: var(--card-default);
@@ -69,7 +71,7 @@
   body{
     margin:0;
     background:var(--bg);
-    color:var(--ink);          /* all lettering blue */
+    color:var(--ink);          /* lettering kept blue */
     padding-bottom:72px;
     transition: background .32s ease, color .25s ease;
     font-size:16px;
@@ -82,7 +84,6 @@
   a.nav-link{color:var(--ink);text-decoration:none;padding:8px 10px;border-radius:10px;opacity:0.86}
   a.nav-link.active{background:var(--glass);color:var(--ink);opacity:1}
 
-  /* controls removed from header (toggle moved bottom-right) */
   main{padding:6px 0 26px}
   h1{font-size:28px;margin:6px 0;color:var(--ink)}
   .hero{display:flex;gap:18px;align-items:center;margin-bottom:12px}
@@ -97,7 +98,7 @@
     background:var(--card);
     padding:18px;border-radius:12px;
     box-shadow:var(--shadow);color:var(--muted);
-    border: 1px solid rgba(11,102,255,0.04);
+    border: 1px solid rgba(139,92,246,0.06);
   }
   .card h2{margin:0 0 8px;color:var(--ink);font-size:16px}
   .card p{margin:8px 0;color:var(--ink);opacity:0.92}
@@ -107,7 +108,7 @@
 
   .stats{display:flex;gap:12px;margin-top:14px}
   .stat{
-    flex:1;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);
+    flex:1;padding:12px;border-radius:10px;background:linear-gradient(180deg,#0b1630,#071021);
     text-align:center;box-shadow:var(--shadow);color:var(--ink)
   }
   .stat .num{font-weight:900;color:var(--accent);font-size:18px}
@@ -120,43 +121,42 @@
     header{padding-bottom:12px}
   }
 
-  /* subtle background orb */
+  /* neon glow orb */
   .orb{position:fixed;left:-120px;bottom:-80px;width:420px;height:420px;border-radius:50%;
-    background:radial-gradient(circle at 30% 30%, rgba(11,102,255,0.06), rgba(0,0,0,0));
-    filter:blur(36px);pointer-events:none;opacity:.7}
+    background:radial-gradient(circle at 30% 30%, rgba(139,92,246,0.12), rgba(0,255,240,0.06), rgba(0,0,0,0));
+    filter:blur(46px);pointer-events:none;opacity:0.95}
 
   /* -------------------------
      LOADER: professional scanline + progress
      ------------------------- */
   #loader{
     position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;
-    background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.46));
+    background:linear-gradient(180deg, rgba(2,6,18,0.72), rgba(3,8,24,0.86));
     backdrop-filter: blur(6px);
   }
-  body.default-theme #loader{ background: linear-gradient(180deg,#ffffffd6,#ffffffc0); }
   #loader.hidden{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s,visibility .28s}
   .stage{
-    width:420px;max-width:92%;padding:18px;border-radius:12px;background:var(--card);
-    color:var(--ink);text-align:left;box-shadow:0 18px 38px rgba(16,32,52,0.06);position:relative;overflow:hidden;
-    border: 1px solid rgba(11,102,255,0.06);
+    width:420px;max-width:92%;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    color:var(--ink);text-align:left;box-shadow:0 18px 38px rgba(2,6,24,0.6);position:relative;overflow:hidden;
+    border: 1px solid rgba(139,92,246,0.06);
   }
   .loader-top{display:flex;align-items:center;gap:14px;margin-bottom:8px}
   .pulse{
     width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
-    display:flex;align-items:center;justify-content:center;font-weight:900;color:white;box-shadow:0 8px 30px rgba(0,0,0,0.08);
+    display:flex;align-items:center;justify-content:center;font-weight:900;color:white;box-shadow:0 8px 30px rgba(0,0,0,0.12);
     margin-bottom:2px;
   }
   .files{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;font-size:13px;line-height:1.4;max-height:110px;overflow:hidden;margin-top:8px;color:var(--muted)}
   .files .row{opacity:0.92;margin-bottom:6px}
   .progress-arc{
     width:86px;height:86px;border-radius:50%;display:grid;place-items:center;margin-left:auto;margin-right:0;
-    position:absolute;right:18px;top:18px;background:conic-gradient(var(--accent) 0% , rgba(11,102,255,0.06) 0% );
+    position:absolute;right:18px;top:18px;background:conic-gradient(var(--accent) 0% , rgba(255,255,255,0.04) 0% );
     box-shadow: inset 0 -6px 18px rgba(0,0,0,0.04); color:white;
   }
   .progress-arc .pct{font-weight:900;color:var(--ink);background:rgba(255,255,255,0.9);padding:6px 8px;border-radius:8px;color:var(--accent)}
   .loader-actions{display:flex;gap:8px;margin-top:12px;align-items:center}
   .skip{
-    background:transparent;border:1px solid rgba(11,102,255,0.08);padding:8px 10px;border-radius:8px;color:var(--ink);cursor:pointer
+    background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer
   }
 
   /* -------------------------
@@ -166,13 +166,12 @@
     position:fixed;right:18px;bottom:18px;z-index:10010;
     width:56px;height:56px;border-radius:14px;border:0;cursor:pointer;
     display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));
-    box-shadow:0 10px 30px rgba(11,102,255,0.12);color:white;font-weight:800;
+    box-shadow:0 10px 30px rgba(139,92,246,0.14);color:white;font-weight:800;
     transition:transform .18s ease, box-shadow .18s ease;
   }
   #themeToggleFixed:active{transform:translateY(2px)}
-  #themeToggleFixed[aria-pressed="true"]{ box-shadow:0 12px 46px rgba(11,102,255,0.22); }
+  #themeToggleFixed[aria-pressed="true"]{ box-shadow:0 12px 46px rgba(139,92,246,0.22); }
 
-  /* accessible reduced motion */
   @media (prefers-reduced-motion: reduce){
     .word-rotator .words{animation:none}
   }
@@ -186,7 +185,7 @@
         <div class="pulse" aria-hidden="true">SM</div>
         <div>
           <div style="font-weight:800;color:var(--ink);font-size:15px">Welcome — Samron Miranda</div>
-          <div style="font-size:13px;color:var(--muted)">Preparing your profile…</div>
+          <div style="font-size:13px;color:var(--muted)">Preparing your neon profile…</div>
         </div>
 
         <div class="progress-arc" id="arc" aria-hidden="true"><div class="pct" id="arcPct">0%</div></div>
@@ -281,7 +280,6 @@
 
   <!-- BOTTOM-RIGHT THEME BUTTON -->
   <button id="themeToggleFixed" aria-pressed="false" aria-label="Toggle background theme">
-    <!-- simple icon -->
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4M12 7a5 5 0 100 10 5 5 0 000-10z" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -299,19 +297,20 @@
     if(mode === 'default'){
       body.classList.add('default-theme');
       themeToggle.setAttribute('aria-pressed','true');
-      // slightly different visual for default
-      themeToggle.style.background = 'linear-gradient(135deg,var(--accent),var(--accent-2))';
     } else {
       body.classList.remove('default-theme');
       themeToggle.setAttribute('aria-pressed','false');
-      themeToggle.style.background = 'linear-gradient(135deg,var(--accent),var(--accent-2))';
     }
     localStorage.setItem('sm_theme', mode);
   }
 
-  // read last theme (default or neon)
-  const savedTheme = localStorage.getItem('sm_theme') || 'neon';
-  applyTheme(savedTheme === 'default' ? 'default' : 'neon');
+  // make NEON the default on first load (and on reload unless user changed it)
+  const savedTheme = localStorage.getItem('sm_theme');
+  if(savedTheme){
+    applyTheme(savedTheme);
+  } else {
+    applyTheme('neon'); // neon by default
+  }
 
   themeToggle.addEventListener('click', ()=>{
     const isDefault = body.classList.contains('default-theme');
@@ -321,7 +320,7 @@
 
   // keyboard: toggle with 'T'
   document.addEventListener('keydown', (e)=>{
-    if(e.key.toLowerCase() === 't'){
+    if(e.key && e.key.toLowerCase() === 't'){
       const isDefault = body.classList.contains('default-theme');
       applyTheme(isDefault ? 'neon' : 'default');
     }
@@ -368,7 +367,7 @@
   const main = document.getElementById('main');
 
   const files = [
-    'profile.json', 'avatar.png', 'skills.bin', 'projects.db',
+    'profile.json', 'avatar.png', 'neon-assets.pkg', 'projects.db',
     'styles.css', 'script.js', 'local-data.cache', 'analytics.log'
   ];
 
@@ -380,7 +379,7 @@
 
     const interval = setInterval(()=>{
       pct = Math.min(100, pct + Math.ceil(Math.random()*8));
-      arc.style.background = `conic-gradient(var(--accent) ${pct}%, rgba(11,102,255,0.06) ${pct}% )`;
+      arc.style.background = `conic-gradient(var(--accent) ${pct}%, rgba(255,255,255,0.02) ${pct}% )`;
       arcPct.textContent = pct + '%';
       if(Math.random() > 0.4 && fileIndex < files.length){
         const row = document.createElement('div');
@@ -390,8 +389,8 @@
         fileList.prepend(row);
       }
       if(pct < 20) loaderStatus.textContent = 'Initializing';
-      else if(pct < 50) loaderStatus.textContent = 'Loading modules';
-      else if(pct < 80) loaderStatus.textContent = 'Decrypting assets';
+      else if(pct < 50) loaderStatus.textContent = 'Loading neon modules';
+      else if(pct < 80) loaderStatus.textContent = 'Applying glow & shaders';
       else if(pct < 98) loaderStatus.textContent = 'Finalizing';
       else loaderStatus.textContent = 'Ready';
 
@@ -399,13 +398,12 @@
         clearInterval(interval);
         setTimeout(hideLoader, 420);
       }
-    }, 210);
+    }, 200);
   }
 
   function hideLoader(){
     loader.classList.add('hidden');
     main.removeAttribute('aria-hidden');
-    // ensure fills and counters animate even if offscreen initially
     fills.forEach(f=>{ if(!f.style.width || f.style.width === '0px') f.style.width = f.getAttribute('data-fill'); });
     nums.forEach(n=>{ if(n.textContent === '0') n.textContent = n.dataset.target; });
   }
