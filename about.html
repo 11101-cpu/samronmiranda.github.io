@@ -3,178 +3,117 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>About — Samron Miranda (Neon)</title>
-<meta name="description" content="About Samron Trevor Miranda — neon default + loader + bottom-right toggle" />
+<title>About — Samron Miranda (Neon Green)</title>
+<meta name="description" content="About — neon green default, loader, theme toggle bottom-right" />
 <style>
-  /* -------------------------
-     THEME VARIABLES
-     ------------------------- */
   :root{
-    /* core colors */
-    --blue-primary: #0b66ff;           /* main blue for lettering & accents */
+    /* text & accents */
+    --blue-primary: #0b66ff;   /* lettering color */
     --blue-2: #5fb0ff;
-    --ink: var(--blue-primary);
 
-    /* white/blue default (professional) */
-    --bg-default: linear-gradient(180deg,#f6fbff,#eaf4ff 60%);
-    --card-default: #ffffff;
-    --accent-default: var(--blue-primary);
-    --accent2-default: var(--blue-2);
-    --muted-default:#3b506b;
-    --glass-default: rgba(255,255,255,0.8);
-    --shadow-default: 0 10px 30px rgba(12,33,80,0.06);
+    /* PROFESSIONAL (light) theme tokens */
+    --bg-prof: linear-gradient(180deg,#f6fbff,#eaf4ff 60%);
+    --card-prof: #fff;
+    --accent-prof: var(--blue-primary);
+    --muted-prof: #3b506b;
+    --shadow-prof: 0 10px 30px rgba(12,33,80,0.06);
 
-    /* NEON theme (vivid) - default now */
-    --bg-neon: radial-gradient(1200px 600px at 10% 10%, rgba(140,43,255,0.12), transparent 10%),
-               radial-gradient(900px 500px at 85% 80%, rgba(13,255,240,0.10), transparent 12%),
-               linear-gradient(180deg,#08021a 0%, #0b1630 55%, #071021 100%);
-    --card-neon: rgba(255,255,255,0.02);
-    --accent-neon: #8b5cf6;
-    --accent2-neon: #00f0ff;
-    --muted-neon: #aabbe6;
-    --glass-neon: rgba(255,255,255,0.03);
-    --shadow-neon: 0 14px 50px rgba(11,22,64,0.55);
+    /* NEON GREEN theme tokens (DEFAULT) */
+    --bg-neon: linear-gradient(180deg, #00ff7a 0%, #00d36a 45%, #002227 100%);
+    --card-neon: rgba(255,255,255,0.03);
+    --accent-neon: #00ff7a;
+    --accent2-neon: #00ffd1;
+    --muted-neon: #b8f9df;
+    --shadow-neon: 0 14px 50px rgba(0,20,16,0.6);
 
-    /* active tokens (switched by .theme-default on <body>) */
+    /* active tokens (start using neon by default) */
     --bg: var(--bg-neon);
     --card: var(--card-neon);
     --accent: var(--accent-neon);
     --accent-2: var(--accent2-neon);
     --muted: var(--muted-neon);
-    --glass: var(--glass-neon);
     --shadow: var(--shadow-neon);
 
+    --ink: var(--blue-primary); /* lettering blue */
     --radius:12px;
     --fw-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     font-family: var(--fw-sans);
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
-    box-sizing: border-box;
+    box-sizing:border-box;
   }
 
-  /* body.default-theme applies white/blue professional look (toggle) */
-  body.default-theme{
-    --bg: var(--bg-default);
-    --card: var(--card-default);
-    --accent: var(--accent-default);
-    --accent-2: var(--accent2-default);
-    --muted: var(--muted-default);
-    --glass: var(--glass-default);
-    --shadow: var(--shadow-default);
+  /* Add a "pro" class to body to switch to professional theme */
+  body.pro{
+    --bg: var(--bg-prof);
+    --card: var(--card-prof);
+    --accent: var(--accent-prof);
+    --accent-2: var(--accent-prof);
+    --muted: var(--muted-prof);
+    --shadow: var(--shadow-prof);
   }
 
-  /* -------------------------
-     BASE LAYOUT & TYPOGRAPHY
-     ------------------------- */
+  /* Base layout */
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);          /* lettering kept blue */
-    padding-bottom:72px;
-    transition: background .32s ease, color .25s ease;
-    font-size:16px;
-    line-height:1.45;
+    margin:0;background:var(--bg);color:var(--ink);padding-bottom:80px;
+    transition:background .32s ease, color .2s ease;
+    font-size:16px;line-height:1.45;
   }
-  .container{max-width:1100px;margin:0 auto;padding:28px 20px;}
-  header{display:flex;align-items:center;justify-content:space-between;padding:6px 0 22px}
-  .brand{font-weight:800;color:var(--ink);text-decoration:none;font-size:18px;letter-spacing:0.2px}
+  .container{max-width:1100px;margin:0 auto;padding:28px 20px}
+  header{display:flex;align-items:center;justify-content:space-between;padding:8px 0 20px}
+  .brand{font-weight:800;color:var(--ink);text-decoration:none;font-size:18px}
   nav .links{display:flex;gap:14px;align-items:center}
-  a.nav-link{color:var(--ink);text-decoration:none;padding:8px 10px;border-radius:10px;opacity:0.86}
-  a.nav-link.active{background:var(--glass);color:var(--ink);opacity:1}
+  a.nav-link{color:var(--ink);text-decoration:none;padding:8px 10px;border-radius:8px;opacity:0.95}
+  a.nav-link.active{background:rgba(255,255,255,0.06);color:var(--ink)}
 
   main{padding:6px 0 26px}
   h1{font-size:28px;margin:6px 0;color:var(--ink)}
   .hero{display:flex;gap:18px;align-items:center;margin-bottom:12px}
   .hero .label{font-weight:700;color:var(--muted);font-size:13px}
   .word-rotator{overflow:hidden;height:22px;position:relative}
-  .word-rotator .words{position:absolute;left:0;top:0;animation:rot 10s linear infinite}
+  .word-rotator .words{position:absolute;left:0;top:0;animation:rot 9s linear infinite}
   .word{display:block;height:22px;padding:0 6px;font-weight:800;color:var(--accent)}
   @keyframes rot{0%{transform:translateY(0)}20%{transform:translateY(-22px)}40%{transform:translateY(-44px)}60%{transform:translateY(-66px)}80%{transform:translateY(-88px)}100%{transform:translateY(0)}}
 
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  .card{
-    background:var(--card);
-    padding:18px;border-radius:12px;
-    box-shadow:var(--shadow);color:var(--muted);
-    border: 1px solid rgba(139,92,246,0.06);
-  }
+  .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);color:var(--muted);border:1px solid rgba(0,0,0,0.04)}
   .card h2{margin:0 0 8px;color:var(--ink);font-size:16px}
-  .card p{margin:8px 0;color:var(--ink);opacity:0.92}
+  .card p{margin:8px 0;color:var(--ink);opacity:0.95}
 
-  .skills .bar{height:12px;background:rgba(11,102,255,0.06);border-radius:999px;overflow:hidden}
+  .skills .bar{height:12px;background:rgba(0,0,0,0.06);border-radius:999px;overflow:hidden}
   .skills .fill{height:100%;width:0;transition:width 1.1s ease;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 
   .stats{display:flex;gap:12px;margin-top:14px}
-  .stat{
-    flex:1;padding:12px;border-radius:10px;background:linear-gradient(180deg,#0b1630,#071021);
-    text-align:center;box-shadow:var(--shadow);color:var(--ink)
-  }
+  .stat{flex:1;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));text-align:center;box-shadow:var(--shadow);color:var(--ink)}
   .stat .num{font-weight:900;color:var(--accent);font-size:18px}
 
-  footer{margin-top:26px;color:var(--muted);opacity:0.86;font-size:14px}
+  footer{margin-top:26px;color:var(--muted);opacity:0.9;font-size:14px}
 
-  /* responsive */
-  @media (max-width:880px){
-    .grid{grid-template-columns:1fr}
-    header{padding-bottom:12px}
-  }
+  @media (max-width:880px){ .grid{grid-template-columns:1fr} header{padding-bottom:12px} }
 
-  /* neon glow orb */
-  .orb{position:fixed;left:-120px;bottom:-80px;width:420px;height:420px;border-radius:50%;
-    background:radial-gradient(circle at 30% 30%, rgba(139,92,246,0.12), rgba(0,255,240,0.06), rgba(0,0,0,0));
-    filter:blur(46px);pointer-events:none;opacity:0.95}
+  /* neon visual accent (subtle) */
+  .orb{position:fixed;left:-120px;bottom:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(0,255,122,0.12), rgba(0,255,210,0.04), transparent 40%);filter:blur(44px);pointer-events:none;opacity:0.95}
 
-  /* -------------------------
-     LOADER: professional scanline + progress
-     ------------------------- */
-  #loader{
-    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;
-    background:linear-gradient(180deg, rgba(2,6,18,0.72), rgba(3,8,24,0.86));
-    backdrop-filter: blur(6px);
-  }
+  /* LOADER */
+  #loader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.5));backdrop-filter: blur(6px)}
   #loader.hidden{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s,visibility .28s}
-  .stage{
-    width:420px;max-width:92%;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-    color:var(--ink);text-align:left;box-shadow:0 18px 38px rgba(2,6,24,0.6);position:relative;overflow:hidden;
-    border: 1px solid rgba(139,92,246,0.06);
-  }
+  .stage{width:420px;max-width:92%;padding:18px;border-radius:12px;background:rgba(255,255,255,0.02);color:var(--ink);text-align:left;box-shadow:0 18px 40px rgba(0,0,0,0.35);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
   .loader-top{display:flex;align-items:center;gap:14px;margin-bottom:8px}
-  .pulse{
-    width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
-    display:flex;align-items:center;justify-content:center;font-weight:900;color:white;box-shadow:0 8px 30px rgba(0,0,0,0.12);
-    margin-bottom:2px;
-  }
+  .pulse{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:900;color:white}
   .files{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;font-size:13px;line-height:1.4;max-height:110px;overflow:hidden;margin-top:8px;color:var(--muted)}
   .files .row{opacity:0.92;margin-bottom:6px}
-  .progress-arc{
-    width:86px;height:86px;border-radius:50%;display:grid;place-items:center;margin-left:auto;margin-right:0;
-    position:absolute;right:18px;top:18px;background:conic-gradient(var(--accent) 0% , rgba(255,255,255,0.04) 0% );
-    box-shadow: inset 0 -6px 18px rgba(0,0,0,0.04); color:white;
-  }
-  .progress-arc .pct{font-weight:900;color:var(--ink);background:rgba(255,255,255,0.9);padding:6px 8px;border-radius:8px;color:var(--accent)}
+  .progress-arc{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;margin-left:auto;margin-right:0;position:absolute;right:18px;top:18px;background:conic-gradient(var(--accent) 0% , rgba(255,255,255,0.02) 0% );box-shadow: inset 0 -6px 18px rgba(0,0,0,0.04)}
+  .progress-arc .pct{font-weight:900;color:var(--ink);background:rgba(255,255,255,0.92);padding:6px 8px;border-radius:8px;color:var(--accent)}
   .loader-actions{display:flex;gap:8px;margin-top:12px;align-items:center}
-  .skip{
-    background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer
-  }
+  .skip{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
 
-  /* -------------------------
-     BOTTOM-RIGHT THEME BUTTON
-     ------------------------- */
-  #themeToggleFixed{
-    position:fixed;right:18px;bottom:18px;z-index:10010;
-    width:56px;height:56px;border-radius:14px;border:0;cursor:pointer;
-    display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));
-    box-shadow:0 10px 30px rgba(139,92,246,0.14);color:white;font-weight:800;
-    transition:transform .18s ease, box-shadow .18s ease;
-  }
+  /* Bottom-right toggle */
+  #themeToggleFixed{position:fixed;right:18px;bottom:18px;z-index:10010;width:56px;height:56px;border-radius:14px;border:0;cursor:pointer;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 10px 30px rgba(0,0,0,0.2);color:white;font-weight:800;transition:transform .18s}
   #themeToggleFixed:active{transform:translateY(2px)}
-  #themeToggleFixed[aria-pressed="true"]{ box-shadow:0 12px 46px rgba(139,92,246,0.22); }
 
-  @media (prefers-reduced-motion: reduce){
-    .word-rotator .words{animation:none}
-  }
+  @media (prefers-reduced-motion: reduce){ .word-rotator .words{animation:none} }
 </style>
 </head>
 <body>
@@ -185,10 +124,9 @@
         <div class="pulse" aria-hidden="true">SM</div>
         <div>
           <div style="font-weight:800;color:var(--ink);font-size:15px">Welcome — Samron Miranda</div>
-          <div style="font-size:13px;color:var(--muted)">Preparing your neon profile…</div>
+          <div style="font-size:13px;color:var(--muted)">Preparing neon profile…</div>
         </div>
-
-        <div class="progress-arc" id="arc" aria-hidden="true"><div class="pct" id="arcPct">0%</div></div>
+        <div class="progress-arc" id="arc"><div class="pct" id="arcPct">0%</div></div>
       </div>
 
       <div class="files" id="fileList" aria-hidden="true" style="margin-top:6px"></div>
@@ -207,7 +145,6 @@
   <div class="container">
     <header>
       <a class="brand" href="index.html">Samron Miranda</a>
-
       <nav class="links" aria-label="Primary">
         <a class="nav-link" href="index.html">Home</a>
         <a class="nav-link active" href="about.html">About</a>
@@ -278,7 +215,7 @@
     <footer style="margin-top:18px">&copy; <span id="yr"></span> Samron Trevor Miranda</footer>
   </main>
 
-  <!-- BOTTOM-RIGHT THEME BUTTON -->
+  <!-- Bottom-right toggle -->
   <button id="themeToggleFixed" aria-pressed="false" aria-label="Toggle background theme">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4M12 7a5 5 0 100 10 5 5 0 000-10z" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -286,136 +223,92 @@
   </button>
 
 <script>
-  // ---------- year
+  // year
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  // ---------- theme toggle with persistence (bottom-right)
+  // theme toggle logic (neon green default). "pro" = professional theme
   const themeToggle = document.getElementById('themeToggleFixed');
   const body = document.body;
-
-  function applyTheme(mode){
-    if(mode === 'default'){
-      body.classList.add('default-theme');
+  function apply(theme){
+    if(theme === 'pro'){
+      body.classList.add('pro');
       themeToggle.setAttribute('aria-pressed','true');
+      localStorage.setItem('sm_theme','pro');
     } else {
-      body.classList.remove('default-theme');
+      body.classList.remove('pro');
       themeToggle.setAttribute('aria-pressed','false');
+      localStorage.setItem('sm_theme','neon');
     }
-    localStorage.setItem('sm_theme', mode);
   }
-
-  // make NEON the default on first load (and on reload unless user changed it)
-  const savedTheme = localStorage.getItem('sm_theme');
-  if(savedTheme){
-    applyTheme(savedTheme);
-  } else {
-    applyTheme('neon'); // neon by default
-  }
+  // load saved choice, default neon
+  const saved = localStorage.getItem('sm_theme') || 'neon';
+  apply(saved === 'pro' ? 'pro' : 'neon');
 
   themeToggle.addEventListener('click', ()=>{
-    const isDefault = body.classList.contains('default-theme');
-    const next = isDefault ? 'neon' : 'default';
-    applyTheme(next);
+    const isPro = body.classList.contains('pro');
+    apply(isPro ? 'neon' : 'pro');
   });
 
-  // keyboard: toggle with 'T'
-  document.addEventListener('keydown', (e)=>{
-    if(e.key && e.key.toLowerCase() === 't'){
-      const isDefault = body.classList.contains('default-theme');
-      applyTheme(isDefault ? 'neon' : 'default');
-    }
-  });
-
-  // ---------- skill bars & stat counters when visible ----------
-  const fills = document.querySelectorAll('.fill');
-  const nums = document.querySelectorAll('.num');
-
-  const io = new IntersectionObserver((entries, obs)=>{
-    entries.forEach(en=>{
-      if(en.isIntersecting){
-        if(en.target.classList && en.target.classList.contains('fill')){
-          en.target.style.width = en.target.getAttribute('data-fill');
-          obs.unobserve(en.target);
-        } else if(en.target.classList && en.target.classList.contains('num')){
-          const el = en.target; const target = +el.dataset.target;
-          let cur = 0; const step = Math.max(1, Math.ceil(target/60));
-          const t = setInterval(()=>{ cur += step; if(cur>=target){ el.textContent = String(target); clearInterval(t);} else el.textContent = String(cur); }, 16);
-          obs.unobserve(el);
-        }
-      }
-    });
-  }, {threshold:0.5});
-
-  fills.forEach(f=>io.observe(f));
-  nums.forEach(n=>io.observe(n));
-
-  // rotator pause on hover
-  const rot = document.querySelector('.word-rotator .words');
-  const rotWrap = document.querySelector('.word-rotator');
-  if(rotWrap){
-    rotWrap.addEventListener('mouseenter', ()=> rot.style.animationPlayState='paused');
-    rotWrap.addEventListener('mouseleave', ()=> rot.style.animationPlayState='running');
-  }
-
-  // ---------- LOADER logic ----------
+  // loader functionality
   const loader = document.getElementById('loader');
-  const fileList = document.getElementById('fileList');
   const arc = document.getElementById('arc');
   const arcPct = document.getElementById('arcPct');
+  const fileList = document.getElementById('fileList');
   const loaderStatus = document.getElementById('loaderStatus');
   const skipBtn = document.getElementById('skipBtn');
   const main = document.getElementById('main');
 
-  const files = [
-    'profile.json', 'avatar.png', 'neon-assets.pkg', 'projects.db',
-    'styles.css', 'script.js', 'local-data.cache', 'analytics.log'
-  ];
+  const files = ['profile.json','avatar.png','neon-assets.pkg','styles.css','script.js','projects.db'];
 
-  function runLoader(){
+  function startLoader(){
     main.setAttribute('aria-hidden','true');
     fileList.innerHTML = '';
-    let pct = 0;
-    let fileIndex = 0;
-
-    const interval = setInterval(()=>{
-      pct = Math.min(100, pct + Math.ceil(Math.random()*8));
+    let pct = 0; let idx = 0;
+    const it = setInterval(()=>{
+      pct = Math.min(100, pct + Math.ceil(Math.random()*7));
       arc.style.background = `conic-gradient(var(--accent) ${pct}%, rgba(255,255,255,0.02) ${pct}% )`;
       arcPct.textContent = pct + '%';
-      if(Math.random() > 0.4 && fileIndex < files.length){
-        const row = document.createElement('div');
-        row.className = 'row';
-        const t = new Date().toLocaleTimeString();
-        row.textContent = `[${t}] Loaded: ${files[fileIndex++]}`;
-        fileList.prepend(row);
+      if(Math.random() > 0.45 && idx < files.length){
+        const r = document.createElement('div'); r.className = 'row';
+        r.textContent = `[${new Date().toLocaleTimeString()}] Loaded: ${files[idx++]}`;
+        fileList.prepend(r);
       }
-      if(pct < 20) loaderStatus.textContent = 'Initializing';
-      else if(pct < 50) loaderStatus.textContent = 'Loading neon modules';
-      else if(pct < 80) loaderStatus.textContent = 'Applying glow & shaders';
-      else if(pct < 98) loaderStatus.textContent = 'Finalizing';
-      else loaderStatus.textContent = 'Ready';
+      if(pct < 30) loaderStatus.textContent = 'Initializing';
+      else if(pct < 60) loaderStatus.textContent = 'Loading assets';
+      else if(pct < 90) loaderStatus.textContent = 'Applying neon shaders';
+      else loaderStatus.textContent = 'Finalizing';
 
       if(pct >= 100){
-        clearInterval(interval);
-        setTimeout(hideLoader, 420);
+        clearInterval(it);
+        setTimeout(()=>{ loader.classList.add('hidden'); main.removeAttribute('aria-hidden'); animateUI(); }, 420);
       }
     }, 200);
   }
 
-  function hideLoader(){
-    loader.classList.add('hidden');
-    main.removeAttribute('aria-hidden');
-    fills.forEach(f=>{ if(!f.style.width || f.style.width === '0px') f.style.width = f.getAttribute('data-fill'); });
-    nums.forEach(n=>{ if(n.textContent === '0') n.textContent = n.dataset.target; });
+  function animateUI(){
+    // animate skill fills and counters (basic)
+    document.querySelectorAll('.fill').forEach(f => f.style.width = f.getAttribute('data-fill'));
+    document.querySelectorAll('.num').forEach(n => n.textContent = n.dataset.target);
   }
 
-  skipBtn.addEventListener('click', ()=> { hideLoader(); localStorage.setItem('sm_loader_skipped','1'); });
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') { hideLoader(); localStorage.setItem('sm_loader_skipped','1'); } });
+  // skip & accessibility
+  skipBtn.addEventListener('click', ()=>{ loader.classList.add('hidden'); main.removeAttribute('aria-hidden'); animateUI(); localStorage.setItem('sm_loader_skipped','1'); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ loader.classList.add('hidden'); main.removeAttribute('aria-hidden'); animateUI(); localStorage.setItem('sm_loader_skipped','1'); } });
 
   document.addEventListener('DOMContentLoaded', ()=>{
     const skipBefore = localStorage.getItem('sm_loader_skipped') === '1';
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(skipBefore || reduce){ hideLoader(); } else { runLoader(); }
+    if(skipBefore || reduce) { loader.classList.add('hidden'); main.removeAttribute('aria-hidden'); animateUI(); }
+    else startLoader();
   });
+
+  // small: pause rotator on hover
+  const rotWrap = document.querySelector('.word-rotator');
+  const rot = document.querySelector('.word-rotator .words');
+  if(rotWrap){
+    rotWrap.addEventListener('mouseenter', ()=> rot.style.animationPlayState='paused');
+    rotWrap.addEventListener('mouseleave', ()=> rot.style.animationPlayState='running');
+  }
 </script>
 </body>
 </html>
