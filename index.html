@@ -4,508 +4,181 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Samron Trevor Miranda — Portfolio</title>
+
   <style>
-    /* ---------------------------
-       THEME VARIABLES (two themes)
-       - Default in :root is NEON (current)
-       - .theme-classic on body switches to original blue/white
-       --------------------------- */
     :root{
-      /* NEON THEME (current) *//
+      /* NEON THEME */
       --bg-neon: #39ff14;
       --bg-neon-2: #1bff64;
       --accent-blue: #0b66ff;
       --muted-blue: #2854a8;
       --card:#ffffff;
-      --glass: rgba(255,255,255,0.85);
-      --shadow: 0 8px 30px rgba(12,33,80,0.08);
-      --rounded: 14px;
+      --shadow: 0 8px 30px rgba(12,33,80,0.1);
       --body-bg: linear-gradient(180deg,var(--bg-neon),var(--bg-neon-2) 60%);
-      --text-primary: var(--accent-blue);
-      --text-muted: var(--muted-blue);
-      --chip-bg: rgba(11,102,255,0.06);
-      --chip-active-bg: var(--accent-blue);
-      --badge-bg: linear-gradient(135deg,var(--accent-blue),#5fb0ff);
     }
 
-    /* CLASSIC BLUE & WHITE THEME */
-    body.theme-classic {
-      --bg-neon: #f8fbff; /* not used but keep */
+    /* CLASSIC THEME */
+    body.theme-classic{
+      --bg-neon: #f8fbff;
       --bg-neon-2: #eaf4ff;
       --accent-blue: #0b66ff;
       --muted-blue: #6b7a90;
       --card:#ffffff;
-      --glass: rgba(255,255,255,0.65);
-      --shadow: 0 8px 30px rgba(12,33,80,0.06);
-      --rounded: 14px;
-      --body-bg: linear-gradient(180deg,var(--bg-neon),#eaf4ff 60%);
-      --text-primary: #102034;
-      --text-muted: var(--muted-blue);
-      --chip-bg: rgba(11,102,255,0.06);
-      --chip-active-bg: var(--accent-blue);
-      --badge-bg: linear-gradient(135deg,var(--accent-blue),#5fb0ff);
+      --body-bg: linear-gradient(180deg,var(--bg-neon),var(--bg-neon-2) 60%);
     }
 
-    /* Smooth transitions for theme-related properties */
-    :root, body {
-      transition: background 350ms ease, color 280ms ease;
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
-      background: var(--body-bg);
-      color:var(--text-primary);
+      background:var(--body-bg);
+      font-family:Inter,system-ui;
+      color:var(--accent-blue);
       -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      letter-spacing:0.1px;
       padding-bottom:40px;
-      transition: background .35s ease, color .28s ease;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      transition:background .25s ease, color .25s ease;
     }
-
-    /* Loader (full-screen) */
-    .page-loader{
-      position:fixed;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.06));
-      z-index:9999;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      transition:opacity .45s ease, visibility .45s ease;
-    }
-    .loader-inner{
-      width:320px;
-      max-width:86%;
-      background:var(--card);
-      border-radius:16px;
-      padding:22px;
-      box-shadow:0 20px 50px rgba(2,6,10,0.18);
-      display:flex;
-      gap:16px;
-      align-items:center;
-    }
-    .loader-badge{
-      width:64px;height:64px;border-radius:12px;
-      display:grid;place-items:center;font-weight:800;color:var(--card);
-      background:var(--badge-bg);
-      box-shadow:0 6px 22px rgba(11,102,255,0.14);
-      font-size:18px;
-    }
-    .loader-meta{flex:1}
-    .loader-meta h4{margin:0 0 6px;color:var(--text-primary);font-size:18px}
-    .loader-meta p{margin:0;color:var(--text-muted);font-size:13px}
-    .progress{
-      margin-top:12px;height:8px;background:rgba(11,102,255,0.08);border-radius:999px;overflow:hidden;
-    }
-    .progress > i{
-      display:block;height:100%;width:0%;
-      background:linear-gradient(90deg,var(--chip-active-bg), #7fb8ff);
-      border-radius:999px;
-      animation:loaderProgress 2s ease forwards;
-    }
-    @keyframes loaderProgress{
-      0%{width:0%}
-      60%{width:78%}
-      100%{width:100%}
-    }
-    .spinner{
-      width:38px;height:38px;border-radius:50%;border:4px solid rgba(11,102,255,0.12);
-      border-top-color:var(--chip-active-bg); animation:spin 1s linear infinite;
-    }
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .page-loader.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
 
     header{
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       padding:22px 28px;
-      max-width:1200px;margin:0 auto;
+      max-width:1200px;
+      margin:0 auto;
     }
-    .logo{font-weight:700;color:var(--chip-active-bg);font-size:18px}
-    nav ul{display:flex;gap:18px;align-items:center;list-style:none;padding:0;margin:0}
-    nav a{color:var(--text-muted);text-decoration:none;padding:10px 12px;border-radius:10px}
-    nav a:hover{background:var(--glass);color:var(--chip-active-bg)}
+    .logo{font-weight:700;font-size:20px;color:var(--accent-blue)}
+    nav a{
+      text-decoration:none;
+      color:var(--muted-blue);
+      margin-left:14px;
+      padding:8px 10px;
+      border-radius:8px;
+    }
+    nav a:hover{
+      background:white;
+      color:var(--accent-blue);
+    }
 
     .container{max-width:1200px;margin:0 auto;padding:0 28px}
 
     .hero{
-      margin-top:10px;
-      padding:40px 0 38px;
-      display:grid;grid-template-columns:1fr 420px;gap:30px;align-items:center;
+      margin-top:20px;
+      padding:32px;
+      background:white;
+      border-radius:16px;
+      display:grid;
+      grid-template-columns:1fr 350px;
+      gap:25px;
+      box-shadow:var(--shadow);
     }
-    .hero-inner{
-      padding:28px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.94));
-      border-radius:18px;box-shadow:var(--shadow);
+    .lead{color:var(--muted-blue)}
+
+    /* Profile Photo */
+    .profile-section{
+      text-align:center;
+      margin-top:40px;
     }
-    h1{font-size:40px;margin:6px 0 10px;line-height:1.02;color:var(--chip-active-bg)}
-    .accent{color:var(--chip-active-bg);}
-    .lead{color:var(--text-muted);margin:0 0 16px}
-
-    .cta{display:flex;gap:12px}
-    .btn{display:inline-block;padding:10px 14px;border-radius:12px;background:var(--chip-active-bg);color:white;text-decoration:none;font-weight:600}
-    .btn.ghost{background:transparent;border:1px solid rgba(11,102,255,0.12);color:var(--chip-active-bg)}
-
-    /* moving words widget */
-    .moving-words{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
-    .moving-words > div:first-child{color:var(--text-muted);font-weight:600}
-    .word-wrap{position:relative;height:34px;overflow:hidden}
-    .word-wrap .words{position:absolute;top:0;left:0;animation:slideWords 10s linear infinite}
-    .word{display:block;height:34px;padding:0 6px;font-weight:700;color:var(--chip-active-bg)}
-    @keyframes slideWords{
-      0%{transform:translateY(0)}
-      20%{transform:translateY(-34px)}
-      40%{transform:translateY(-68px)}
-      60%{transform:translateY(-102px)}
-      80%{transform:translateY(-136px)}
-      100%{transform:translateY(0)}
+    .profile-photo-wrapper{
+      width:240px;
+      height:240px;
+      margin:0 auto;
+      border-radius:50%;
+      overflow:hidden;
+      border:6px solid var(--card);
+      box-shadow:0 15px 40px rgba(0,0,0,0.18);
     }
-
-    /* highlights */
-    .highlights{display:flex;gap:18px;margin:34px 0}
-    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:var(--shadow);flex:1}
-    .card h3{margin:0 0 6px;color:var(--chip-active-bg)}
-    .card p{margin:0;color:var(--text-muted)}
-
-    /* projects */
-    .projects h2{margin-top:10px;color:var(--chip-active-bg)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:14px}
-    .proj{
-      background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.98));
-      padding:14px;border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;transition:transform .28s ease,box-shadow .28s
-    }
-    .proj:hover{transform:translateY(-8px);box-shadow:0 18px 50px rgba(12,33,80,0.12)}
-    .proj img{width:100%;height:140px;object-fit:cover;border-radius:10px}
-    .proj h4{margin:0;color:var(--chip-active-bg)}
-    .proj p{margin:0;color:var(--text-muted);font-size:14px}
-
-    /* interactive controls */
-    .projects .controls{display:flex;gap:10px;align-items:center;margin-top:12px}
-    .chip{padding:8px 10px;border-radius:999px;background:var(--chip-bg);border:1px solid var(--chip-bg);cursor:pointer;color:var(--chip-active-bg)}
-    .chip.active{background:var(--chip-active-bg);color:white;border-color:transparent}
-
-    footer.site-footer{margin-top:40px;padding:22px 0;color:var(--text-muted)}
-    footer p{margin:6px 0}
-
-    /* responsive */
-    @media (max-width:880px){
-      .hero{grid-template-columns:1fr}
-      .hero-inner{order:2}
-      aside{order:1}
+    .profile-photo-wrapper img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
     }
 
-    /* subtle floating background shapes */
-    .bg-shape{position:fixed;right:-80px;top:10%;width:420px;height:420px;border-radius:50%;background:linear-gradient(135deg,var(--bg-neon),#8bff9a);opacity:0.12;filter:blur(36px);pointer-events:none}
-    .bg-shape--2{left:-100px;bottom:-60px;opacity:0.08;background:linear-gradient(135deg,#9cffb6,var(--bg-neon-2))}
+    footer{text-align:center;margin-top:40px;color:var(--muted-blue)}
 
-    /* Theme toggle button (floating) */
+    /* Theme Toggle Button */
     .theme-toggle{
       position:fixed;
-      right:20px;
-      bottom:20px;
-      z-index:12000;
+      right:22px;
+      bottom:22px;
       width:56px;
       height:56px;
-      border-radius:999px;
-      display:grid;
-      place-items:center;
-      background:var(--chip-active-bg);
-      color:white;
-      box-shadow: 0 8px 26px rgba(11,102,255,0.18);
       border:none;
+      border-radius:50%;
+      background:var(--accent-blue);
+      color:white;
       cursor:pointer;
-      transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+      box-shadow:0 8px 25px rgba(0,0,0,0.18);
+      font-size:22px;
     }
-    .theme-toggle:active{ transform:scale(.96) }
-    .theme-toggle .icon{font-weight:700; font-size:18px; line-height:1;}
-    .theme-toggle[aria-pressed="true"]{ background:var(--text-muted); }
-    .theme-toggle:focus{ outline:3px solid rgba(11,102,255,0.18); outline-offset:4px; }
 
-    /* small accessibility helpers */
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:880px){
+      .hero{grid-template-columns:1fr}
+    }
   </style>
 </head>
-<body>
-  <!-- Loader overlay shown while page loads -->
-  <div class="page-loader" id="pageLoader" role="status" aria-live="polite" aria-label="Loading content">
-    <div class="loader-inner" aria-hidden="false">
-      <div class="loader-badge" aria-hidden="true">SM</div>
-      <div class="loader-meta">
-        <h4>Samron Miranda</h4>
-        <p>Preparing your portfolio…</p>
-        <div class="progress" aria-hidden="true"><i></i></div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-left:10px">
-        <div class="spinner" aria-hidden="true"></div>
-        <small style="color:var(--text-muted);font-size:12px">Almost there</small>
-      </div>
-    </div>
-  </div>
 
-  <div class="bg-shape" aria-hidden></div>
-  <div class="bg-shape bg-shape--2" aria-hidden></div>
+<body>
 
   <header>
     <div class="logo">Samron Miranda</div>
     <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </header>
 
-  <main class="container" id="mainContent" aria-busy="true">
-    <section class="hero">
-      <div class="hero-inner">
-        <h1>Hi, I’m <span class="accent">Samron Trevor Miranda</span></h1>
-        <p class="lead">Novice coder • Enthusiastic sportsman • Lover of history, classical literature & technology.</p>
+  <main class="container">
 
-        <div class="moving-words" aria-hidden="true">
-          <div>Passionate about</div>
-          <div class="word-wrap" aria-hidden>
-            <div class="words">
-              <span class="word">Web Apps</span>
-              <span class="word">Data</span>
-              <span class="word">Sports Science</span>
-              <span class="word">History</span>
-              <span class="word">Design</span>
+    <section class="hero">
+      <div>
+        <h1>Hi, I’m <span style="color:var(--accent-blue)">Samron Trevor Miranda</span></h1>
+        <p class="lead">Novice coder • Sportsman • Lover of history & tech.</p>
+      </div>
+
+      <aside>
+        <div style="background:white;padding:18px;border-radius:12px;box-shadow:var(--shadow)">
+          <h3>Quick Info</h3>
+          <p style="color:var(--muted-blue)">Computer Engineering — FCRIT</p>
+
+          <div style="display:flex;gap:12px;margin-top:12px">
+            <div style="background:var(--accent-blue);color:white;padding:10px;border-radius:10px;font-weight:bold">
+              Age<br><small>18</small>
+            </div>
+
+            <div style="padding:10px;border-radius:10px;background:#eef5ff;color:var(--accent-blue)">
+              Hobbies<br><small style="color:var(--muted-blue)">Coding, Sports, Reading</small>
             </div>
           </div>
         </div>
-
-        <div style="height:10px"></div>
-        <div class="cta">
-          <a class="btn" href="about.html">Know More</a>
-          <a class="btn ghost" href="gallery.html">See My Work</a>
-        </div>
-      </div>
-
-      <aside style="padding:18px;display:flex;flex-direction:column;gap:14px;align-items:flex-end">
-        <div style="background:linear-gradient(180deg,#fff,#f7fbff);padding:18px;border-radius:12px;box-shadow:var(--shadow);min-width:300px">
-          <h3 style="margin:0 0 6px">Quick Info</h3>
-          <p style="margin:0;color:var(--text-muted)">Computer Engineering — Father Conceicao Rodrigues College of Engineering</p>
-          <div style="display:flex;gap:8px;margin-top:12px">
-            <div style="background:var(--chip-active-bg);color:white;padding:8px 10px;border-radius:10px;font-weight:700">Age<br><small style="font-weight:600">18</small></div>
-            <div style="padding:8px 10px;border-radius:10px;background:rgba(11,102,255,0.06);color:var(--chip-active-bg)">Hobbies<br><small style="color:var(--text-muted)">Coding, Sports, Reading</small></div>
-          </div>
-        </div>
-
-        <div style="text-align:right;color:var(--text-muted);font-size:13px">Fr. Conceicao Rodrigues College of Engineering<br> Father Agnel Ashram, Bandstand, Bandra-West, Mumbai-50</div>
       </aside>
     </section>
 
-  <section class="profile-photo-section" style="margin-top:40px; text-align:center;">
-  <h2 style="color:var(--chip-active-bg); margin-bottom:20px;">
-    Samron Trevor Miranda
-  </h2>
+    <!-- PROFILE PHOTO SECTION -->
+    <section class="profile-section">
+      <h2 style="color:var(--accent-blue)">Samron Trevor Miranda</h2>
 
-  <div class="profile-photo-wrapper" 
-       style="
-         width:240px;
-         height:240px;
-         margin:0 auto;
-         border-radius:50%;
-         overflow:hidden;
-         box-shadow:0 15px 40px rgba(0,0,0,0.18);
-         border:6px solid var(--card);
-         background:var(--card);
-       ">
-    <img src="assets/sam.jpeg"
-         alt="Profile photo of Samron"
-         style="
-           width:100%;
-           height:100%;
-           object-fit:cover;
-         ">
-  </div>
-</section>
-
+      <div class="profile-photo-wrapper">
+        <img src="assets/sam.jpeg" alt="Profile photo of Samron">
+      </div>
+    </section>
 
   </main>
 
-  <footer class="site-footer container">
-    <p>&copy; <span id="year"></span> Samron Trevor Miranda</p>
+  <footer>
+    <p>&copy; <script>document.write(new Date().getFullYear())</script> Samron Trevor Miranda</p>
   </footer>
 
-  <!-- Floating theme toggle (bottom-right) -->
-  <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Switch theme (neon / classic)">
-    <span class="icon" aria-hidden="true">♻</span>
-    <span class="sr-only">Toggle theme</span>
-  </button>
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" id="themeToggle">♻</button>
 
   <script>
-    // populate year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // =========================
-    // THEME TOGGLER
-    // - Saves 'siteTheme' in localStorage ('neon' | 'classic')
-    // - Adds/removes body.class 'theme-classic'
-    // - Updates button aria-pressed
-    // =========================
-    (function(){
-      const body = document.body;
-      const toggle = document.getElementById('themeToggle');
-      const STORAGE_KEY = 'siteTheme';
-      const CLASSIC = 'classic';
-      const DEFAULT_THEME = 'neon'; // current default
-
-      function applyTheme(theme, save = false){
-        if(theme === CLASSIC){
-          body.classList.add('theme-classic');
-          toggle.setAttribute('aria-pressed','true');
-          toggle.title = 'Switch to Neon theme';
-        } else {
-          body.classList.remove('theme-classic');
-          toggle.setAttribute('aria-pressed','false');
-          toggle.title = 'Switch to Classic theme';
-        }
-        if(save){
-          try { localStorage.setItem(STORAGE_KEY, theme); } catch(e){}
-        }
-      }
-
-      // initialize from storage if available
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if(saved === CLASSIC) applyTheme(CLASSIC, false);
-        else applyTheme(DEFAULT_THEME, false);
-      } catch(e){
-        applyTheme(DEFAULT_THEME, false);
-      }
-
-      // toggle handler
-      function toggleTheme(){
-        const isClassic = body.classList.contains('theme-classic');
-        applyTheme(isClassic ? DEFAULT_THEME : CLASSIC, true);
-        // small focus / visual feedback
-        toggle.blur();
-      }
-
-      toggle.addEventListener('click', toggleTheme);
-      // keyboard: Enter & Space activate
-      toggle.addEventListener('keydown', (e)=>{
-        if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme(); }
-      });
-
-      // expose for debugging if needed: window.setSiteTheme = applyTheme;
-    })();
-
-    // Sorting controls, shuffle, drag n drop (unchanged behavior)
-    const chips = document.querySelectorAll('.chip');
-    const grid = document.getElementById('projectsGrid');
-    function renderOrder(elements){
-      grid.innerHTML = '';
-      elements.forEach(el=>grid.appendChild(el));
-    }
-    function getItems(){
-      return Array.from(grid.querySelectorAll('.proj'));
-    }
-    chips.forEach(chip=>{
-      chip.addEventListener('click', ()=>{
-        chips.forEach(c=>c.classList.remove('active'));
-        chip.classList.add('active');
-        const mode = chip.dataset.sort;
-        let items = getItems();
-        if(mode === 'alpha-asc'){
-          items.sort((a,b)=> a.dataset.title.localeCompare(b.dataset.title));
-        } else if(mode === 'alpha-desc'){
-          items.sort((a,b)=> b.dataset.title.localeCompare(a.dataset.title));
-        } else if(mode === 'default'){
-          items.sort((a,b)=> a.dataset.title.localeCompare(b.dataset.title));
-        }
-        renderOrder(items);
-      });
-      chip.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chip.click(); } });
+    const btn = document.getElementById("themeToggle");
+    btn.addEventListener("click", ()=>{
+      document.body.classList.toggle("theme-classic");
     });
-
-    document.getElementById('shuffle').addEventListener('click', ()=>{
-      const items = getItems();
-      for(let i = items.length -1; i>0; i--){
-        const j = Math.floor(Math.random()*(i+1));
-        [items[i], items[j]] = [items[j], items[i]];
-      }
-      chips.forEach(c=>c.classList.remove('active'));
-      document.querySelector('[data-sort="default"]').classList.add('active');
-      renderOrder(items);
-    });
-
-    // Drag & drop reorder
-    let dragSrc = null;
-    function handleDragStart(e){
-      dragSrc = this;
-      this.style.opacity = '0.5';
-      e.dataTransfer.effectAllowed = 'move';
-      try { e.dataTransfer.setData('text/html', this.outerHTML); } catch (err) {}
-    }
-    function handleDragEnd(){
-      this.style.opacity = '1';
-      document.querySelectorAll('.proj').forEach(p=>p.classList.remove('over'));
-    }
-    function handleDragOver(e){
-      e.preventDefault();
-      return false;
-    }
-    function handleDrop(e){
-      e.stopPropagation();
-      if(dragSrc !== this){
-        const children = Array.from(grid.children);
-        const srcIndex = children.indexOf(dragSrc);
-        const tgtIndex = children.indexOf(this);
-        if(srcIndex < tgtIndex){
-          grid.insertBefore(dragSrc, this.nextSibling);
-        } else {
-          grid.insertBefore(dragSrc, this);
-        }
-      }
-      return false;
-    }
-    function addDnDHandlers(item){
-      item.addEventListener('dragstart', handleDragStart);
-      item.addEventListener('dragend', handleDragEnd);
-      item.addEventListener('dragover', handleDragOver);
-      item.addEventListener('drop', handleDrop);
-    }
-    document.querySelectorAll('.proj').forEach(addDnDHandlers);
-
-    // Make moving words interactive: pause on hover
-    const wordWrap = document.querySelector('.word-wrap .words');
-    if(wordWrap){
-      document.querySelector('.word-wrap').addEventListener('mouseenter', ()=>{ wordWrap.style.animationPlayState='paused'});
-      document.querySelector('.word-wrap').addEventListener('mouseleave', ()=>{ wordWrap.style.animationPlayState='running'});
-    }
-
-    /* ===== Page loader handling ===== */
-    (function(){
-      const loader = document.getElementById('pageLoader');
-      const main = document.getElementById('mainContent');
-      const MIN_VISIBLE = 400;
-      const start = Date.now();
-      function hideLoader(){
-        const elapsed = Date.now() - start;
-        const remaining = Math.max(0, MIN_VISIBLE - elapsed);
-        setTimeout(()=>{
-          loader.classList.add('hidden');
-          if(main) main.setAttribute('aria-busy','false');
-        }, remaining);
-      }
-      if(document.readyState === 'complete'){ hideLoader(); }
-      else { window.addEventListener('load', hideLoader, {once:true}); }
-      setTimeout(()=>{ if(!loader.classList.contains('hidden')) hideLoader(); }, 5000);
-    })();
   </script>
+
 </body>
 </html>
-
-
-
 
