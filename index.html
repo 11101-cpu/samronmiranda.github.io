@@ -303,35 +303,31 @@
       </aside>
     </section>
 
-    <section class="projects">
-      <h2>Recent Projects</h2>
+    <section class="profile-photo-section" style="margin-top:40px; text-align:center;">
+  <h2 style="color:var(--chip-active-bg); margin-bottom:20px;">
+    Samron Trevor Miranda
+  </h2>
 
-      <div class="controls">
-        <div class="chip active" data-sort="default">Default</div>
-        <div class="chip" data-sort="alpha-asc">A → Z</div>
-        <div class="chip" data-sort="alpha-desc">Z → A</div>
-        <div class="chip" id="shuffle">Shuffle</div>
-        <div style="margin-left:auto;color:var(--text-muted);font-size:13px">Drag to reorder (desktop)</div>
-      </div>
-
-      <div class="grid" id="projectsGrid">
-        <article class="proj" draggable="true" data-title="Mini Chat App">
-          <img src="assets/images/project1.jpg" alt="project 1">
-          <h4>Mini Chat App</h4>
-          <p>Built with HTML, CSS, JS — a playground for learning sockets.</p>
-        </article>
-        <article class="proj" draggable="true" data-title="Portfolio">
-          <img src="assets/images/project2.jpg" alt="project 2">
-          <h4>Portfolio</h4>
-          <p>A single-page portfolio highlighting coursework and hobbies.</p>
-        </article>
-        <article class="proj" draggable="true" data-title="Sports Tracker">
-          <img src="assets/images/project3.jpg" alt="project 3">
-          <h4>Sports Tracker</h4>
-          <p>A small JS app to log practice sessions and stats.</p>
-        </article>
-      </div>
-    </section>
+  <div class="profile-photo-wrapper" 
+       style="
+         width:220px;
+         height:220px;
+         margin:0 auto;
+         border-radius:50%;
+         overflow:hidden;
+         box-shadow:0 15px 40px rgba(0,0,0,0.18);
+         border:6px solid var(--card);
+         background:var(--card);
+       ">
+    <img src="assets/images/profile.jpg"
+         alt="Profile photo of Samron"
+         style="
+           width:100%;
+           height:100%;
+           object-fit:cover;
+         ">
+  </div>
+</section>
 
   </main>
 
@@ -508,4 +504,5 @@
   </script>
 </body>
 </html>
+
 
