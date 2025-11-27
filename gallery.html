@@ -13,7 +13,7 @@
     --muted:#6b7a90;             /* muted text (secondary) */
     --card:#ffffff;              /* card surface */
     --shadow:0 8px 28px rgba(12,33,80,0.08);
-    --text:#0b66ff;              /* <-- lettering set to blue as requested */
+    --text:#0b66ff;              /* lettering set to blue */
     --glass: rgba(255,255,255,0.92);
     --rounded:12px;
   }
@@ -21,12 +21,12 @@
   /* neon-green theme (applied when body.neon) */
   body.neon {
     --bg: linear-gradient(180deg,#eafef0,#e6fff6 60%);
-    --accent: #00ff66;          /* accent for things that need to indicate green theme */
+    --accent: #00ff66;          /* accent for elements while in neon */
     --muted: #08321d;
     --card: #041a10;
     --shadow: 0 18px 50px rgba(0,140,70,0.09);
     --glass: rgba(255,255,255,0.04);
-    /* note: --text intentionally NOT changed so lettering stays blue */
+    /* note: --text intentionally unchanged so lettering remains blue */
   }
 
   /* ---------- Base (professional) layout ---------- */
@@ -38,7 +38,7 @@
     color:var(--text);                      /* all lettering blue */
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
-    padding-bottom:72px;                    /* space for bottom-right button */
+    padding-bottom:88px;                    /* space for bottom-right button */
     transition:background .35s ease, color .25s ease;
   }
 
@@ -276,7 +276,7 @@
   }
   applyTheme(stored);
 
-  // Toggle on click
+  // Toggle on click: switch the page background between neon and original
   themeBtnBR.addEventListener('click', ()=>{
     const isNeon = body.classList.contains('neon');
     applyTheme(isNeon ? 'original' : 'neon');
