@@ -7,54 +7,58 @@
 <meta name="description" content="Contact Samron Trevor Miranda — get in touch.">
 <style>
   :root{
-    --bg:#f6fbff;--accent:#0b66ff;--muted:#6b7a90;--card:#fff;--glass:rgba(255,255,255,0.7);--shadow:0 12px 40px rgba(6,18,40,0.08);--rounded:12px
+    --bg:#f6fbff;--accent:#0b66ff;--muted:#6b7a90;--card:#fff;--glass:rgba(255,255,255,0.85);--shadow:0 12px 40px rgba(6,18,40,0.08);--rounded:12px;--text-color:#0b66ff;
   }
   /* Theme tokens for easy switching */
-  .theme-default{ --bg: #f6fbff; --accent: #0b66ff; --muted: #6b7a90; --card: #fff; --glass: rgba(255,255,255,0.7); --shape-opacity:0.05 }
-  .theme-neon{ --bg: #00ff6a; --accent: #00303f; --muted: rgba(2,10,30,0.6); --card: rgba(255,255,255,0.04); --glass: rgba(255,255,255,0.06); --shape-opacity:0.12 }
+  .theme-default{ --bg: #f6fbff; --accent: #0b66ff; --muted: #6b7a90; --card: #fff; --glass: rgba(255,255,255,0.85); --shape-opacity:0.06; --text-color:#0b66ff }
+  .theme-neon{ --bg: linear-gradient(180deg,#00ff6a 0%, #d8ffe1 100%); --accent: #0b66ff; --muted: rgba(2,10,30,0.6); --card: rgba(255,255,255,0.06); --glass: rgba(255,255,255,0.06); --shape-opacity:0.08; --text-color:#0b66ff }
 
+  /* base reset */
   *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:linear-gradient(180deg,var(--bg), rgba(255,255,255,0.06) 70%);color:#102034;-webkit-font-smoothing:antialiased;padding-bottom:60px;transition:background .35s ease,color .35s ease}
-  .container{max-width:900px;margin:0 auto;padding:20px}
+  html,body{height:100%}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:var(--bg);color:var(--text-color);-webkit-font-smoothing:antialiased;padding:36px 20px 96px;transition:background .35s ease,color .35s ease}
+
+  .container{max-width:980px;margin:0 auto;padding:20px}
   header.nav-wrap{padding:18px 0}
   .nav{display:flex;align-items:center;justify-content:space-between}
-  .brand{font-weight:700;color:var(--accent);text-decoration:none}
+  .brand{font-weight:700;color:var(--accent);text-decoration:none;font-size:18px}
   .nav-links{display:flex;gap:14px;list-style:none;padding:0;margin:0}
-  .nav-links a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px}
+  .nav-links a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px;font-weight:600}
   .nav-links a.active{background:var(--glass);color:var(--accent)}
 
   main.contact-page{padding:22px 0}
-  h1{font-size:32px;margin:6px 0}
-  p.intro{color:var(--muted)}
+  h1{font-size:28px;margin:6px 0;color:var(--accent)}
+  p.intro{color:var(--muted);line-height:1.5}
 
-  .contact-form{background:linear-gradient(180deg,var(--card),rgba(255,255,255,0.02));padding:18px;border-radius:12px;box-shadow:var(--shadow);margin-top:12px;border:1px solid rgba(2,10,30,0.03)}
-  .contact-form label{display:block;margin-top:12px;font-weight:600}
-  .contact-form input,.contact-form textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(2,10,30,0.06);margin-top:6px;font-size:15px;background:transparent;color:inherit}
-  .contact-form textarea{resize:vertical}
+  /* Card */
+  .card{background:var(--card);padding:22px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(11,102,255,0.06)}
+  .contact-form{background:transparent;padding:0;border-radius:8px;margin-top:12px}
+  .contact-form label{display:block;margin-top:12px;font-weight:700;color:var(--accent)}
+  .contact-form input,.contact-form textarea{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(2,10,30,0.08);margin-top:8px;font-size:15px;background:transparent;color:var(--text-color)}
+  .contact-form textarea{resize:vertical;min-height:140px}
 
-  .btn{display:inline-block;padding:10px 14px;border-radius:12px;background:var(--accent);color:white;text-decoration:none;border:0;font-weight:700;margin-top:12px;cursor:pointer}
-  /* theme toggle */
-  .theme-toggle{display:inline-flex;align-items:center;gap:8px;padding:8px;border-radius:999px;border:1px solid rgba(2,10,30,0.06);background:transparent;color:var(--muted);cursor:pointer;font-weight:700}
+  .btn{display:inline-block;padding:10px 16px;border-radius:12px;background:var(--accent);color:white;text-decoration:none;border:0;font-weight:800;margin-top:16px;cursor:pointer;box-shadow:0 8px 24px rgba(11,102,255,0.12)}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(11,102,255,0.12)}
 
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .form-msg{margin-top:10px;color:var(--muted)}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .form-msg{margin-top:10px;color:var(--muted);font-weight:600}
 
-  .socials{margin-top:18px}
-  .socials a{color:var(--accent);text-decoration:none;font-weight:600}
+  .socials{margin-top:22px}
+  .socials a{color:var(--accent);text-decoration:none;font-weight:700}
 
   /* floating shape */
-  .bg-shape{position:fixed;right:-100px;top:10%;width:380px;height:380px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#5fb0ff);opacity:var(--shape-opacity);filter:blur(36px);pointer-events:none;transition:opacity .35s ease}
+  .bg-shape{position:fixed;right:-80px;top:6%;width:320px;height:320px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#5fb0ff);opacity:var(--shape-opacity);filter:blur(48px);pointer-events:none;transition:opacity .35s ease}
 
   /* tiny animations */
-  .btn.sending{transform:translateY(1px) scale(0.98);opacity:0.9}
+  .btn.sending{transform:translateY(1px) scale(0.98);opacity:0.95}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
   /* loading overlay (game-style) */
-  .loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6));z-index:9999;flex-direction:column;color:white}
-  .loader-box{width:380px;max-width:80%;padding:26px;border-radius:14px;background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);text-align:center}
+  .loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.78), rgba(0,0,0,0.52));z-index:9999;flex-direction:column;color:white}
+  .loader-box{width:420px;max-width:88%;padding:28px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));backdrop-filter:blur(6px);text-align:center;border:1px solid rgba(255,255,255,0.03)}
   .loader-title{font-weight:800;letter-spacing:2px;margin-bottom:12px}
-  .loader-anim{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
-  .loader-anim span{width:12px;height:12px;border-radius:3px;background:white;opacity:.15;transform:translateY(0);animation:loaderJump 1s infinite ease-in-out}
+  .loader-anim{display:flex;gap:10px;justify-content:center;margin-bottom:12px}
+  .loader-anim span{width:14px;height:14px;border-radius:3px;background:white;opacity:.15;transform:translateY(0);animation:loaderJump 1s infinite ease-in-out}
   .loader-anim span:nth-child(2){animation-delay:.12s}
   .loader-anim span:nth-child(3){animation-delay:.24s}
   .loader-anim span:nth-child(4){animation-delay:.36s}
@@ -63,8 +67,13 @@
   .loader-percent{font-size:14px;font-weight:700}
   .loader-hidden{opacity:0;pointer-events:none;transition:opacity .45s ease}
 
+  /* floating theme button bottom-right */
+  #themeToggle{position:fixed;right:20px;bottom:20px;z-index:2000;display:inline-flex;align-items:center;gap:10px;padding:12px 14px;border-radius:999px;border:0;background:#00ff6a;color:#042b3a;font-weight:800;box-shadow:0 8px 30px rgba(0,0,0,0.2);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
+  #themeToggle.small{padding:10px 12px}
+  #themeToggle.defaultStyle{background:#fff;color:var(--accent);border:1px solid rgba(11,102,255,0.12)}
+
   /* responsive */
-  @media (max-width:720px){.form-row{grid-template-columns:1fr}.nav{gap:10px}}
+  @media (max-width:820px){.form-row{grid-template-columns:1fr}.container{padding:12px}#themeToggle{right:14px;bottom:14px;padding:10px 12px}}
 </style>
 </head>
 <body class="theme-neon">
@@ -80,57 +89,62 @@
   </div>
 
   <div class="bg-shape" aria-hidden></div>
-  <header class="nav-wrap">
-    <nav class="nav container">
+  <header class="nav-wrap container">
+    <nav class="nav">
       <a class="brand" href="index.html">Samron Miranda</a>
-      <div style="display:flex;align-items:center;gap:10px">
-        <button id="themeToggle" class="theme-toggle" aria-pressed="true" title="Switch theme">Switch to White/Blue</button>
-        <ul class="nav-links" id="nav-links-4" style="margin:0;padding:0">
-          <li style="display:inline-block"><a href="index.html">Home</a></li>
-          <li style="display:inline-block"><a href="about.html">About</a></li>
-          <li style="display:inline-block"><a href="gallery.html">Gallery</a></li>
-          <li style="display:inline-block"><a href="contact.html" class="active">Contact</a></li>
-        </ul>
-      </div>
+      <ul class="nav-links" id="nav-links-4" aria-hidden>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
     </nav>
   </header>
 
-  <main class="container contact-page" id="mainContent" tabindex="-1">
-    <h1>Contact Me</h1>
-    <p class="intro">If you'd like to reach me, send a message using the form below or email me at <a id="mail-link" href="mailto:samronmiranda@gmail.com">samronmiranda@gmail.com</a>. Click the email to copy it.</p>
+  <main class="container" id="mainContent" tabindex="-1">
+    <section class="card">
+      <h1>Contact Me</h1>
+      <p class="intro">If you'd like to reach me, send a message using the form below or email me at <a id="mail-link" href="mailto:samronmiranda@gmail.com">samronmiranda@gmail.com</a>. Click the email to copy it.</p>
 
-    <form id="contact-form" class="contact-form" novalidate>
-      <div class="form-row">
-        <div>
-          <label for="name">Name</label>
-          <input id="name" name="name" type="text" required aria-required="true" placeholder="Your full name">
+      <form id="contact-form" class="contact-form" novalidate>
+        <div class="form-row">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required aria-required="true" placeholder="Your full name">
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required aria-required="true" placeholder="you@example.com">
+          </div>
         </div>
-        <div>
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" required aria-required="true" placeholder="you@example.com">
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="6" required aria-required="true" placeholder="Tell me a bit about your project or message"></textarea>
+
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <button type="submit" class="btn" id="sendBtn">Send Message</button>
+          <button type="button" class="btn ghost" id="downloadVcard">Download vCard</button>
+          <p id="form-msg" class="form-msg" aria-live="polite" style="margin:0"></p>
         </div>
+      </form>
+
+      <div class="socials">
+        <h3 style="color:var(--accent);margin-top:18px">Connect</h3>
+        <p>
+          <a href="#" target="_blank" rel="noopener">LinkedIn</a> &middot;
+          <a href="#" target="_blank" rel="noopener">GitHub</a> &middot;
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+        </p>
       </div>
-
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="6" required aria-required="true" placeholder="Tell me a bit about your project or message"></textarea>
-
-      <button type="submit" class="btn" id="sendBtn">Send Message</button>
-      <p id="form-msg" class="form-msg" aria-live="polite"></p>
-    </form>
-
-    <div class="socials">
-      <h3>Connect</h3>
-      <p>
-        <a href="#" target="_blank" rel="noopener">LinkedIn</a> &middot;
-        <a href="#" target="_blank" rel="noopener">GitHub</a> &middot;
-        <a href="#" target="_blank" rel="noopener">Instagram</a>
-      </p>
-    </div>
+    </section>
   </main>
 
-  <footer class="site-footer container">
+  <footer class="site-footer container" style="margin-top:18px;text-align:center;color:var(--muted)">
     <p>&copy; <span id="year-4"></span> Samron Trevor Miranda</p>
   </footer>
+
+  <!-- theme button fixed bottom-right -->
+  <button id="themeToggle" title="Toggle theme" aria-pressed="false">Switch to White/Blue</button>
 
 <script>
   // set year
@@ -144,7 +158,7 @@
     navigator.clipboard?.writeText(email).then(()=>{
       const prev = mailLink.textContent;
       mailLink.textContent = 'Copied!';
-      setTimeout(()=> mailLink.textContent = email, 1500);
+      setTimeout(()=> mailLink.textContent = email, 1400);
     }).catch(()=>{ window.location.href = 'mailto:' + email; });
   });
 
@@ -191,50 +205,69 @@
   const themeToggle = document.getElementById('themeToggle');
   const body = document.body;
   let isDefault = false; // currently neon
+
+  function applyDefaultStyleButton(){
+    themeToggle.classList.add('defaultStyle');
+    themeToggle.style.boxShadow = '0 8px 30px rgba(11,102,255,0.12)';
+  }
+
+  function applyNeonStyleButton(){
+    themeToggle.classList.remove('defaultStyle');
+    themeToggle.style.boxShadow = '0 8px 30px rgba(0,0,0,0.18)';
+  }
+
   function updateToggleLabel(){
     themeToggle.textContent = isDefault ? 'Switch to Neon Green' : 'Switch to White/Blue';
     themeToggle.setAttribute('aria-pressed', String(isDefault));
+    if(isDefault) applyDefaultStyleButton(); else applyNeonStyleButton();
   }
+
   themeToggle.addEventListener('click', ()=>{
     isDefault = !isDefault;
     if(isDefault){ body.classList.remove('theme-neon'); body.classList.add('theme-default'); }
     else{ body.classList.remove('theme-default'); body.classList.add('theme-neon'); }
     updateToggleLabel();
   });
+  // initial button style
+  applyNeonStyleButton();
   updateToggleLabel();
 
   // Game-style loading: animate percent then fade out
   const loader = document.getElementById('loader');
   const percentEl = document.getElementById('loaderPercent');
 
-  // emulate a game loading sequence with small random increments
+  // emulate a game loading sequence with small random increments tuned for professional feel
   let percent = 0;
   function advance(){
-    const slow = Math.random() * 6 + 6; // small increments
+    const slow = Math.random() * 6 + 6;
     percent = Math.min(100, Math.round(percent + slow));
     percentEl.textContent = percent + '%';
-    if(percent < 100){ setTimeout(advance, Math.random() * 220 + 80); }
+    if(percent < 100){ setTimeout(advance, Math.random() * 200 + 90); }
     else finishLoading();
   }
   function finishLoading(){
     loader.classList.add('loader-hidden');
-    setTimeout(()=> loader.style.display = 'none', 500);
+    setTimeout(()=> loader.style.display = 'none', 480);
     // focus main content for accessibility
     const main = document.getElementById('mainContent');
-    main.focus();
+    if(main) main.focus();
   }
 
-  // Start loading when DOM is ready; if the page is already loaded, start quickly.
   document.addEventListener('readystatechange', ()=>{
     if(document.readyState === 'interactive'){
-      // small delay to let animation show
-      setTimeout(advance, 200);
+      setTimeout(advance, 220);
     }
   });
+  setTimeout(()=>{ if(percent < 100) { percent = 100; percentEl.textContent = '100%'; finishLoading(); } }, 3500);
 
-  // Fallback in case load takes too long
-  setTimeout(()=>{ if(percent < 100) { percent = 100; percentEl.textContent = '100%'; finishLoading(); } }, 3000);
+  // small helper: download vCard
+  document.getElementById('downloadVcard').addEventListener('click', ()=>{
+    const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Samron Trevor Miranda\nEMAIL;TYPE=INTERNET:samronmiranda@gmail.com\nEND:VCARD`;
+    const blob = new Blob([vcard], {type:'text/vcard'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'samron_miranda.vcf'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  });
 </script>
 </body>
 </html>
-
