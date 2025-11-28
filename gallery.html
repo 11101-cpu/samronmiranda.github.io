@@ -21,11 +21,12 @@
   /* neon-green theme (applied when body.neon) */
   body.neon {
     --bg: linear-gradient(180deg,#eafef0,#e6fff6 60%);
-    --accent: #00ff66;
+    --accent: #00ff66;          /* accent for elements while in neon */
     --muted: #08321d;
     --card: #041a10;
     --shadow: 0 18px 50px rgba(0,140,70,0.09);
     --glass: rgba(255,255,255,0.04);
+    /* note: --text intentionally unchanged so lettering remains blue */
   }
 
   /* ---------- Base (professional) layout ---------- */
@@ -34,10 +35,10 @@
     margin:0;
     font-family:Inter, "Segoe UI", Roboto, system-ui, -apple-system, Arial, sans-serif;
     background:var(--bg);
-    color:var(--text);
+    color:var(--text);                      /* all lettering blue */
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
-    padding-bottom:88px;
+    padding-bottom:88px;                    /* space for bottom-right button */
     transition:background .35s ease, color .25s ease;
   }
 
@@ -63,6 +64,7 @@
     box-shadow:0 6px 18px rgba(11,102,255,0.06);
   }
 
+  /* refined hero */
   h1{font-size:30px;margin:6px 0;color:var(--text);font-weight:800}
   .intro{color:var(--muted);margin-bottom:14px}
 
@@ -73,14 +75,10 @@
   .filter.active{background:var(--accent);color:white;border-color:transparent;box-shadow:0 10px 30px rgba(11,102,255,0.06)}
   .view-count{margin-left:auto;color:var(--muted);font-size:13px}
 
-  /* gallery */
   .gallery-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:16px;
-  }
-  .gallery-item{
-    position:relative;
   }
   .thumb{
     width:100%;height:160px;object-fit:cover;border-radius:12px;display:block;cursor:pointer;
@@ -89,21 +87,6 @@
     background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.2));
   }
   .thumb:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 26px 60px rgba(12,33,80,0.12);filter:brightness(1.02)}
-
-  /* caption overlay on top-left of image */
-  .gallery-item .caption{
-    position:absolute;
-    top:10px;
-    left:10px;
-    background:rgba(255,255,255,0.85); /* light glass so blue text remains readable on dark/neon */
-    color:#0b66ff; /* blue text */
-    padding:8px 12px;
-    border-radius:8px;
-    font-size:1rem;
-    font-weight:600;
-    letter-spacing:0.5px;
-    box-shadow:0 6px 20px rgba(2,10,30,0.08);
-  }
 
   /* card-like modal (clean & minimal) */
   .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(6,18,40,0.45);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .18s ease;z-index:40}
@@ -130,21 +113,29 @@
     background:linear-gradient(180deg,#001316,#022826);color:#b8ffd9;z-index:9999;padding:28px;
     font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;
   }
+
   .loader-inner{display:flex;flex-direction:column;gap:10px;align-items:center;max-width:420px;text-align:center}
-  .loader-badge{ width:92px;height:92px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  .loader-badge{
+    width:92px;height:92px;border-radius:18px;display:flex;align-items:center;justify-content:center;
     background:linear-gradient(135deg,#002a12,#00522a);box-shadow:0 24px 80px rgba(0,200,110,0.08);
     transform-origin:center;animation: badgePulse 1600ms ease-in-out infinite;border:1px solid rgba(0,255,130,0.06);
   }
+  .loader-badge svg{filter:drop-shadow(0 12px 28px rgba(0,255,120,0.09));}
+
   .loader-title{font-weight:800;letter-spacing:0.8px;color:var(--text)}
   .loader-sub{font-size:13px;color:rgba(255,255,255,0.85)}
+
   .progress-wrap{width:320px;max-width:100%;height:10px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;box-shadow:inset 0 -6px 18px rgba(0,0,0,0.12)}
   .progress-bar{height:100%;width:0%;background:linear-gradient(90deg,#00ff66,#00b36a);transition:width .22s linear}
+
   .dots{display:flex;gap:8px;margin-top:6px}
   .dots span{width:8px;height:8px;border-radius:50%;background:#00ff66;opacity:0;transform:translateY(0);animation: dot 1s infinite}
   .dots span:nth-child(2){animation-delay:.12s}
   .dots span:nth-child(3){animation-delay:.24s}
+
   @keyframes dot {0%{opacity:0;transform:translateY(0)}40%{opacity:1;transform:translateY(-6px)}100%{opacity:0;transform:translateY(0)}}
   @keyframes badgePulse {0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+
   .page-loader.hidden{opacity:0;pointer-events:none;transition:opacity .36s ease;transform:translateY(-6px)}
 
   /* ---------- Bottom-right theme toggle button ---------- */
@@ -222,29 +213,11 @@
       <div class="view-count" id="view-count">4 items</div>
     </div>
 
-    <!-- NOTE: id="galleryGrid" is important for the script -->
     <div class="gallery-grid" id="galleryGrid">
-
-      <div class="gallery-item" data-tag="events">
-        <img class="thumb" src="elo.jpeg" alt="Elocution Competition Winner!" data-tag="events" />
-        <span class="caption">Elocution Competition Winner!</span>
-      </div>
-
-      <div class="gallery-item" data-tag="sports">
-        <img class="thumb" src="ic2.jpeg" alt="Inter College Sports" data-tag="sports" />
-        <span class="caption">Inter College Sports</span>
-      </div>
-
-      <div class="gallery-item" data-tag="projects">
-        <img class="thumb" src="matlab.png" alt="Matlab Course Completion" data-tag="projects" />
-        <span class="caption">Matlab Course Completion</span>
-      </div>
-
-      <div class="gallery-item" data-tag="projects">
-        <img class="thumb" src="team.jpeg" alt="My Team" data-tag="projects" />
-        <span class="caption">My Team</span>
-      </div>
-
+      <img class="thumb" src="assets/images/photo1.jpg" alt="Mini Chat App screenshot" data-full="assets/images/photo1_large.jpg" data-tag="projects" loading="lazy">
+      <img class="thumb" src="assets/images/photo2.jpg" alt="College sports day" data-full="assets/images/photo2_large.jpg" data-tag="sports" loading="lazy">
+      <img class="thumb" src="assets/images/photo3.jpg" alt="Portfolio screenshot" data-full="assets/images/photo3_large.jpg" data-tag="projects" loading="lazy">
+      <img class="thumb" src="assets/images/photo4.jpg" alt="Team photo" data-full="assets/images/photo4_large.jpg" data-tag="events" loading="lazy">
     </div>
 
     <!-- Modal -->
@@ -281,6 +254,7 @@
   const themeIcon = document.getElementById('themeIcon');
   const themeLabel = document.getElementById('themeLabel');
 
+  // apply theme from localStorage (default to neon)
   const stored = localStorage.getItem('samron_theme') || 'neon';
   function applyTheme(name){
     if(name === 'neon'){
@@ -302,6 +276,7 @@
   }
   applyTheme(stored);
 
+  // Toggle on click: switch the page background between neon and original
   themeBtnBR.addEventListener('click', ()=>{
     const isNeon = body.classList.contains('neon');
     applyTheme(isNeon ? 'original' : 'neon');
@@ -310,7 +285,6 @@
   // ---------- Gallery filters & count ----------
   const filters = document.querySelectorAll('.filter');
   const grid = document.getElementById('galleryGrid');
-  // select the images (class thumb) — keeps compatibility with original logic
   const items = Array.from(grid.querySelectorAll('.thumb'));
   const viewCount = document.getElementById('view-count');
 
@@ -321,10 +295,7 @@
     filters.forEach(x=>x.classList.remove('active'));
     f.classList.add('active');
     const tag = f.dataset.filter;
-    items.forEach(it => { 
-      // show if tag is 'all' or matches data-tag
-      it.hidden = !(tag === 'all' || it.dataset.tag === tag); 
-    });
+    items.forEach(it => { it.hidden = !(tag === 'all' || it.dataset.tag === tag); });
     updateCount();
   }));
 
@@ -352,7 +323,7 @@
 
   function closeModal(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
 
-  items.forEach((it)=> it.addEventListener('click', (e)=>{
+  items.forEach((it)=> it.addEventListener('click', ()=>{
     const visible = visibleItems();
     const index = visible.indexOf(it);
     openAt(index);
@@ -402,8 +373,10 @@
   const progressBar = document.getElementById('progressBar');
   const pageContent = document.getElementById('pageContent');
 
+  // show loader by default; hide page content for accessibility
   pageContent.setAttribute('aria-hidden','true');
 
+  // simulate progressive loading to look "game-like"
   const imgs = Array.from(document.images);
   let total = imgs.length || 1;
   let loaded = 0;
