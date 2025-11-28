@@ -1,183 +1,83 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Contact — Samron Miranda</title>
-<meta name="description" content="Contact Samron Trevor Miranda — get in touch." />
+<meta name="description" content="Contact Samron Trevor Miranda — get in touch.">
 <style>
   :root{
-    --bg-default: linear-gradient(180deg,#f6fbff,#eaf4ff);
-    --bg-neon: linear-gradient(180deg,#00ff6a 0%, #d8ffe1 100%);
-    --accent: #0b66ff;
-    --muted: #6b7a90;
-    --card: #ffffff;
-    --card-alpha: rgba(255,255,255,0.04);
-    --glass: rgba(255,255,255,0.85);
-    --shadow: 0 12px 40px rgba(6,18,40,0.08);
-    --rounded: 14px;
-    --text-blue: #0b66ff;
-    --btn-neon-bg: #00ff6a;
-    --btn-neon-fore: #042b3a;
+    --bg:#f6fbff;--accent:#0b66ff;--muted:#6b7a90;--card:#fff;--glass:rgba(255,255,255,0.85);--shadow:0 12px 40px rgba(6,18,40,0.08);--rounded:12px;--text-color:#0b66ff;
   }
+  /* Theme tokens for easy switching */
+  .theme-default{ --bg: #f6fbff; --accent: #0b66ff; --muted: #6b7a90; --card: #fff; --glass: rgba(255,255,255,0.85); --shape-opacity:0.06; --text-color:#0b66ff }
+  .theme-neon{ --bg: linear-gradient(180deg,#00ff6a 0%, #d8ffe1 100%); --accent: #0b66ff; --muted: rgba(2,10,30,0.6); --card: rgba(255,255,255,0.06); --glass: rgba(255,255,255,0.06); --shape-opacity:0.08; --text-color:#0b66ff }
 
-  /* Theme classes */
-  .theme-default { --page-bg: var(--bg-default); --card-bg: var(--card); --shape-opacity: 0.06; }
-  .theme-neon    { --page-bg: var(--bg-neon);   --card-bg: var(--card-alpha); --shape-opacity: 0.08; }
+  /* base reset */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:var(--bg);color:var(--text-color);-webkit-font-smoothing:antialiased;padding:36px 20px 96px;transition:background .35s ease,color .35s ease}
 
-  /* Reset & base */
-  * { box-sizing: border-box; }
-  html,body { height: 100%; }
-  body{
-    margin:0;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-    background: var(--page-bg);
-    color: var(--text-blue);
-    -webkit-font-smoothing:antialiased;
-    padding: 36px 20px 96px;
-    transition: background .35s ease, color .25s ease;
-  }
+  .container{max-width:980px;margin:0 auto;padding:20px}
+  header.nav-wrap{padding:18px 0}
+  .nav{display:flex;align-items:center;justify-content:space-between}
+  .brand{font-weight:700;color:var(--accent);text-decoration:none;font-size:18px}
+  .nav-links{display:flex;gap:14px;list-style:none;padding:0;margin:0}
+  .nav-links a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px;font-weight:600}
+  .nav-links a.active{background:var(--glass);color:var(--accent)}
 
-  .container{ max-width: 980px; margin: 0 auto; padding: 20px; }
+  main.contact-page{padding:22px 0}
+  h1{font-size:28px;margin:6px 0;color:var(--accent)}
+  p.intro{color:var(--muted);line-height:1.5}
 
-  /* Header / nav */
-  header.nav-wrap{ padding: 18px 0; }
-  .nav{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
-  .brand{ font-weight:700; color:var(--accent); text-decoration:none; font-size:18px; }
-  .nav-links { display:flex; gap:12px; list-style:none; padding:0; margin:0; }
-  .nav-links a { color:var(--muted); text-decoration:none; padding:8px 10px; border-radius:10px; font-weight:600; }
-  .nav-links a.active { background: rgba(255,255,255,0.7); color:var(--accent); }
+  /* Card */
+  .card{background:var(--card);padding:22px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(11,102,255,0.06)}
+  .contact-form{background:transparent;padding:0;border-radius:8px;margin-top:12px}
+  .contact-form label{display:block;margin-top:12px;font-weight:700;color:var(--accent)}
+  .contact-form input,.contact-form textarea{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(2,10,30,0.08);margin-top:8px;font-size:15px;background:transparent;color:var(--text-color)}
+  .contact-form textarea{resize:vertical;min-height:140px}
 
-  /* Main card */
-  main { padding: 22px 0; }
-  .card {
-    background: var(--card-bg);
-    padding: 28px;
-    border-radius: var(--rounded);
-    box-shadow: var(--shadow);
-    border: 1px solid rgba(11,102,255,0.06);
-    transition: background .25s ease, border-color .25s ease;
-  }
+  .btn{display:inline-block;padding:10px 16px;border-radius:12px;background:var(--accent);color:white;text-decoration:none;border:0;font-weight:800;margin-top:16px;cursor:pointer;box-shadow:0 8px 24px rgba(11,102,255,0.12)}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(11,102,255,0.12)}
 
-  h1 { margin: 0 0 6px 0; font-size: 28px; color: var(--accent); }
-  p.intro { color: var(--muted); margin-bottom: 18px; line-height:1.5; }
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .form-msg{margin-top:10px;color:var(--muted);font-weight:600}
 
-  /* Form */
-  .contact-form label { display:block; margin-top:12px; font-weight:700; color:var(--accent); }
-  .contact-form input,
-  .contact-form textarea {
-    width:100%;
-    padding:12px 14px;
-    border-radius:10px;
-    border:1px solid rgba(2,10,30,0.08);
-    margin-top:8px;
-    font-size:15px;
-    background: transparent;
-    color: var(--text-blue);
-    outline: none;
-  }
-  .contact-form textarea { min-height:140px; resize:vertical; }
+  .socials{margin-top:22px}
+  .socials a{color:var(--accent);text-decoration:none;font-weight:700}
 
-  .form-row { display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
-  @media (max-width:820px){ .form-row { grid-template-columns: 1fr; } }
+  /* floating shape */
+  .bg-shape{position:fixed;right:-80px;top:6%;width:320px;height:320px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#5fb0ff);opacity:var(--shape-opacity);filter:blur(48px);pointer-events:none;transition:opacity .35s ease}
 
-  .form-actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:14px; }
-  .form-msg { margin:0; color:var(--muted); font-weight:600; }
+  /* tiny animations */
+  .btn.sending{transform:translateY(1px) scale(0.98);opacity:0.95}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-  /* Buttons */
-  .btn {
-    display:inline-block;
-    padding:10px 16px;
-    border-radius:12px;
-    background: var(--accent);
-    color: #fff;
-    text-decoration:none;
-    border:0;
-    font-weight:800;
-    cursor:pointer;
-    box-shadow: 0 8px 24px rgba(11,102,255,0.12);
-  }
-  .btn.ghost {
-    background:transparent;
-    color:var(--accent);
-    border:1px solid rgba(11,102,255,0.12);
-    font-weight:700;
-    box-shadow:none;
-  }
-  .btn.sending { transform: translateY(1px) scale(.995); opacity:.95; }
+  /* loading overlay (game-style) */
+  .loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.78), rgba(0,0,0,0.52));z-index:9999;flex-direction:column;color:white}
+  .loader-box{width:420px;max-width:88%;padding:28px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));backdrop-filter:blur(6px);text-align:center;border:1px solid rgba(255,255,255,0.03)}
+  .loader-title{font-weight:800;letter-spacing:2px;margin-bottom:12px}
+  .loader-anim{display:flex;gap:10px;justify-content:center;margin-bottom:12px}
+  .loader-anim span{width:14px;height:14px;border-radius:3px;background:white;opacity:.15;transform:translateY(0);animation:loaderJump 1s infinite ease-in-out}
+  .loader-anim span:nth-child(2){animation-delay:.12s}
+  .loader-anim span:nth-child(3){animation-delay:.24s}
+  .loader-anim span:nth-child(4){animation-delay:.36s}
 
-  /* Socials */
-  .socials { margin-top:22px; color:var(--muted); }
-  .socials a { color:var(--accent); text-decoration:none; font-weight:700; }
+  @keyframes loaderJump{0%,80%,100%{transform:translateY(0);opacity:.15}40%{transform:translateY(-18px);opacity:1}}
+  .loader-percent{font-size:14px;font-weight:700}
+  .loader-hidden{opacity:0;pointer-events:none;transition:opacity .45s ease}
 
-  /* Decorative floating shape (subtle) */
-  .bg-shape {
-    position:fixed;
-    right:-80px;
-    top:6%;
-    width:320px;
-    height:320px;
-    border-radius:50%;
-    background: linear-gradient(135deg,var(--accent),#5fb0ff);
-    opacity: var(--shape-opacity);
-    filter: blur(48px);
-    pointer-events:none;
-    transition:opacity .35s ease;
-  }
+  /* floating theme button bottom-right */
+  #themeToggle{position:fixed;right:20px;bottom:20px;z-index:2000;display:inline-flex;align-items:center;gap:10px;padding:12px 14px;border-radius:999px;border:0;background:#00ff6a;color:#042b3a;font-weight:800;box-shadow:0 8px 30px rgba(0,0,0,0.2);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
+  #themeToggle.small{padding:10px 12px}
+  #themeToggle.defaultStyle{background:#fff;color:var(--accent);border:1px solid rgba(11,102,255,0.12)}
 
-  /* Loading overlay (game-style) */
-  .loader-overlay {
-    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-    background: linear-gradient(180deg, rgba(0,0,0,0.78), rgba(0,0,0,0.52));
-    z-index:9999; flex-direction:column; color:white;
-  }
-  .loader-box {
-    width:420px; max-width:88%; padding:28px; border-radius:14px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-    text-align:center; backdrop-filter: blur(6px); border:1px solid rgba(255,255,255,0.03);
-  }
-  .loader-title { font-weight:800; letter-spacing:2px; margin-bottom:12px; }
-  .loader-anim { display:flex; gap:10px; justify-content:center; margin-bottom:12px; }
-  .loader-anim span { width:14px; height:14px; border-radius:3px; background:white; opacity:.15; transform:translateY(0); animation:loaderJump 1s infinite ease-in-out; }
-  .loader-anim span:nth-child(2){ animation-delay:.12s; } .loader-anim span:nth-child(3){ animation-delay:.24s; } .loader-anim span:nth-child(4){ animation-delay:.36s; }
-  @keyframes loaderJump { 0%,80%,100% { transform:translateY(0); opacity:.15 } 40% { transform:translateY(-18px); opacity:1 } }
-  .loader-percent { font-size:14px; font-weight:700; }
-  .loader-hidden { opacity:0; pointer-events:none; transition:opacity .45s ease; }
-
-  /* Theme toggle fixed bottom-right */
-  #themeToggle {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    z-index:2000;
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding:12px 14px;
-    border-radius:999px;
-    border:0;
-    background: var(--btn-neon-bg);
-    color: var(--btn-neon-fore);
-    font-weight:800;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.18);
-    cursor:pointer;
-    transition: transform .18s ease, box-shadow .18s ease, background .25s ease, color .25s ease;
-  }
-  /* White/blue look for toggle when default theme is active */
-  #themeToggle.defaultStyle { background:#fff; color:var(--accent); border:1px solid rgba(11,102,255,0.12); box-shadow: 0 8px 30px rgba(11,102,255,0.12); }
-
-  footer.site-footer { margin-top:18px; text-align:center; color:var(--muted); font-size:14px; }
-
-  /* small helper responsive adjustments */
-  @media (max-width:520px){
-    .card { padding:18px; }
-    #themeToggle { right:14px; bottom:14px; padding:10px 12px; }
-  }
+  /* responsive */
+  @media (max-width:820px){.form-row{grid-template-columns:1fr}.container{padding:12px}#themeToggle{right:14px;bottom:14px;padding:10px 12px}}
 </style>
 </head>
-
 <body class="theme-neon">
-  <!-- Loading overlay -->
+  <!-- Game-style loading overlay -->
   <div id="loader" class="loader-overlay" role="status" aria-live="polite">
     <div class="loader-box">
       <div class="loader-title">LOADING</div>
@@ -189,7 +89,6 @@
   </div>
 
   <div class="bg-shape" aria-hidden></div>
-
   <header class="nav-wrap container">
     <nav class="nav">
       <a class="brand" href="index.html">Samron Miranda</a>
@@ -203,68 +102,67 @@
   </header>
 
   <main class="container" id="mainContent" tabindex="-1">
-    <section class="card" aria-labelledby="contactHeading">
-      <h1 id="contactHeading">Contact Me</h1>
-      <p class="intro">If you'd like to reach me, send a message using the form below or email me at
-        <a id="mail-link" href="mailto:samronmiranda@gmail.com">samronmiranda@gmail.com</a>. Click the email to copy it.</p>
+    <section class="card">
+      <h1>Contact Me</h1>
+      <p class="intro">If you'd like to reach me, send a message using the form below or email me at <a id="mail-link" href="mailto:samronmiranda@gmail.com">samronmiranda@gmail.com</a>. Click the email to copy it.</p>
 
       <form id="contact-form" class="contact-form" novalidate>
         <div class="form-row">
           <div>
             <label for="name">Name</label>
-            <input id="name" name="name" type="text" required aria-required="true" placeholder="Your full name" />
+            <input id="name" name="name" type="text" required aria-required="true" placeholder="Your full name">
           </div>
           <div>
             <label for="email">Email</label>
-            <input id="email" name="email" type="email" required aria-required="true" placeholder="you@example.com" />
+            <input id="email" name="email" type="email" required aria-required="true" placeholder="you@example.com">
           </div>
         </div>
 
         <label for="message">Message</label>
         <textarea id="message" name="message" rows="6" required aria-required="true" placeholder="Tell me a bit about your project or message"></textarea>
 
-        <div class="form-actions">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
           <button type="submit" class="btn" id="sendBtn">Send Message</button>
           <button type="button" class="btn ghost" id="downloadVcard">Download vCard</button>
-          <p id="form-msg" class="form-msg" aria-live="polite" style="margin-left:6px"></p>
+          <p id="form-msg" class="form-msg" aria-live="polite" style="margin:0"></p>
         </div>
       </form>
 
       <div class="socials" aria-label="social links">
         <h3 style="margin-top:18px; color:var(--accent)">Connect</h3>
         <p>
-          <a href="#" target="_blank" rel="noopener">LinkedIn</a> &middot;
-          <a href="#" target="_blank" rel="noopener">GitHub</a> &middot;
-          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.linkedin.com/in/samron-miranda-75115b36a" target="_blank" rel="noopener">LinkedIn</a> &middot;
+          <a href="https://github.com/11101-cpu/samronmiranda.github.io" target="_blank" rel="noopener">GitHub</a> &middot;
+          <a href="https://www.instagram.com/mirandasamron" target="_blank" rel="noopener">Instagram</a>
         </p>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer container">
+  <footer class="site-footer container" style="margin-top:18px;text-align:center;color:var(--muted)">
     <p>&copy; <span id="year-4"></span> Samron Trevor Miranda</p>
   </footer>
 
-  <!-- theme switch button fixed bottom-right -->
-  <button id="themeToggle" aria-pressed="false" title="Toggle theme">Switch to White/Blue</button>
+  <!-- theme button fixed bottom-right -->
+  <button id="themeToggle" title="Toggle theme" aria-pressed="false">Switch to White/Blue</button>
 
 <script>
-  // --- small DOM helpers & UX ---
+  // set year
   document.getElementById('year-4').textContent = new Date().getFullYear();
 
-  // copy email
+  // copy email on click with feedback
   const mailLink = document.getElementById('mail-link');
-  mailLink.addEventListener('click', (e) => {
+  mailLink.addEventListener('click', (e)=>{
     e.preventDefault();
     const email = mailLink.textContent.trim();
-    navigator.clipboard?.writeText(email).then(() => {
+    navigator.clipboard?.writeText(email).then(()=>{
       const prev = mailLink.textContent;
       mailLink.textContent = 'Copied!';
-      setTimeout(() => mailLink.textContent = email, 1400);
-    }).catch(() => { window.location.href = 'mailto:' + email; });
+      setTimeout(()=> mailLink.textContent = email, 1400);
+    }).catch(()=>{ window.location.href = 'mailto:' + email; });
   });
 
-  // form validation (client-side simulation)
+  // simple client-side validation + fake submit (no backend)
   const form = document.getElementById('contact-form');
   const msg = document.getElementById('form-msg');
   const btn = document.getElementById('sendBtn');
@@ -279,96 +177,98 @@
     return '';
   }
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', (e)=>{
     e.preventDefault();
     const err = validate();
     if(err){ msg.textContent = err; msg.style.color = 'crimson'; return; }
 
+    // simulate send animation
     btn.classList.add('sending');
     const original = btn.textContent;
     btn.textContent = 'Sending...';
     msg.style.color = 'var(--muted)';
     msg.textContent = 'Sending your message — simulated (no backend).';
 
-    setTimeout(() => {
+    setTimeout(()=>{
       btn.classList.remove('sending');
       btn.textContent = original;
       msg.style.color = 'green';
-      msg.textContent = 'Thanks! Your message was sent (simulation).';
+      msg.textContent = 'Thanks! Your message was "sent" (simulation). I recommend connecting this form to a service like Formspree or Netlify Forms for real submissions.';
       form.reset();
     }, 1200);
   });
 
-  // Enter key submit when not in textarea
-  form.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); form.requestSubmit(); }
-  });
+  // Accessibility: press Enter on any input to submit
+  form.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); form.requestSubmit(); } });
 
-  // vCard download helper
-  document.getElementById('downloadVcard').addEventListener('click', () => {
-    const vcard = [
-      'BEGIN:VCARD',
-      'VERSION:3.0',
-      'FN:Samron Trevor Miranda',
-      'EMAIL;TYPE=INTERNET:samronmiranda@gmail.com',
-      'END:VCARD'
-    ].join('\\n');
-    const blob = new Blob([vcard], { type: 'text/vcard' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'samron_miranda.vcf'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-  });
+  // Theme toggle: switch between neon (current) and original white/blue deck
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+  let isDefault = false; // currently neon
 
-  // --- loader (game-style) ---
+  function applyDefaultStyleButton(){
+    themeToggle.classList.add('defaultStyle');
+    themeToggle.style.boxShadow = '0 8px 30px rgba(11,102,255,0.12)';
+  }
+
+  function applyNeonStyleButton(){
+    themeToggle.classList.remove('defaultStyle');
+    themeToggle.style.boxShadow = '0 8px 30px rgba(0,0,0,0.18)';
+  }
+
+  function updateToggleLabel(){
+    themeToggle.textContent = isDefault ? 'Switch to Neon Green' : 'Switch to White/Blue';
+    themeToggle.setAttribute('aria-pressed', String(isDefault));
+    if(isDefault) applyDefaultStyleButton(); else applyNeonStyleButton();
+  }
+
+  themeToggle.addEventListener('click', ()=>{
+    isDefault = !isDefault;
+    if(isDefault){ body.classList.remove('theme-neon'); body.classList.add('theme-default'); }
+    else{ body.classList.remove('theme-default'); body.classList.add('theme-neon'); }
+    updateToggleLabel();
+  });
+  // initial button style
+  applyNeonStyleButton();
+  updateToggleLabel();
+
+  // Game-style loading: animate percent then fade out
   const loader = document.getElementById('loader');
   const percentEl = document.getElementById('loaderPercent');
+
+  // emulate a game loading sequence with small random increments tuned for professional feel
   let percent = 0;
   function advance(){
-    const step = Math.random() * 6 + 6;
-    percent = Math.min(100, Math.round(percent + step));
+    const slow = Math.random() * 6 + 6;
+    percent = Math.min(100, Math.round(percent + slow));
     percentEl.textContent = percent + '%';
-    if(percent < 100) setTimeout(advance, Math.random() * 200 + 90);
+    if(percent < 100){ setTimeout(advance, Math.random() * 200 + 90); }
     else finishLoading();
   }
   function finishLoading(){
     loader.classList.add('loader-hidden');
-    setTimeout(() => loader.style.display = 'none', 480);
-    document.getElementById('mainContent')?.focus();
+    setTimeout(()=> loader.style.display = 'none', 480);
+    // focus main content for accessibility
+    const main = document.getElementById('mainContent');
+    if(main) main.focus();
   }
-  document.addEventListener('readystatechange', () => {
-    if(document.readyState === 'interactive') setTimeout(advance, 220);
-  });
-  // fail-safe
-  setTimeout(() => { if(percent < 100) { percent = 100; percentEl.textContent = '100%'; finishLoading(); } }, 3500);
 
-  // --- theme toggle logic (button bottom-right) ---
-  const themeToggle = document.getElementById('themeToggle');
-  const htmlBody = document.body;
-  let defaultMode = false; // false => neon active; true => white/blue active
-
-  function applyToggleStyle(){
-    if(defaultMode){
-      htmlBody.classList.remove('theme-neon'); htmlBody.classList.add('theme-default');
-      themeToggle.classList.add('defaultStyle');
-      themeToggle.textContent = 'Switch to Neon Green';
-    } else {
-      htmlBody.classList.remove('theme-default'); htmlBody.classList.add('theme-neon');
-      themeToggle.classList.remove('defaultStyle');
-      themeToggle.textContent = 'Switch to White/Blue';
+  document.addEventListener('readystatechange', ()=>{
+    if(document.readyState === 'interactive'){
+      setTimeout(advance, 220);
     }
-    themeToggle.setAttribute('aria-pressed', String(defaultMode));
-  }
+  });
+  setTimeout(()=>{ if(percent < 100) { percent = 100; percentEl.textContent = '100%'; finishLoading(); } }, 3500);
 
-  // initialize theme classes and button
-  if(!htmlBody.classList.contains('theme-neon') && !htmlBody.classList.contains('theme-default')){
-    htmlBody.classList.add('theme-neon');
-  }
-  applyToggleStyle();
-
-  themeToggle.addEventListener('click', () => {
-    defaultMode = !defaultMode;
-    applyToggleStyle();
+  // small helper: download vCard
+  document.getElementById('downloadVcard').addEventListener('click', ()=>{
+    const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Samron Trevor Miranda\nEMAIL;TYPE=INTERNET:samronmiranda@gmail.com\nEND:VCARD`;
+    const blob = new Blob([vcard], {type:'text/vcard'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'samron_miranda.vcf'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
   });
 </script>
 </body>
 </html>
+
