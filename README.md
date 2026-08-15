@@ -2,7 +2,7 @@
 
 A multi-page personal portfolio site built from scratch with HTML, CSS, and vanilla JavaScript. This was my first web project — I built it to learn the fundamentals of front-end development and to have a live, working site I could keep improving over time.
 
-🔗 **Live site:** https://samronmiranda.github.io/
+🔗 **Live site:** [https://samronmiranda.github.io/](https://11101-cpu.github.io/samronmiranda.github.io/)
 
 ## 🛠️ Technologies
 
@@ -70,4 +70,4 @@ To run this project locally:
 1. Clone the repository to your local machine.
 2. Open `index.html` directly in your browser — no build step or dependencies required.
 
-Or simply visit the live version: https://samronmiranda.github.io/
+Or simply visit the live version: [https://samronmiranda.github.io/](https://11101-cpu.github.io/samronmiranda.github.io/)
